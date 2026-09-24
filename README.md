@@ -62,18 +62,27 @@
 
 Požadavky: **macOS 14 Sonoma** nebo novější, Mac s **Apple Silicon**.
 
-1. Stáhněte [`Hashline.dmg`](https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg) z [posledního vydání](https://github.com/Hessevalentino/hashline/releases/latest).
-2. Otevřete DMG a přetáhněte Hashline do složky **Aplikace**.
-3. **Při prvním spuštění povolte výjimku.** Hashline je podepsaný ad-hoc (bez placeného účtu Apple Developer), takže ho macOS napoprvé zablokuje hláškou, že aplikaci nelze ověřit:
-   - Klikněte na **Hotovo** (ne na „Přesunout do koše“).
-   - Otevřete **Nastavení systému ▸ Soukromí a zabezpečení**, sjeďte dolů k hlášce o aplikaci Hashline a klikněte na **Přesto otevřít**. Potvrďte heslem nebo Touch ID.
-   - Pak se Hashline spouští normálně.
+Hashline je podepsaný jen ad-hoc (bez placeného účtu Apple Developer), takže macOS stažený soubor napoprvé zablokuje s hláškou, že ho nelze ověřit. Nejrychlejší je jeden příkaz v Terminálu, nebo povolení v Nastavení systému.
 
-   Alternativa v Terminálu:
+**Rychle přes Terminál** (doporučeno):
+
+1. Stáhněte [`Hashline.dmg`](https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg).
+2. Odstraňte příznak „staženo z internetu“:
 
    ```sh
-   xattr -dr com.apple.quarantine /Applications/Hashline.app
+   xattr -d com.apple.quarantine ~/Downloads/Hashline.dmg
    ```
+
+3. Otevřete DMG a přetáhněte Hashline do složky **Aplikace**. Spustí se bez dalších dotazů.
+
+**Bez Terminálu, přes Nastavení systému:**
+
+1. Dvakrát klikněte na `Hashline.dmg`. V hlášce, že soubor nelze ověřit, klikněte na **Hotovo** (ne na „Přesunout do koše“).
+2. Otevřete **Nastavení systému ▸ Soukromí a zabezpečení**, sjeďte dolů do části **Zabezpečení** a u hlášky o `Hashline.dmg` klikněte na **Přesto otevřít**. Potvrďte heslem nebo Touch ID. Tlačítko se ukazuje zhruba hodinu po pokusu o otevření.
+3. Otevřete DMG znovu, v dialogu klikněte na **Otevřít** a přetáhněte Hashline do složky **Aplikace**.
+4. Při prvním spuštění Hashline zopakujte kroky 1–2 pro aplikaci (**Přesto otevřít** u „Hashline“). Pak se spouští normálně.
+
+Když už aplikaci máte v Aplikacích a macOS ji blokuje, pomůže i `xattr -dr com.apple.quarantine /Applications/Hashline.app`.
 
 **Aktualizace:** při druhém spuštění se Hashline zeptá, jestli má jednou týdně hledat nové verze ([Sparkle](https://sparkle-project.org)). Aktualizace jsou podepsané klíčem EdDSA, takže se nainstaluje jen verze z tohoto projektu. Ručně: **Hashline ▸ Check for Updates…**
 

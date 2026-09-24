@@ -141,21 +141,42 @@ code { font-family: var(--font-mono); font-size: 0.86em; color: var(--ember-hi);
 .nav__links { display: flex; gap: var(--space-3); list-style: none; margin: 0; padding: 0; font-family: var(--font-mono); font-size: 0.8125rem; }
 .nav__links a { color: inherit; text-decoration: none; opacity: 0.8; }
 .nav__links a:hover { opacity: 1; color: inherit; }
-/* Tlačítko ke stažení: bílý text na --ember-lo (6,7:1), jediný primární cíl stránky */
+/* Tlačítko ke stažení: červená z loga, bílý text (4,9:1 nahoře, 7:1 dole), tvar pilulky jako systémová tlačítka */
 .btn {
-  display: inline-flex; align-items: center; gap: 0.5em;
-  font-family: var(--font-mono); font-weight: 600; font-size: 0.9375rem; letter-spacing: 0.01em;
-  padding: 0.75rem 1.25rem; border-radius: var(--radius);
-  background: var(--ember-lo); color: #fff; text-decoration: none;
-  box-shadow: 0 1px 0 rgb(255 255 255 / 0.15) inset, 0 8px 20px -10px rgb(171 46 18 / 0.7);
-  transition: background-color 0.2s var(--ease), transform 0.2s var(--ease);
+  --btn-top: #D2372A; --btn-bottom: #AE2317;
+  display: inline-flex; align-items: center; gap: 0.6em;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+  font-weight: 600; font-size: 1rem; letter-spacing: -0.01em; line-height: 1;
+  padding: 0.8rem 1.35rem 0.8rem 0.8rem; border-radius: 999px;
+  background: linear-gradient(180deg, var(--btn-top), var(--btn-bottom));
+  color: #fff; text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.28),
+    inset 0 -1px 0 rgb(0 0 0 / 0.18),
+    0 1px 2px rgb(120 25 8 / 0.35),
+    0 10px 24px -8px rgb(200 55 25 / 0.6);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), filter 0.25s var(--ease);
 }
-.btn:hover, .btn:focus-visible { background: #C23A1B; color: #fff; }
-.btn:active { transform: translateY(1px); }
-.btn__arrow { display: inline-block; transition: transform 0.25s var(--ease); }
+.btn:hover, .btn:focus-visible {
+  color: #fff; transform: translateY(-1px); filter: brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.3),
+    inset 0 -1px 0 rgb(0 0 0 / 0.18),
+    0 2px 4px rgb(120 25 8 / 0.3),
+    0 16px 32px -10px rgb(200 55 25 / 0.75);
+}
+.btn:active { transform: translateY(0); filter: brightness(0.96); }
+.btn:focus-visible { outline: 2px solid var(--ember-hi); outline-offset: 3px; }
+.btn__arrow {
+  display: inline-grid; place-items: center; flex: none;
+  width: 1.75em; height: 1.75em; border-radius: 50%;
+  background: rgb(255 255 255 / 0.2); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+  font-size: 0.85em; transition: transform 0.3s var(--ease);
+}
 .btn:hover .btn__arrow { transform: translateY(2px); }
-.btn--lg { font-size: 1.0625rem; padding: 0.95rem 1.6rem; }
-.btn--nav { font-size: 0.8125rem; padding: 0.4rem 0.8rem; box-shadow: none; }
+.btn--lg { font-size: 1.125rem; padding: 0.9rem 1.6rem 0.9rem 0.9rem; }
+.btn--nav { font-size: 0.8125rem; padding: 0.4rem 0.9rem 0.4rem 0.45rem; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 4px 12px -6px rgb(200 55 25 / 0.7); }
+.btn--nav .btn__arrow { width: 1.45em; height: 1.45em; }
 .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin-top: var(--space-6); }
 .cta-row p { font-size: var(--text-sm); color: var(--muted); }
 .cuts .cta-row p { color: var(--muted-on-cream); }

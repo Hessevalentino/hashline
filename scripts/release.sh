@@ -72,5 +72,5 @@ git push origin HEAD --tags
 NOTES_TEXT=$(printf -- '- %s\n' "${NOTES[@]}")
 gh release create "v$VERSION" "$DMG" --repo "$REPO" --title "Hashline $VERSION" --notes "$NOTES_TEXT
 
-Aplikace je podepsaná ad-hoc (bez účtu Apple Developer). Při prvním spuštění ji povolte v Nastavení systému ▸ Soukromí a zabezpečení ▸ Přesto otevřít. Podrobně v README."
+Aplikace je podepsaná ad-hoc (bez účtu Apple Developer), macOS stažený DMG napoprvé zablokuje. Nejrychleji: `xattr -d com.apple.quarantine ~/Downloads/Hashline.dmg`, pak DMG otevřít. Bez Terminálu: Nastavení systému ▸ Soukromí a zabezpečení ▸ Přesto otevřít (pro DMG i aplikaci). Podrobně v README."
 echo "Done: https://github.com/$REPO/releases/tag/v$VERSION"
