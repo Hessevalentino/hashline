@@ -28,8 +28,8 @@ struct LibraryIndexTests {
 
         let items = LibraryIndex.scan(folder)
         #expect(items.map(\.relativePath) == ["Sub/b.markdown", "a.md"])
-        #expect(items.map(\.title) == ["b", "Alpha"])
-        #expect(items.map(\.snippet) == ["No heading, just a link.", "First text here."])
+        #expect(items.map(\.title) == ["b", "a"])
+        #expect(items.map(\.snippet) == ["No heading, just a link.", "Alpha · First text here."])
     }
 
     @Test func titleFromFrontMatter() {
@@ -45,9 +45,9 @@ struct LibraryIndexTests {
         ])
         defer { try? FileManager.default.removeItem(at: folder) }
         let items = LibraryIndex.scan(folder)
-        #expect(items.filter { LibraryIndex.matchesName($0, query: "kun") }.map(\.title) == ["Kůň"])
+        #expect(items.filter { LibraryIndex.matchesName($0, query: "kun") }.map(\.title) == ["kun"])
         let matches = LibraryIndex.searchContent(items, query: "ZLUTOUCKY")
-        #expect(matches.map(\.item.title) == ["Kůň"])
+        #expect(matches.map(\.item.title) == ["kun"])
         #expect(matches.first?.line == "Příliš žluťoučký kůň úpěl.")
     }
 

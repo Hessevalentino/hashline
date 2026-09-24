@@ -1,5 +1,9 @@
 # Změny
 
+## 0.1.4 – 2026-09-24
+
+- Knihovna ukazuje název souboru (jako Finder), ne první nadpis; přejmenování souboru se v ní hned projeví. Nadpis je vidět v náhledu textu pod názvem.
+
 ## 0.1.3 – 2026-09-24
 
 - Přejmenování dokumentu přímo v knihovně: pravé tlačítko ▸ Přejmenovat… (v seznamu i ve stromu složek), otevřené okno se přesune s ním

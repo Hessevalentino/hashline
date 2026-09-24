@@ -5,10 +5,10 @@ public struct LibraryDocument: Sendable, Identifiable, Hashable {
     public let url: URL
     /// Path inside the library folder, e.g. `Notes/Idea.md`.
     public let relativePath: String
-    /// First heading (or front matter `title:`), otherwise the file name.
+    /// The file name without its extension, as in Finder (renaming the file renames the entry).
     public let title: String
     public let modified: Date
-    /// First lines of body text without Markdown markers.
+    /// The first heading (or front matter `title:`) and the first lines of text, without Markdown markers.
     public let snippet: String
 
     public var id: URL { url }
@@ -48,13 +48,13 @@ public enum LibraryIndex {
                 continue
             }
             let summary = summarize(url)
-            let fallbackTitle = url.deletingPathExtension().lastPathComponent
+            let snippet = [summary.title ?? "", summary.snippet].filter { !$0.isEmpty }.joined(separator: " · ")
             var relative = url.standardizedFileURL.path
             if relative.hasPrefix(base) { relative = String(relative.dropFirst(base.count)) }
             relative = relative.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-            items.append(LibraryDocument(url: url, relativePath: relative, title: summary.title ?? fallbackTitle,
+            items.append(LibraryDocument(url: url, relativePath: relative, title: url.deletingPathExtension().lastPathComponent,
                                      modified: values.contentModificationDate ?? .distantPast,
-                                     snippet: summary.snippet))
+                                     snippet: snippet))
         }
         return items.sorted { $0.modified > $1.modified }
     }
