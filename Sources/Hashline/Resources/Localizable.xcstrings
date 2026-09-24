@@ -447,6 +447,26 @@
         }
       }
     },
+    "Check for Updates…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyhledat aktualizace…"
+          }
+        }
+      }
+    },
+    "Check for updates weekly": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hledat aktualizace jednou týdně"
+          }
+        }
+      }
+    },
     "Choose Folder…": {
       "localizations": {
         "cs": {
@@ -1407,6 +1427,16 @@
         }
       }
     },
+    "Move to Trash": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přesunout do koše"
+          }
+        }
+      }
+    },
     "Narrow (72 characters)": {
       "localizations": {
         "cs": {
@@ -1523,6 +1553,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Číslovaný seznam"
+          }
+        }
+      }
+    },
+    "Open": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otevřít"
           }
         }
       }
@@ -1943,6 +1983,16 @@
         }
       }
     },
+    "Some documents could not be moved to the Trash.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Některé dokumenty se nepodařilo přesunout do koše."
+          }
+        }
+      }
+    },
     "Status bar": {
       "localizations": {
         "cs": {
@@ -2139,6 +2189,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Podtržení"
+          }
+        }
+      }
+    },
+    "Updates": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktualizace"
           }
         }
       }

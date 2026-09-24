@@ -8,6 +8,7 @@ extension EditorSession {
     /// Reading mode shows only the preview; keyboard focus moves with it, so keys never
     /// edit the hidden text. The editor keeps its caret and scroll position.
     func setReadingMode(_ reading: Bool) {
+        preview?.setReading(reading)
         guard let scrollView = editorScrollView else { return }
         if reading {
             // Remember where the editor ended, to put the divider back afterwards.

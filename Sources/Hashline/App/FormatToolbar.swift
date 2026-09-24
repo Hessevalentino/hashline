@@ -16,7 +16,7 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
     }
 
     /// Bumped when default items are added: a saved customisation would otherwise hide them.
-    private static let identifier = NSToolbar.Identifier("cz.hashline.format.2")
+    private static let identifier = NSToolbar.Identifier("cz.hashline.format.3")
 
     private static func id(_ raw: String) -> NSToolbarItem.Identifier { .init("cz.hashline.toolbar.\(raw)") }
 
@@ -26,6 +26,7 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
     private static let preview = id("preview")
     private static let share = id("share")
     private static let appearance = id("appearance")
+    private static let reading = id("reading")
 
     private static let buttons: [Item] = [
         Item(identifier: id("bold"), title: "Bold", symbol: "bold",
@@ -55,7 +56,7 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
         buttons.prefix(3).map(\.identifier) + [heading, list] + buttons.dropFirst(3).map(\.identifier)
 
     private static let defaultOrder: [NSToolbarItem.Identifier] =
-        [library, .flexibleSpace] + formatting + [.flexibleSpace, appearance, share, preview]
+        [library, .flexibleSpace] + formatting + [.flexibleSpace, appearance, share, reading, preview]
 
     /// An empty bar of the same style, installed before the first display so the title bar
     /// already has its final height; `install(in:)` replaces it once the editor is editable.
@@ -126,6 +127,12 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
             item.toolTip = String(localized: "Share")
             item.delegate = self
             return item
+        case Self.reading:
+            let item = button(Item(identifier: identifier, title: "Reading Mode", symbol: "book",
+                                   action: #selector(toggleReading(_:)), shortcut: "⌘/"))
+            item.target = self
+            item.autovalidates = false
+            return item
         case Self.preview:
             let item = button(Item(identifier: identifier, title: "Preview", symbol: "rectangle.split.2x1",
                                    action: #selector(togglePreview(_:)), shortcut: "⌥⌘P"))
@@ -175,6 +182,12 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
     @objc private func toggleLibrary(_ sender: Any?) {
         let defaults = UserDefaults.standard
         defaults.set(!defaults.bool(forKey: LibrarySettings.showsLibraryKey), forKey: LibrarySettings.showsLibraryKey)
+    }
+
+    /// The rendered document alone, as a readable page (View ▸ Reading Mode).
+    @objc private func toggleReading(_ sender: Any?) {
+        let defaults = UserDefaults.standard
+        defaults.set(!defaults.bool(forKey: ViewSettings.readingModeKey), forKey: ViewSettings.readingModeKey)
     }
 
     @objc private func togglePreview(_ sender: Any?) {

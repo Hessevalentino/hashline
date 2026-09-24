@@ -30,6 +30,30 @@ final class UITestSupport: NSObject {
                 await Self.runTypingBenchmark(count: benchmarkCount)
             }
         }
+        startServiceHook(defaults)
+        if let folder = defaults.string(forKey: "HashlineExportTest") {
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(4))
+                await Self.runExportTest(into: folder)
+            }
+        }
+        startShowcaseHook(defaults)
+        if defaults.bool(forKey: "HashlineModeBenchmark") {
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(4))
+                await Self.runModeBenchmark()
+            }
+        }
+        if let snapshotName = defaults.string(forKey: "HashlineDebugSnapshot") {
+            let delay = max(defaults.double(forKey: "HashlineDebugSnapshotDelay"), 2)
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(delay))
+                await Self.writeSnapshot(named: snapshotName)
+            }
+        }
+    }
+
+    private func startServiceHook(_ defaults: UserDefaults) {
         if let text = defaults.string(forKey: "HashlineServiceTest") {
             Task { @MainActor in
                 try? await Task.sleep(for: .seconds(2))
@@ -43,12 +67,9 @@ final class UITestSupport: NSObject {
         if let corpus = defaults.string(forKey: "HashlineXSSTest") {
             Task { @MainActor in await XSSProbe.run(corpusNamed: corpus) }
         }
-        if let folder = defaults.string(forKey: "HashlineExportTest") {
-            Task { @MainActor in
-                try? await Task.sleep(for: .seconds(4))
-                await Self.runExportTest(into: folder)
-            }
-        }
+    }
+
+    private func startShowcaseHook(_ defaults: UserDefaults) {
         if defaults.bool(forKey: "HashlineShowcase") {
             // Screenshots for the README: the window floats visible (WebKit does not paint covered
             // windows) without activating the app, so it never takes the keyboard focus.
@@ -58,19 +79,6 @@ final class UITestSupport: NSObject {
                     window.level = .floating
                     window.orderFrontRegardless()
                 }
-            }
-        }
-        if defaults.bool(forKey: "HashlineModeBenchmark") {
-            Task { @MainActor in
-                try? await Task.sleep(for: .seconds(4))
-                await Self.runModeBenchmark()
-            }
-        }
-        if let snapshotName = defaults.string(forKey: "HashlineDebugSnapshot") {
-            let delay = max(defaults.double(forKey: "HashlineDebugSnapshotDelay"), 2)
-            Task { @MainActor in
-                try? await Task.sleep(for: .seconds(delay))
-                await Self.writeSnapshot(named: snapshotName)
             }
         }
     }

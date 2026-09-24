@@ -84,7 +84,7 @@ Hashline je podepsaný jen ad-hoc (bez placeného účtu Apple Developer), takž
 
 Když už aplikaci máte v Aplikacích a macOS ji blokuje, pomůže i `xattr -dr com.apple.quarantine /Applications/Hashline.app`.
 
-**Aktualizace:** při druhém spuštění se Hashline zeptá, jestli má jednou týdně hledat nové verze ([Sparkle](https://sparkle-project.org)). Aktualizace jsou podepsané klíčem EdDSA, takže se nainstaluje jen verze z tohoto projektu. Ručně: **Hashline ▸ Check for Updates…**
+**Aktualizace:** při druhém spuštění se Hashline zeptá, jestli má jednou týdně hledat nové verze ([Sparkle](https://sparkle-project.org)). Aktualizace jsou podepsané klíčem EdDSA, takže se nainstaluje jen verze z tohoto projektu, a další povolení v Nastavení systému už nevyžadují. Ručně: **Hashline ▸ Vyhledat aktualizace…**
 
 ## Funkce
 
@@ -92,10 +92,11 @@ Když už aplikaci máte v Aplikacích a macOS ji blokuje, pomůže i `xattr -dr
 |---|---|
 | ✍️ **Editor** | TextKit 2, zvýraznění Markdownu i bloků kódu (36 nejběžnějších jazyků), formátovací lišta, chytré seznamy, úprava tabulek tabulátorem |
 | 👁️ **Náhled** | GFM tabulky, úkoly, poznámky pod čarou, `[toc]`, emoji, matematika (KaTeX), diagramy (Mermaid), lokální i vzdálené obrázky, synchronní scrollování |
-| 🗂️ **Knihovna** | Složka dokumentů, strom složek, osnova, hledání v knihovně ⇧⌘F, rychlé otevření ⌘P, najít a nahradit s regexem |
+| 🗂️ **Knihovna** | Složka dokumentů, strom složek, osnova, hledání v knihovně ⇧⌘F, rychlé otevření ⌘P, najít a nahradit s regexem, přesun do koše (pravé tlačítko nebo ⌘⌫) |
 | 🎨 **Vzhled** | Přepínač ☀︎ / ☾ v liště, témata `theme.json` + `theme.css` (Paper, Tomorrow Night, Solarized), písmo, výška řádku, šířka textu |
-| 🧘 **Režimy** | Čtení ⌘/, soustředění F8, psací stroj F9, stavový řádek se slovy, znaky a dobou čtení |
-| 📤 **Export** | HTML, PDF se záložkami, PNG, přes [Pandoc](https://pandoc.org) DOCX, ODT, RTF, ePub, LaTeX, MediaWiki, RST, import přes Pandoc |
+| 📖 **Čtení** | Tlačítko s knížkou v liště (⌘/): jen vykreslený dokument jako čitelná stránka, bez zdrojového kódu |
+| 🧘 **Režimy** | Soustředění F8, psací stroj F9, stavový řádek se slovy, znaky a dobou čtení |
+| 📤 **Export** | Markdown (kopie kamkoli), HTML, PDF se záložkami, PNG, přes [Pandoc](https://pandoc.org) DOCX, ODT, RTF, ePub, LaTeX, MediaWiki, RST, import přes Pandoc |
 | 🍎 **macOS** | Quick Look pro `.md` ve Finderu, Služby („Nový dokument Hashline s výběrem“), Sdílení, čeština a angličtina, přístupnost |
 | 🔒 **Bezpečnost** | App Sandbox, CSP, allow-list sanitizace HTML, test proti 77 XSS vektorům, ochrana proti nepřátelským dokumentům |
 

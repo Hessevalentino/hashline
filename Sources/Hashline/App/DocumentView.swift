@@ -33,7 +33,7 @@ struct DocumentView: View {
                 }
                 // Reading mode removes the editor but keeps its view in the session (caret, scroll,
                 // undo survive). The preview keeps its place, so its web view is never re-parented.
-                if !readingMode {
+                if !readingMode || !session.readiness.isEditable {
                     VStack(spacing: 0) {
                         if session.find.isVisible {
                             FindBar(find: session.find)
@@ -45,7 +45,7 @@ struct DocumentView: View {
                     .accessibilityElement(children: .contain)
                     .accessibilityLabel("Editor")
                 }
-                if showsPreview || readingMode {
+                if showsPreview || (readingMode && session.readiness.isEditable) {
                     PreviewColumn(controller: session.previewController())
                         .frame(minWidth: 280, idealWidth: 600, maxWidth: .infinity, maxHeight: .infinity)
                         .accessibilityElement(children: .contain)
@@ -70,6 +70,10 @@ struct DocumentView: View {
             session.setReadingMode(readingMode)
         }
         .onChange(of: fileURL) { _, url in session.documentURL = url }
+        .onChange(of: session.readiness.isEditable) { _, editable in
+            // Opened in reading mode: the editor was shown until it was ready; hide it now.
+            if editable, readingMode { DispatchQueue.main.async { session.setReadingMode(true) } }
+        }
         .onChange(of: readingMode) { _, reading in
             // After SwiftUI has moved the preview, which may create its web view.
             DispatchQueue.main.async { session.setReadingMode(reading) }

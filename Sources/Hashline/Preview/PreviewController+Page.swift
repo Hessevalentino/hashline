@@ -25,6 +25,9 @@ extension PreviewController {
         .mermaid-diagram[data-rendered="true"] > pre { display: none; }
         .mermaid-error { color: #d73a49; font-size: 0.85em; }
         .footnote { font-size: 0.85em; opacity: 0.85; }
+        /* Reading mode: the preview alone, as a comfortable page (beats every theme). */
+        html.hashline-reading body { max-width: 44em !important; margin: 0 auto !important;
+            padding: 48px 32px 96px !important; font-size: 17px !important; line-height: 1.7 !important; }
         .task-list-item { list-style: none; }
         .task-list-item > input[type=checkbox] { margin: 0 0.4em 0 -1.35em; vertical-align: middle; }
         </style>

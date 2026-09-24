@@ -1,4 +1,5 @@
 import AppKit
+import Observation
 import HashlineCore
 
 /// Per-window editing state: highlighter, preview and the scroll link between them.
@@ -11,6 +12,8 @@ final class EditorSession {
     private var isEditorEditable = false
     private var formatToolbar: FormatToolbar?
     let status = DocumentStatus()
+    /// Observable for the window: the editor joined the window and became editable once.
+    let readiness = EditorReadiness()
     let find = FindController()
     let navigation = DocumentNavigation()
     let conflict = DiskConflict()
@@ -58,6 +61,7 @@ final class EditorSession {
     /// Called once the editor accepts input; starts the preview's WebKit.
     func editorBecameEditable() {
         isEditorEditable = true
+        readiness.isEditable = true
         if let window = textView?.window { formatToolbar = FormatToolbar.install(in: window) }
         preview?.load()
         DocumentReveal.applyPending(to: self)
@@ -290,4 +294,13 @@ final class EditorSession {
         }
         return NSRange(location: offset, length: Self.initialStyledLength)
     }
+}
+
+/// Whether the editor has been editable at least once. The preview and the toolbar start from that
+/// moment, so reading mode may hide the editor only afterwards (a window opened in reading mode
+/// would otherwise stay empty).
+@MainActor
+@Observable
+final class EditorReadiness {
+    var isEditable = false
 }

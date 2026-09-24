@@ -23,6 +23,18 @@ extension PreviewController {
                                     in: .defaultClient, completionHandler: nil)
     }
 
+    /// Reading mode typography: a class on the page, no re-render.
+    func setReading(_ reading: Bool) {
+        isReading = reading
+        applyReadingClass()
+    }
+
+    func applyReadingClass() {
+        webView?.callAsyncJavaScript("document.documentElement.classList.toggle('hashline-reading', on);",
+                                     arguments: ["on": isReading], in: nil, in: .defaultClient,
+                                     completionHandler: nil)
+    }
+
     /// A new page (new CSP or newly readable images); the current blocks render again once it loaded.
     func reloadPage() {
         guard let webView else { return }

@@ -33,6 +33,7 @@ final class PreviewController: NSObject, WKNavigationDelegate {
     nonisolated(unsafe) private var themeObserver: NSObjectProtocol?
     var appliedThemes = ""
     var appliedRemoteImages = true
+    var isReading = false
     /// Blocks changed while a patch was in flight; patch again when it lands.
     private var isDirty = false
     /// Document text for document-level content (front matter); read on the main thread only.
@@ -274,6 +275,7 @@ final class PreviewController: NSObject, WKNavigationDelegate {
         webView.callAsyncJavaScript(Self.clickScript, arguments: [:], in: nil, in: .defaultClient,
                                     completionHandler: nil)
         isLoaded = true
+        applyReadingClass()
         hasKaTeXStyles = false
         mermaidState = .notLoaded
         renderer.reset()

@@ -20,6 +20,7 @@ sleep 2; for i in {1..60}; do pgrep -x Hashline >/dev/null || break; sleep 1; do
 out="$CONTAINER/exp"
 fail=0
 check() { if eval "$2"; then echo "ok    $1"; else echo "FAIL  $1"; fail=1; fi }
+check "Markdown is the document" "cmp -s $out/export.md $CONTAINER/expdoc/doc.md"
 check "HTML exists"            "[[ -s $out/export.html ]]"
 check "HTML has no scripts"    "! grep -q '<script' $out/export.html"
 check "HTML embeds diagrams"   "grep -q 'hashline-mermaid-1' $out/export.html"

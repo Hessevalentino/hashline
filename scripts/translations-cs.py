@@ -219,6 +219,12 @@ CS = {
     "Light": "Světlý",
     "Light or dark appearance": "Světlý nebo tmavý vzhled",
     "Match System": "Podle systému",
+    "Check for Updates…": "Vyhledat aktualizace…",
+    "Check for updates weekly": "Hledat aktualizace jednou týdně",
+    "Move to Trash": "Přesunout do koše",
+    "Open": "Otevřít",
+    "Some documents could not be moved to the Trash.": "Některé dokumenty se nepodařilo přesunout do koše.",
+    "Updates": "Aktualizace",
     # Quick Look extension
     "Open the document to see the rest.": "Zbytek uvidíte po otevření dokumentu.",
 }

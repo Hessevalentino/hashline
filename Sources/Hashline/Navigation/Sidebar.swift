@@ -77,6 +77,16 @@ private struct FolderTreeView: View {
             guard let path, let document = store.items.first(where: { $0.relativePath == path }) else { return }
             store.openDocument(document, besides: NSApp.keyWindow)
         }
+        .contextMenu(forSelectionType: String.self) { paths in
+            // Documents only: trashing a whole folder from here is too easy to do by accident.
+            LibraryItemMenu(store: store, urls: store.items.filter { paths.contains($0.relativePath) }.map(\.url))
+        }
+        .onDeleteCommand {
+            guard let selection, let document = store.items.first(where: { $0.relativePath == selection }) else {
+                return
+            }
+            store.moveToTrash([document.url])
+        }
     }
 }
 

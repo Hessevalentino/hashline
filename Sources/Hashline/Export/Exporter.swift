@@ -4,13 +4,16 @@ import UniformTypeIdentifiers
 
 /// What a document can be exported to.
 enum ExportFormat: Hashable, CaseIterable {
-    case html, pdf, png
+    case markdown, html, pdf, png
     case pandoc(PandocFormat)
 
-    static var allCases: [ExportFormat] { [.html, .pdf, .png] + PandocFormat.allCases.map(ExportFormat.pandoc) }
+    static var allCases: [ExportFormat] {
+        [.markdown, .html, .pdf, .png] + PandocFormat.allCases.map(ExportFormat.pandoc)
+    }
 
     var title: String {
         switch self {
+        case .markdown: "Markdown"
         case .html: "HTML"
         case .pdf: "PDF"
         case .png: String(localized: "PNG Image")
@@ -23,6 +26,7 @@ enum ExportFormat: Hashable, CaseIterable {
 
     var fileExtension: String {
         switch self {
+        case .markdown: "md"
         case .html: "html"
         case .pdf: "pdf"
         case .png: "png"
@@ -40,7 +44,9 @@ enum ExportFormat: Hashable, CaseIterable {
         self = format
     }
 
-    var contentType: UTType { UTType(filenameExtension: fileExtension) ?? .data }
+    var contentType: UTType {
+        self == .markdown ? .markdown : UTType(filenameExtension: fileExtension) ?? .data
+    }
 }
 
 /// File ▸ Export: HTML, PDF and PNG from the same renderer as the preview; other formats via Pandoc.
@@ -90,6 +96,7 @@ enum Exporter {
         do {
             let input = try Input(session)
             switch format {
+            case .markdown: try writeMarkdown(input, to: url)
             case .html: try await writeHTML(input, to: url)
             case .pdf: try await writePDF(input, to: url)
             case .png: try await writePNG(input, to: url)
@@ -143,6 +150,11 @@ enum Exporter {
     }
 
     // MARK: Formats
+
+    /// A copy of the document as it is in the editor (UTF-8, line endings as written).
+    private static func writeMarkdown(_ input: Input, to url: URL) throws {
+        try Data((input.text as String).utf8).write(to: url, options: .atomic)
+    }
 
     private static func writeHTML(_ input: Input, to url: URL) async throws {
         var diagrams: [String: String] = [:]

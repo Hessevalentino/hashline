@@ -166,6 +166,38 @@ final class LibraryStore {
 
     // MARK: Documents
 
+    /// Moves documents to the Trash (recoverable there, as in Finder). Windows showing them close
+    /// first, after saving, so no editor keeps writing to a trashed file.
+    func moveToTrash(_ urls: [URL]) {
+        let targets = Set(urls.map(\.standardizedFileURL))
+        guard !targets.isEmpty else { return }
+        for document in NSDocumentController.shared.documents {
+            guard let url = document.fileURL?.standardizedFileURL, targets.contains(url) else { continue }
+            document.autosave(withImplicitCancellability: false) { _ in }
+            document.close()
+        }
+        var failures: [String] = []
+        for url in targets {
+            do {
+                try FileManager.default.trashItem(at: url, resultingItemURL: nil)
+            } catch {
+                failures.append(url.lastPathComponent)
+                Performance.logger.error("Trash failed: \(error.localizedDescription, privacy: .public)")
+            }
+        }
+        rescan()
+        if !failures.isEmpty {
+            let alert = NSAlert()
+            alert.messageText = String(localized: "Some documents could not be moved to the Trash.")
+            alert.informativeText = failures.sorted().joined(separator: "\n")
+            alert.runModal()
+        }
+    }
+
+    func revealInFinder(_ urls: [URL]) {
+        NSWorkspace.shared.activateFileViewerSelecting(urls)
+    }
+
     /// Opens a library document as a tab of `window` (or brings it forward if already open).
     func openDocument(_ item: LibraryDocument, besides window: NSWindow?) {
         openDocument(at: item.url, besides: window)

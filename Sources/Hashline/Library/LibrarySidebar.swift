@@ -73,6 +73,11 @@ struct LibrarySidebar: View {
             guard let url, let item = (store.items.first { $0.url == url }) else { return }
             store.openDocument(item, besides: NSApp.keyWindow)
         }
+        .contextMenu(forSelectionType: URL.self) { urls in
+            LibraryItemMenu(store: store, urls: Array(urls))
+        }
+        // Edit ▸ Delete and ⌘⌫ on the selected document.
+        .onDeleteCommand { if let selection { store.moveToTrash([selection]) } }
     }
 
     private var bottomBar: some View {
@@ -94,6 +99,24 @@ struct LibrarySidebar: View {
         .buttonStyle(.borderless)
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
+    }
+}
+
+/// Right-click menu of library documents (list and folder tree).
+struct LibraryItemMenu: View {
+    let store: LibraryStore
+    let urls: [URL]
+
+    var body: some View {
+        if !urls.isEmpty {
+            Button("Open") {
+                for url in urls { store.openDocument(at: url, besides: NSApp.keyWindow) }
+            }
+            Button("Show in Finder") { store.revealInFinder(urls) }
+            Divider()
+            Button("Move to Trash", role: .destructive) { store.moveToTrash(urls) }
+                .keyboardShortcut(.delete, modifiers: .command)
+        }
     }
 }
 
