@@ -158,6 +158,30 @@ public enum LibraryIndex {
         return candidate
     }
 
+    /// Why a new document name cannot be used.
+    public enum RenameError: Error, Equatable {
+        case empty, invalidCharacters, exists
+    }
+
+    /// The URL of `url` renamed to `name` in the same folder. Without an extension of its own,
+    /// `name` keeps the original one (`Notes` → `Notes.md`); nil when nothing changes.
+    public static func renamedURL(_ url: URL, to name: String) throws(RenameError) -> URL? {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, trimmed != ".", trimmed != ".." else { throw .empty }
+        guard !trimmed.contains("/"), !trimmed.contains(":"), !trimmed.hasPrefix(".") else {
+            throw .invalidCharacters
+        }
+        let original = url.pathExtension
+        let hasOwnExtension = extensions.contains((trimmed as NSString).pathExtension.lowercased())
+        let fileName = hasOwnExtension || original.isEmpty ? trimmed : trimmed + "." + original
+        let target = url.deletingLastPathComponent().appendingPathComponent(fileName)
+        guard target.lastPathComponent != url.lastPathComponent else { return nil }
+        // Only a change of letter case may keep the same file (case-insensitive volumes).
+        let caseOnly = target.lastPathComponent.lowercased() == url.lastPathComponent.lowercased()
+        if !caseOnly, FileManager.default.fileExists(atPath: target.path) { throw .exists }
+        return target
+    }
+
     /// Copies files into the library under unique names; returns the new URLs.
     public static func importFiles(_ urls: [URL], into folder: URL) throws -> [URL] {
         try urls.map { source in

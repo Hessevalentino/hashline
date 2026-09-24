@@ -225,6 +225,17 @@ CS = {
     "Open": "Otevřít",
     "Some documents could not be moved to the Trash.": "Některé dokumenty se nepodařilo přesunout do koše.",
     "Updates": "Aktualizace",
+    "A document named “%@” already exists.": "Dokument s názvem „%@“ už existuje.",
+    "Enter a new name for “%@”.": "Zadejte nový název pro „%@“.",
+    "Export as Markdown…": "Exportovat jako Markdown…",
+    "Rename": "Přejmenovat",
+    "Rename Document": "Přejmenovat dokument",
+    "Rename…": "Přejmenovat…",
+    "Send with AirDrop…": "Poslat přes AirDrop…",
+    "Share…": "Sdílet…",
+    "The name cannot be empty.": "Název nesmí být prázdný.",
+    "The name cannot contain “/” or “:” or start with a dot.": "Název nesmí obsahovat „/“ ani „:“ a nesmí začínat tečkou.",
+    "Untitled": "Bez názvu",
     # Quick Look extension
     "Open the document to see the rest.": "Zbytek uvidíte po otevření dokumentu.",
 }

@@ -172,11 +172,11 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
         return item
     }
 
-    /// The saved file, or the text of an untitled document.
+    /// Always a `.md` file with the current text, so AirDrop, Mail and Messages send the document itself.
     func items(for pickerToolbarItem: NSSharingServicePickerToolbarItem) -> [Any] {
-        if let url = (window?.windowController?.document as? NSDocument)?.fileURL { return [url] }
-        if let window, let text = DocumentReveal.session(for: window)?.document.textStorage.string { return [text] }
-        return []
+        guard let window, let session = DocumentReveal.session(for: window),
+              let url = Sharing.markdownFile(for: session) else { return [] }
+        return [url]
     }
 
     @objc private func toggleLibrary(_ sender: Any?) {

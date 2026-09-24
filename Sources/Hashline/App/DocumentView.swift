@@ -227,6 +227,14 @@ struct PreviewCommands: Commands {
             Button("Export…") { session.map { Exporter.export($0, format: nil) } }
                 .keyboardShortcut("e", modifiers: [.command, .shift])
                 .disabled(session == nil)
+            Button("Export as Markdown…") { session.map { Exporter.export($0, format: .markdown) } }
+                .keyboardShortcut("e", modifiers: [.command, .option])
+                .disabled(session == nil)
+            Divider()
+            Button("Share…") { session.map(Sharing.showPicker(for:)) }
+                .disabled(session == nil)
+            Button("Send with AirDrop…") { session.map(Sharing.sendWithAirDrop) }
+                .disabled(session == nil)
             Button("Import with Pandoc…") { Exporter.importDocument() }
         }
         CommandGroup(replacing: .printItem) {

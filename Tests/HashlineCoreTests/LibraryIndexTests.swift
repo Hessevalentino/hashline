@@ -81,4 +81,18 @@ struct LibraryIndexTests {
         print("PERF library scan \(count) files: \(scan), content search: \(search)")
         #expect(count == 5_000)
     }
+
+    @Test func renamedURLKeepsExtensionAndRejectsBadNames() throws {
+        let folder = try Self.makeFolder(["a.md": "", "Taken.md": ""])
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let url = folder.appendingPathComponent("a.md")
+        #expect(try LibraryIndex.renamedURL(url, to: " Notes ")?.lastPathComponent == "Notes.md")
+        #expect(try LibraryIndex.renamedURL(url, to: "Notes.markdown")?.lastPathComponent == "Notes.markdown")
+        #expect(try LibraryIndex.renamedURL(url, to: "v1.2")?.lastPathComponent == "v1.2.md")
+        #expect(try LibraryIndex.renamedURL(url, to: "A")?.lastPathComponent == "A.md")
+        #expect(try LibraryIndex.renamedURL(url, to: "a") == nil)
+        #expect(throws: LibraryIndex.RenameError.empty) { try LibraryIndex.renamedURL(url, to: "  ") }
+        #expect(throws: LibraryIndex.RenameError.invalidCharacters) { try LibraryIndex.renamedURL(url, to: "x/y") }
+        #expect(throws: LibraryIndex.RenameError.exists) { try LibraryIndex.renamedURL(url, to: "Taken") }
+    }
 }

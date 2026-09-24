@@ -1,5 +1,13 @@
 # Změny
 
+## 0.1.3 – 2026-09-24
+
+- Přejmenování dokumentu přímo v knihovně: pravé tlačítko ▸ Přejmenovat… (v seznamu i ve stromu složek), otevřené okno se přesune s ním
+- Dělicí čára mezi editorem a náhledem si pamatuje polohu: platí pro všechna okna i po restartu, dokud ji znovu nepřetáhnete
+- Sdílení vždy posílá soubor .md s aktuálním textem (i neuloženým), taky u dokumentu bez názvu
+- Soubor ▸ Poslat přes AirDrop… a Soubor ▸ Sdílet…, v knihovně Sdílet a AirDrop v kontextové nabídce
+- Soubor ▸ Exportovat jako Markdown… (⌥⌘E): kopie .md do libovolné složky přímo v nabídce Soubor
+
 ## 0.1.2 – 2026-09-24
 
 - Mazání dokumentů v knihovně: pravé tlačítko ▸ Přesunout do koše (nebo ⌘⌫), v seznamu i ve stromu složek

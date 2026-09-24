@@ -22,6 +22,9 @@ final class EditorSession {
     var editorScrollView: NSScrollView?
     let focusDelegate = FocusDelegate()
     var editorWidthBeforeReading: CGFloat?
+    nonisolated(unsafe) var splitObserver: NSObjectProtocol?
+    var isApplyingSplit = false
+    var isSplitApplyScheduled = false
     var focusedRange: NSRange?
     nonisolated(unsafe) private var viewSettingsObserver: NSObjectProtocol?
     nonisolated(unsafe) private var themeObserver: NSObjectProtocol?
@@ -56,6 +59,7 @@ final class EditorSession {
         if let scrollObserver { NotificationCenter.default.removeObserver(scrollObserver) }
         if let viewSettingsObserver { NotificationCenter.default.removeObserver(viewSettingsObserver) }
         if let themeObserver { NotificationCenter.default.removeObserver(themeObserver) }
+        if let splitObserver { NotificationCenter.default.removeObserver(splitObserver) }
     }
 
     /// Called once the editor accepts input; starts the preview's WebKit.
@@ -65,6 +69,7 @@ final class EditorSession {
         if let window = textView?.window { formatToolbar = FormatToolbar.install(in: window) }
         preview?.load()
         DocumentReveal.applyPending(to: self)
+        DispatchQueue.main.async { [weak self] in self?.observeSplit() }
     }
 
     /// Inserts `text` into an empty, editable document; false otherwise.

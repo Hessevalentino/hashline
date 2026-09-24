@@ -264,6 +264,16 @@
         }
       }
     },
+    "A document named “%@” already exists.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dokument s názvem „%@“ už existuje."
+          }
+        }
+      }
+    },
     "A remote image tells its server that you opened the document. Local images always show.": {
       "localizations": {
         "cs": {
@@ -777,12 +787,32 @@
         }
       }
     },
+    "Enter a new name for “%@”.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zadejte nový název pro „%@“."
+          }
+        }
+      }
+    },
     "Export": {
       "localizations": {
         "cs": {
           "stringUnit": {
             "state": "translated",
             "value": "Export"
+          }
+        }
+      }
+    },
+    "Export as Markdown…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportovat jako Markdown…"
           }
         }
       }
@@ -1787,6 +1817,36 @@
         }
       }
     },
+    "Rename": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přejmenovat"
+          }
+        }
+      }
+    },
+    "Rename Document": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přejmenovat dokument"
+          }
+        }
+      }
+    },
+    "Rename…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přejmenovat…"
+          }
+        }
+      }
+    },
     "Replace": {
       "localizations": {
         "cs": {
@@ -1873,12 +1933,32 @@
         }
       }
     },
+    "Send with AirDrop…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poslat přes AirDrop…"
+          }
+        }
+      }
+    },
     "Share": {
       "localizations": {
         "cs": {
           "stringUnit": {
             "state": "translated",
             "value": "Sdílet"
+          }
+        }
+      }
+    },
+    "Share…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sdílet…"
           }
         }
       }
@@ -2123,6 +2203,26 @@
         }
       }
     },
+    "The name cannot be empty.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Název nesmí být prázdný."
+          }
+        }
+      }
+    },
+    "The name cannot contain “/” or “:” or start with a dot.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Název nesmí obsahovat „/“ ani „:“ a nesmí začínat tečkou."
+          }
+        }
+      }
+    },
     "The program receives the image path in place of {file} and must print the image URL. It runs only when switched on here, never through a shell.": {
       "localizations": {
         "cs": {
@@ -2189,6 +2289,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Podtržení"
+          }
+        }
+      }
+    },
+    "Untitled": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bez názvu"
           }
         }
       }

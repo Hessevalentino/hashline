@@ -113,6 +113,12 @@ struct LibraryItemMenu: View {
                 for url in urls { store.openDocument(at: url, besides: NSApp.keyWindow) }
             }
             Button("Show in Finder") { store.revealInFinder(urls) }
+            if urls.count == 1, let url = urls.first {
+                Button("Rename…") { store.rename(url) }
+            }
+            Divider()
+            ShareLink(items: urls)
+            Button("Send with AirDrop…") { Sharing.sendWithAirDrop(urls) }
             Divider()
             Button("Move to Trash", role: .destructive) { store.moveToTrash(urls) }
                 .keyboardShortcut(.delete, modifiers: .command)
