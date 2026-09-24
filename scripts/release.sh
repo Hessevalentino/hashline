@@ -73,4 +73,13 @@ NOTES_TEXT=$(printf -- '- %s\n' "${NOTES[@]}")
 gh release create "v$VERSION" "$DMG" --repo "$REPO" --title "Hashline $VERSION" --notes "$NOTES_TEXT
 
 Aplikace je podepsaná ad-hoc (bez účtu Apple Developer), macOS stažený DMG napoprvé zablokuje. Nejrychleji: `xattr -d com.apple.quarantine ~/Downloads/Hashline.dmg`, pak DMG otevřít. Bez Terminálu: Nastavení systému ▸ Soukromí a zabezpečení ▸ Přesto otevřít (pro DMG i aplikaci). Podrobně v README."
+# raw.githubusercontent.com caches for up to 5 minutes; until then Sparkle still sees the old feed.
+echo "== Waiting for the published appcast"
+FEED=$(/usr/libexec/PlistBuddy -c "Print SUFeedURL" Support/Info.plist)
+for _ in {1..40}; do
+  curl -fsS -H "Cache-Control: no-cache" "$FEED" | grep -q "<sparkle:version>$BUILD</sparkle:version>" && break
+  /bin/sleep 15
+done
+curl -fsS "$FEED" | grep -q "<sparkle:version>$BUILD</sparkle:version>" \
+  && echo "Appcast serves build $BUILD: updates are live." || echo "Appcast still old after 10 min; check $FEED" >&2
 echo "Done: https://github.com/$REPO/releases/tag/v$VERSION"
