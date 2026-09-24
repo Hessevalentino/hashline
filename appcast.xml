@@ -6,6 +6,15 @@
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
     <item>
+      <title>Hashline 0.1.2</title>
+      <pubDate>Thu, 24 Sep 2026 19:15:24 GMT</pubDate>
+      <sparkle:version>3</sparkle:version>
+      <sparkle:shortVersionString>0.1.2</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Mazání dokumentů v knihovně: pravé tlačítko ▸ Přesunout do koše (nebo ⌘⌫)</li><li>Čtecí režim v liště (knížka, ⌘/): jen vykreslený dokument jako čitelná stránka</li><li>Export ▸ Markdown…: kopie dokumentu kamkoli</li><li>Oprava: okno otevřené ve čtecím režimu zůstávalo prázdné</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.1.2/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="7xAjMRGtntF434rGtKiG0o0F/opyugSwnraVHizdhkJqBADVoqa4LD/sUIHwuUSX4SlIkpvOwKqmGGslj4glDw==" length="7278476" />
+    </item>
+    <item>
       <title>Hashline 0.1.1</title>
       <pubDate>Thu, 24 Sep 2026 17:07:14 GMT</pubDate>
       <sparkle:version>2</sparkle:version>
