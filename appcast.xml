@@ -6,6 +6,15 @@
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
     <item>
+      <title>Hashline 0.1.1</title>
+      <pubDate>Thu, 24 Sep 2026 17:07:14 GMT</pubDate>
+      <sparkle:version>2</sparkle:version>
+      <sparkle:shortVersionString>0.1.1</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Úkolové položky už nemají vedle zaškrtávátka navíc odrážku</li><li>Copyright a odkaz na zdrojový kód v okně O aplikaci</li><li>Hashline je open source pod licencí MIT</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.1.1/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="ydj7gDxulGTrH1RFr7ijs2jeskxYVnQMD6ttZS7Yud6VvBK8ea8C0uZZ/LWqji0vZVldxtf/tkMF+7koUsybBg==" length="7263093" />
+    </item>
+    <item>
       <title>Hashline 0.1.0</title>
       <pubDate>Thu, 24 Sep 2026 16:49:20 GMT</pubDate>
       <sparkle:version>1</sparkle:version>
