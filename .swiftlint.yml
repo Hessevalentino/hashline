@@ -1,0 +1,13 @@
+# Default rules; only scope the scan and the exceptions below.
+included:
+  - Sources
+  - Tests
+excluded:
+  - .build
+disabled_rules:
+  - trailing_comma  # Swift 6 allows trailing commas; they keep diffs to one line
+identifier_name:
+  excluded:
+    - id
+    - lf  # line ending names are established terms
+    - cr

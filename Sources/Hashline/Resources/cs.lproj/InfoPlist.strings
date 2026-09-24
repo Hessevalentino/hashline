@@ -1,0 +1,3 @@
+/* Document type names (Info.plist CFBundleDocumentTypes, UTImportedTypeDeclarations) */
+"Markdown Document" = "Dokument Markdown";
+"Plain Text" = "Prostý text";

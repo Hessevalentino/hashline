@@ -1,0 +1,16 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Open the document to see the rest.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zbytek uvidíte po otevření dokumentu."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

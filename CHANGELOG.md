@@ -1,0 +1,14 @@
+# Změny
+
+## 0.1.0 – 2026-09-24
+
+První veřejné vydání.
+
+- Editor Markdownu se zvýrazněnou syntaxí a živým HTML náhledem (rozvržení podle MacDownu)
+- Formátovací lišta, přepínač světlého a tmavého vzhledu, režimy čtení, soustředění a psacího stroje
+- Knihovna dokumentů, osnova, hledání v knihovně, rychlé otevření, najít a nahradit s regexem
+- Tabulky, poznámky pod čarou, obsah, emoji, matematika, diagramy Mermaid, obrázky
+- Export do HTML, PDF, PNG a přes Pandoc; import přes Pandoc
+- Témata, čeština a angličtina, Quick Look, Služby, přístupnost
+- Bezpečnost: sandbox, sanitizace HTML, ochrana proti nepřátelským dokumentům
+- Aktualizace přes Sparkle (jednou týdně, po souhlasu)

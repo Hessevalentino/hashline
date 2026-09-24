@@ -1,0 +1,105 @@
+{
+  "name": "Tomorrow Night",
+  "appearance": "dark",
+  "editor": {
+    "background": "#2d2d2d",
+    "foreground": "#cccccc",
+    "caret": "#cc99cc",
+    "selection": "#515151",
+    "selectionText": "#ffffff",
+    "tokens": {
+      "H1": {
+        "color": "#66cccc",
+        "bold": true,
+        "size": 24.0
+      },
+      "H2": {
+        "color": "#66cccc",
+        "bold": true,
+        "size": 20.0
+      },
+      "H3": {
+        "color": "#66cccc",
+        "size": 17.0
+      },
+      "H4": {
+        "color": "#66cccc",
+        "size": 15.0
+      },
+      "H5": {
+        "color": "#66cccc",
+        "size": 13.0
+      },
+      "H6": {
+        "color": "#66cccc",
+        "size": 11.0
+      },
+      "EMPH": {
+        "color": "#ffcc66",
+        "italic": true
+      },
+      "STRONG": {
+        "color": "#f99157",
+        "bold": true
+      },
+      "CODE": {
+        "color": "#999999"
+      },
+      "VERBATIM": {
+        "color": "#999999"
+      },
+      "LINK": {
+        "color": "#99cc99"
+      },
+      "AUTO_LINK_URL": {
+        "color": "#99cc99"
+      },
+      "IMAGE": {
+        "color": "#cc99cc"
+      },
+      "LIST_BULLET": {
+        "color": "#6699cc"
+      },
+      "LIST_ENUMERATOR": {
+        "color": "#6699cc"
+      },
+      "BLOCKQUOTE": {
+        "color": "#f2777a"
+      },
+      "HRULE": {
+        "color": "#999999"
+      },
+      "COMMENT": {
+        "color": "#888888"
+      },
+      "REFERENCE": {
+        "color": "#66cccc"
+      }
+    }
+  },
+  "code": {
+    "comment": "#969896",
+    "quote": "#969896",
+    "keyword": "#b294bb",
+    "selector-tag": "#b294bb",
+    "string": "#b5bd68",
+    "regexp": "#b5bd68",
+    "addition": "#b5bd68",
+    "number": "#de935f",
+    "literal": "#de935f",
+    "symbol": "#de935f",
+    "title": "#81a2be",
+    "section": "#81a2be",
+    "type": "#f0c674",
+    "built_in": "#f0c674",
+    "attr": "#cc6666",
+    "attribute": "#cc6666",
+    "variable": "#cc6666",
+    "template-variable": "#cc6666",
+    "tag": "#cc6666",
+    "name": "#cc6666",
+    "deletion": "#cc6666",
+    "meta": "#8abeb7",
+    "params": "#c5c8c6"
+  }
+}

@@ -1,0 +1,114 @@
+# Source of truth for Hashline.xcodeproj. Regenerate with: xcodegen generate
+name: Hashline
+# Profile = Release optimisation + UI test hooks, for measuring typing latency on optimised code.
+configs:
+  Debug: debug
+  Release: release
+  Profile: release
+options:
+  developmentLanguage: en
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    DEAD_CODE_STRIPPING: YES
+    # Apple Silicon only (CLAUDE.md): a universal binary would double the app size.
+    ARCHS: arm64
+    # String Catalogs: the compiler lists localizable strings (scripts/sync-strings.sh).
+    SWIFT_EMIT_LOC_STRINGS: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+packages:
+  HashlineCore:
+    path: .
+  # Updates (ADR 0018). Pre-approved dependency: EdDSA-signed updates without a Developer ID.
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: 2.6.0
+targets:
+  Hashline:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/Hashline
+        excludes:
+          - "Resources/Themes/**"
+      # Theme folders stay folders in the bundle (every theme has its own theme.json).
+      - path: Sources/Hashline/Resources/Themes
+        type: folder
+        buildPhase: resources
+    dependencies:
+      - package: HashlineCore
+        embed: true
+      - target: HashlineQuickLook
+      - package: Sparkle
+    settings:
+      base:
+        PRODUCT_NAME: Hashline
+        PRODUCT_BUNDLE_IDENTIFIER: cz.hashline.Hashline
+        INFOPLIST_FILE: Support/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        CODE_SIGN_ENTITLEMENTS: Support/Hashline.entitlements
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "-"
+        # Off for local ad-hoc signing: with it, library validation rejects the shared
+        # HashlineCore.framework (ad-hoc binaries have no Team ID). F11 signs with Developer ID
+        # and turns it on for notarization (ADR 0016).
+        ENABLE_HARDENED_RUNTIME: NO
+        GENERATE_INFOPLIST_FILE: NO
+      configs:
+        Profile:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: HASHLINE_TEST_HOOKS
+  HashlineQuickLook:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Sources/HashlineQuickLook
+      - path: Sources/Hashline/Resources/Themes
+        type: folder
+        buildPhase: resources
+      - path: Sources/Hashline/Resources/Styles/katex-inline.css
+        buildPhase: resources
+    dependencies:
+      - package: HashlineCore
+        embed: false
+    settings:
+      base:
+        PRODUCT_NAME: HashlineQuickLook
+        PRODUCT_BUNDLE_IDENTIFIER: cz.hashline.Hashline.QuickLook
+        # HashlineCore.framework is embedded once, in the app.
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../../../../Frameworks"
+        INFOPLIST_FILE: Support/QuickLook-Info.plist
+        CODE_SIGN_ENTITLEMENTS: Support/QuickLook.entitlements
+        CODE_SIGN_STYLE: Automatic
+        CODE_SIGN_IDENTITY: "-"
+        # Off for local ad-hoc signing: with it, library validation rejects the shared
+        # HashlineCore.framework (ad-hoc binaries have no Team ID). F11 signs with Developer ID
+        # and turns it on for notarization (ADR 0016).
+        ENABLE_HARDENED_RUNTIME: NO
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES
+  HashlineUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    sources:
+      - Tests/HashlineUITests
+    dependencies:
+      - target: Hashline
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: cz.hashline.HashlineUITests
+        CODE_SIGN_IDENTITY: "-"
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  Hashline:
+    build:
+      targets:
+        Hashline: all
+    test:
+      targets:
+        - package: HashlineCore/HashlineCoreTests
+        - HashlineUITests

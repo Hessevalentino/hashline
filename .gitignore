@@ -1,0 +1,10 @@
+.build/
+.swiftpm/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+DerivedData/
+.DS_Store
+*.xcodeproj/
+Fixtures/generated/
+
+build/

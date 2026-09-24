@@ -1,0 +1,112 @@
+{
+  "name": "Solarized Light",
+  "appearance": "light",
+  "editor": {
+    "background": "#fdf6e3",
+    "foreground": "#657b83",
+    "caret": "#586e75",
+    "selection": "#eee8d5",
+    "tokens": {
+      "H1": {
+        "color": "#cb4b16",
+        "bold": true,
+        "size": 24
+      },
+      "H2": {
+        "color": "#cb4b16",
+        "bold": true,
+        "size": 20
+      },
+      "H3": {
+        "color": "#cb4b16",
+        "bold": true,
+        "size": 17
+      },
+      "H4": {
+        "color": "#cb4b16",
+        "bold": true,
+        "size": 15
+      },
+      "H5": {
+        "color": "#cb4b16",
+        "bold": true,
+        "size": 13
+      },
+      "H6": {
+        "color": "#cb4b16",
+        "bold": true,
+        "size": 11
+      },
+      "EMPH": {
+        "color": "#586e75",
+        "italic": true
+      },
+      "STRONG": {
+        "color": "#586e75",
+        "bold": true
+      },
+      "STRIKE": {
+        "color": "#93a1a1"
+      },
+      "CODE": {
+        "color": "#2aa198"
+      },
+      "VERBATIM": {
+        "color": "#2aa198"
+      },
+      "LINK": {
+        "color": "#268bd2"
+      },
+      "AUTO_LINK_URL": {
+        "color": "#268bd2"
+      },
+      "IMAGE": {
+        "color": "#d33682"
+      },
+      "LIST_BULLET": {
+        "color": "#b58900"
+      },
+      "LIST_ENUMERATOR": {
+        "color": "#b58900"
+      },
+      "BLOCKQUOTE": {
+        "color": "#93a1a1",
+        "italic": true
+      },
+      "HRULE": {
+        "color": "#93a1a1"
+      },
+      "COMMENT": {
+        "color": "#93a1a1"
+      },
+      "REFERENCE": {
+        "color": "#6c71c4"
+      }
+    }
+  },
+  "code": {
+    "comment": "#93a1a1",
+    "quote": "#93a1a1",
+    "keyword": "#859900",
+    "selector-tag": "#859900",
+    "string": "#2aa198",
+    "regexp": "#2aa198",
+    "addition": "#859900",
+    "number": "#d33682",
+    "literal": "#d33682",
+    "symbol": "#cb4b16",
+    "title": "#268bd2",
+    "section": "#268bd2",
+    "type": "#b58900",
+    "built_in": "#cb4b16",
+    "attr": "#268bd2",
+    "attribute": "#268bd2",
+    "variable": "#268bd2",
+    "template-variable": "#268bd2",
+    "tag": "#268bd2",
+    "name": "#268bd2",
+    "deletion": "#dc322f",
+    "meta": "#cb4b16",
+    "params": "#839496"
+  }
+}

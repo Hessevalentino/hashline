@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hashline – markdown editor pro macOS se živým náhledem</title>
+<meta name="description" content="Hashline je nativní markdown editor pro macOS. Vlevo zdroj se zvýrazněnou syntaxí, vpravo živý náhled. Obyčejné soubory .md, žádný Electron. Již brzy.">
+<meta name="theme-color" content="#1C2427">
+<meta name="color-scheme" content="light dark">
+<!-- Na stagingu přepnout na "noindex, nofollow". Canonical a og:url doplnit po výběru domény. -->
+<meta name="robots" content="index, follow">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hashline – markdown editor pro macOS">
+<meta property="og:description" content="Vlevo píšete, vpravo čtete. Nativní editor pro obyčejné soubory .md. Již brzy.">
+<meta property="og:image" content="assets/img/og.jpg">
+<meta property="og:locale" content="cs_CZ">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" href="assets/img/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/img/icon-256.png">
+<link rel="preload" as="font" href="assets/fonts/newsreader-latin.woff2" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/img/hero-1408.webp" imagesrcset="assets/img/hero-800.webp 800w, assets/img/hero-1408.webp 1408w" imagesizes="100vw" type="image/webp">
+<link rel="stylesheet" href="assets/css/main.css">
+<script src="assets/js/main.js" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Hashline",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "macOS 14 nebo novější, Apple Silicon",
+  "description": "Nativní markdown editor pro macOS se zvýrazněnou syntaxí a živým HTML náhledem. Pracuje s obyčejnými soubory .md.",
+  "inLanguage": "cs",
+  "softwareVersion": "0.1.0",
+  "downloadUrl": "https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg"
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#obsah">Přeskočit na obsah</a>
+
+<header class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="nav__brand" href="#top" aria-label="Hashline – na začátek">
+      <img src="assets/img/icon-256.png" width="28" height="28" alt="">
+      <span>Hashline</span>
+    </a>
+    <nav aria-label="Hlavní">
+      <ul class="nav__links">
+        <li><a href="#editor">Editor</a></li>
+        <li><a href="#rychlost">Rychlost</a></li>
+        <li><a href="#soubory">Soubory</a></li>
+        <li><a href="#plan">Plán</a></li>
+      </ul>
+    </nav>
+    <a class="pill pill--nav" href="#stahnout">Stáhnout</a>
+  </div>
+</header>
+
+<main id="obsah">
+
+  <!-- 1 · HERO: obraz se při scrollu přibližuje k oknu a stránka přejde do tmavé -->
+  <section class="hero" id="top" data-track>
+    <div class="hero__stage">
+      <picture class="hero__img">
+        <source type="image/webp" srcset="assets/img/hero-800.webp 800w, assets/img/hero-1408.webp 1408w" sizes="100vw">
+        <img src="assets/img/hero-1408.jpg" srcset="assets/img/hero-800.jpg 800w, assets/img/hero-1408.jpg 1408w" sizes="100vw"
+             width="1408" height="768" alt="Okno editoru vznášející se nad světlou plochou. Mřížka se v něm rozpadá do slova heading." fetchpriority="high">
+      </picture>
+      <div class="hero__copy">
+        <div class="hero__brand">
+          <picture>
+            <source type="image/webp" srcset="assets/img/icon-288.webp">
+            <img class="hero__icon" src="assets/img/icon-288.png" width="144" height="144" alt="">
+          </picture>
+          <p class="hero__name">Hashline</p>
+        </div>
+        <p class="hero__kicker mono"><span class="accent">#</span> markdown editor pro macOS</p>
+        <h1 class="hero__title">Vlevo píšete.<br><em>Vpravo čtete.</em></h1>
+        <p class="hero__lead">Hashline otevře obyčejný soubor .md za méně než desetinu sekundy. Syntaxi obarví, vedle ukáže hotový text a pak vám nebude stát v&nbsp;cestě.</p>
+        <p class="hero__meta mono"><a class="pill" href="#stahnout">Verze 0.1</a> macOS 14+ · Apple Silicon</p>
+      </div>
+      <div class="hero__veil" aria-hidden="true"></div>
+      <p class="hero__hint mono" aria-hidden="true">scroll ↓</p>
+    </div>
+  </section>
+
+  <!-- 2 · EDITOR: připnuté okno, zdroj se píše, náhled se dopočítává -->
+  <section class="demo" id="editor" data-track data-demo aria-labelledby="demo-title">
+    <div class="demo__stage">
+      <div class="demo__head">
+        <h2 id="demo-title" class="h2">Mřížka zůstane tam,<br>kam jste ji napsali.</h2>
+        <ol class="steps" aria-label="Jak editor pracuje">
+          <li class="step is-on" data-step="0">
+            <h3>Píšete zdroj.</h3>
+            <p>Nativní <code>NSTextView</code> a&nbsp;neproporcionální písmo. Mřížky, hvězdičky a&nbsp;pomlčky zůstávají vidět, editor je jen obarví a&nbsp;do textu nesahá.</p>
+          </li>
+          <li class="step" data-step="1">
+            <h3>Náhled se dopočítá.</h3>
+            <p>Stačí se na 60&nbsp;ms zastavit a&nbsp;náhled dostane jen bloky, které se změnily. Oba panely se posouvají spolu.</p>
+          </li>
+          <li class="step" data-step="2">
+            <h3>⌥⌘P a&nbsp;zbyde text.</h3>
+            <p>Náhled je ve výchozím stavu zapnutý. Jedna zkratka ho schová a&nbsp;editor dostane celou šířku okna.</p>
+          </li>
+        </ol>
+      </div>
+
+      <div class="win" role="img" aria-label="Okno Hashline: vlevo markdown se zvýrazněnými značkami, vpravo vykreslený náhled stejného textu.">
+        <div class="win__bar" aria-hidden="true"><span class="win__dots"><i></i><i></i><i></i></span><span class="win__title mono">zapisky-z-cesty.md</span></div>
+        <div class="win__body" aria-hidden="true">
+          <div class="src mono">
+            <div class="ln" data-i="0"><span class="mk">#</span> <b class="hd">Zápisky z cesty</b></div>
+            <div class="ln" data-i="1">&nbsp;</div>
+            <div class="ln" data-i="2">Vlak do <span class="mk">**</span><b>Brna</b><span class="mk">**</span> nabral</div>
+            <div class="ln" data-i="3">zpoždění, tak konečně píšu.</div>
+            <div class="ln" data-i="4">&nbsp;</div>
+            <div class="ln" data-i="5"><span class="mk">##</span> <b class="hd">Nezapomenout</b></div>
+            <div class="ln" data-i="6"><span class="mk">- [x]</span> nabíječka</div>
+            <div class="ln" data-i="7"><span class="mk">- [ ]</span> <span class="mk">_</span><i>druhý</i><span class="mk">_</span> svetr</div>
+            <div class="ln" data-i="8">&nbsp;</div>
+            <div class="ln" data-i="9"><span class="mk">&gt;</span> <span class="qt">Soubor je pravda.</span></div>
+          </div>
+          <div class="pv">
+            <div class="pv__inner">
+              <h4 class="pv__b pv__h1" data-at="0">Zápisky z cesty</h4>
+              <p class="pv__b" data-at="3">Vlak do <strong>Brna</strong> nabral zpoždění, tak konečně píšu.</p>
+              <h5 class="pv__b pv__h2" data-at="5">Nezapomenout</h5>
+              <ul class="pv__b pv__tasks" data-at="6">
+                <li><span class="cb cb--on"></span>nabíječka</li>
+                <li class="pv__b" data-at="7"><span class="cb"></span><em>druhý</em> svetr</li>
+              </ul>
+              <blockquote class="pv__b" data-at="9">Soubor je pravda.</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · RYCHLOST: skutečná měření z docs/perf.md -->
+  <section class="speed" id="rychlost" aria-labelledby="speed-title">
+    <div class="wrap">
+      <p class="label mono">Rychlost</p>
+      <h2 id="speed-title" class="h2">Měříme ji,<br>neodhadujeme.</h2>
+      <p class="speed__intro">Každá fáze vývoje končí měřením a&nbsp;novým řádkem v&nbsp;tabulce. Když změna překročí rozpočet, nejde dovnitř.</p>
+
+      <div class="stats">
+        <article class="stat" data-view>
+          <p class="stat__num"><span data-count="9">9</span><small>&nbsp;ms</small></p>
+          <h3>jeden úhoz</h3>
+          <p>Medián latence psaní v&nbsp;souboru o&nbsp;velikosti 1&nbsp;MB. Rozpočet je 16&nbsp;ms, tedy jeden snímek na 60Hz displeji.</p>
+        </article>
+        <article class="stat" data-view>
+          <p class="stat__num"><span data-count="89">89</span><small>&nbsp;ms</small></p>
+          <h3>otevření 1&nbsp;MB</h3>
+          <p>Od čtení souboru po okno, do kterého jde psát. Nejhorší ze tří měření. Deset megabajtů zabralo nejvýš 112&nbsp;ms.</p>
+        </article>
+        <article class="stat" data-view>
+          <p class="stat__num"><span class="stat__lt">&lt;</span><span data-count="400">400</span><small>&nbsp;ms</small></p>
+          <h3>studený start</h3>
+          <p>Od spuštění procesu po editovatelné okno. Naměřeno 222–362&nbsp;ms.</p>
+        </article>
+        <article class="stat" data-view>
+          <p class="stat__num"><span data-count="4.1" data-decimals="1">4,1</span><small>&nbsp;MB</small></p>
+          <h3>celá aplikace</h3>
+          <p>Velikost .app. Strop je 15&nbsp;MB a&nbsp;žádná závislost se nepřidá bez zdůvodnění.</p>
+        </article>
+      </div>
+      <p class="fine mono">Release build, MacBook Pro M4 (16 GB), macOS 26.6, rozsah ze tří spuštění. Fáze F1a, 23. 9. 2026. Latence psaní měřena v&nbsp;konfiguraci Profile se zapnutým náhledem.</p>
+    </div>
+  </section>
+
+  <!-- 4 · PŘÍBĚH: Touch Bar + nativní detaily (ploché orámované karty) -->
+  <section class="native" aria-labelledby="native-title">
+    <div class="wrap">
+      <p class="label mono">Nativní</p>
+      <h2 id="native-title" class="h2">Žádný prohlížeč<br>tam, kde píšete.</h2>
+
+      <div class="bento">
+        <article class="card card--story" data-view>
+          <p class="card__big"><span class="strike">55</span> → 9&nbsp;ms</p>
+          <h3>Touch Bar, který nikdo nemá</h3>
+          <p>Při prvním měření trvalo psaní v&nbsp;megabajtovém souboru 55&nbsp;ms na úhoz. Profiler ukázal, že 88&nbsp;% času hlavního vlákna spolkl Touch Bar. AppKit po každém stisku procházel atributy textu kvůli formátovacím tlačítkům, i&nbsp;na Macu, který žádný Touch Bar nemá.</p>
+          <p>Dvě přepsané metody a&nbsp;medián spadl na 9&nbsp;ms.</p>
+        </article>
+        <article class="card" data-view>
+          <h3>Editor bez webového jádra</h3>
+          <p>Text píšete do <code>NSTextView</code> na TextKitu&nbsp;2. WebKit v&nbsp;pravém panelu jen ukazuje výsledek, psaný text nikdy nevykresluje.</p>
+        </article>
+        <article class="card" data-view>
+          <h3>Náhled počká, editor ne</h3>
+          <p>Panel náhledu vzniká až ve chvíli, kdy už můžete psát. Otevření souboru tím kleslo ze 150–220 na 80&nbsp;ms.</p>
+        </article>
+        <article class="card" data-view>
+          <h3>Velké soubory bez čekání</h3>
+          <p>Nad 100&nbsp;000 znaků se dokument parsuje na pozadí. Psát jde hned, barvy doběhnou za chvíli.</p>
+        </article>
+        <article class="card" data-view>
+          <h3>Jako každý dokument v&nbsp;macOS</h3>
+          <p>Automatické ukládání, historie verzí, Otevřít nedávné. Světlý i&nbsp;tmavý režim podle systému.</p>
+        </article>
+        <article class="card" data-view>
+          <h3>Témata z&nbsp;MacDownu</h3>
+          <p>Editor barví motivy Mou Paper+ a&nbsp;Tomorrow+, náhled styly GitHub2 a&nbsp;Clearness Dark. Převzaté s&nbsp;licencí MIT.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · SOUBOR JE PRAVDA: slova se rozsvěcují podle scrollu -->
+  <section class="truth" id="soubory" data-track data-reveal aria-labelledby="truth-title">
+    <div class="truth__stage">
+      <div class="wrap">
+        <p class="label mono">Soubory</p>
+        <h2 id="truth-title" class="visually-hidden">Soubor je pravda</h2>
+        <p class="truth__text" data-words>Žádná databáze, žádná knihovna, žádný vlastní formát. Hashline otevře soubor .md, který leží na disku, a&nbsp;uloží ho zpátky přesně takový, jaký byl. Otevřít, upravit, uložit, porovnat: <mark>rozdíl nula bajtů.</mark> Zítra ho otevřete ve Vimu, na GitHubu, nebo za dvacet let v&nbsp;něčem, co ještě neexistuje.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · ŠKRTY: podpisový prvek, přeškrtnutí ~~ ~~ se kreslí při scrollu -->
+  <section class="cuts" aria-labelledby="cuts-title">
+    <div class="wrap">
+      <p class="label mono">Minimalismus</p>
+      <h2 id="cuts-title" class="h2">Výchozí odpověď<br>na nový nápad je ne.</h2>
+      <ul class="cuts__list">
+        <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>Electron</s><span class="tl mono" aria-hidden="true">~~</span></li>
+        <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>Vlastní cloud a&nbsp;synchronizace</s><span class="tl mono" aria-hidden="true">~~</span></li>
+        <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>Spolupráce v&nbsp;reálném čase</s><span class="tl mono" aria-hidden="true">~~</span></li>
+        <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>Pluginy</s><span class="tl mono" aria-hidden="true">~~</span></li>
+        <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>AI asistent</s><span class="tl mono" aria-hidden="true">~~</span></li>
+        <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>Telemetrie</s><span class="tl mono" aria-hidden="true">~~</span></li>
+      </ul>
+      <p class="cuts__after">Co v&nbsp;seznamu chybí, nechává Hashline systému. Soubory synchronizuje iCloud Drive nebo cokoli, co už používáte. Nápady, které se nevešly, čekají v&nbsp;<code>docs/ideas.md</code>.</p>
+    </div>
+  </section>
+
+  <!-- 7 · PLÁN: vodorovná osa fází F0–F11 -->
+  <section class="plan" id="plan" data-track data-hscroll aria-labelledby="plan-title">
+    <div class="plan__stage">
+      <div class="wrap plan__head">
+        <p class="label mono">Plán</p>
+        <h2 id="plan-title" class="h2">Dvanáct fází.<br>Dvě jsou hotové.</h2>
+        <p class="plan__progress mono" aria-hidden="true"><span class="plan__bar"><i></i></span></p>
+      </div>
+      <ol class="plan__track" tabindex="0" aria-label="Fáze vývoje">
+        <li class="phase phase--done"><span class="phase__id mono">F0 · hotovo</span><h3>Kostra</h3><p>Otevřít 1&nbsp;MB, upravit, uložit. Porovnání s&nbsp;originálem je prázdné.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F1a · hotovo</span><h3>Editor a&nbsp;náhled</h3><p>Zvýraznění syntaxe, HTML náhled, synchronní scroll, ikona.</p></li>
+        <li class="phase"><span class="phase__id mono">F1b</span><h3>Kód a&nbsp;úkoly</h3><p>Barvy v&nbsp;blocích kódu, klikací checkboxy, ⌘-klik na odkaz.</p></li>
+        <li class="phase"><span class="phase__id mono">F2</span><h3>Psaní</h3><p>Pokračování seznamů, ⌘B, ⌘I, ⌘K, chytré vkládání. Každou automatiku vrátí jedno Undo.</p></li>
+        <li class="phase"><span class="phase__id mono">F3</span><h3>Rozšířená syntaxe</h3><p>Tabulky, poznámky pod čarou, matematika, diagramy Mermaid.</p></li>
+        <li class="phase"><span class="phase__id mono">F4</span><h3>Obrázky</h3><p>Přetáhnete obrázek do textu a&nbsp;kopie skončí v&nbsp;<code>./assets/</code>.</p></li>
+        <li class="phase"><span class="phase__id mono">F5</span><h3>Režimy</h3><p>Focus, typewriter, počet slov. Přepnutí do 50&nbsp;ms i&nbsp;u&nbsp;1&nbsp;MB.</p></li>
+        <li class="phase"><span class="phase__id mono">F6</span><h3>Soubory</h3><p>Postranní panel, hledání ve složce, ⌘P. Pět tisíc souborů do 300&nbsp;ms.</p></li>
+        <li class="phase"><span class="phase__id mono">F7</span><h3>Export</h3><p>HTML, PDF se záložkami, PNG. Přes Pandoc i&nbsp;DOCX, ePub a&nbsp;LaTeX.</p></li>
+        <li class="phase"><span class="phase__id mono">F8</span><h3>Témata</h3><p>Světlá a&nbsp;tmavá, písmo, šířka textu. Přepnutí bez restartu.</p></li>
+        <li class="phase"><span class="phase__id mono">F9</span><h3>Systém</h3><p>Čeština a&nbsp;angličtina, Quick Look, Services, přístupnost.</p></li>
+        <li class="phase"><span class="phase__id mono">F10</span><h3>Bezpečnost</h3><p>Sandbox, sanitizace HTML, náhled bez přístupu k&nbsp;síti.</p></li>
+        <li class="phase"><span class="phase__id mono">F11</span><h3>Distribuce</h3><p>DMG, aktualizace přes Sparkle a&nbsp;návod k&nbsp;instalaci.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 8 · STAŽENÍ -->
+  <section class="get" id="stahnout" aria-labelledby="get-title">
+    <div class="wrap get__inner" data-view>
+      <img class="get__icon" src="assets/img/icon-256.png" width="128" height="128" alt="Ikona aplikace Hashline" loading="lazy">
+      <h2 id="get-title" class="get__title">Hashline&nbsp;0.1</h2>
+      <a class="get__soon get__download" href="https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg">Stáhnout DMG</a>
+      <p class="get__lead">Aplikace je podepsaná bez účtu Apple Developer. Při prvním spuštění ji povolte v&nbsp;Nastavení systému ▸ Soukromí a&nbsp;zabezpečení ▸ Přesto otevřít (<a href="https://github.com/Hessevalentino/hashline#stažení-a-instalace">návod</a>). Aktualizace si pak po vašem souhlasu jednou týdně zkontroluje sama.</p>
+      <ul class="get__req mono">
+        <li>macOS 14 Sonoma a&nbsp;novější</li>
+        <li>Apple Silicon</li>
+        <li>DMG_SIZE</li>
+        <li><a href="https://github.com/Hessevalentino/hashline">Zdrojový kód na GitHubu</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <p class="foot__brand"><img src="assets/img/icon-256.png" width="20" height="20" alt="" loading="lazy"> Hashline</p>
+    <p>Tahle stránka nepoužívá cookies ani analytiku.</p>
+    <p class="mono">© 2026 Hashline</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,102 @@
+{
+  "name": "Paper",
+  "appearance": "light",
+  "editor": {
+    "background": "#ffffff",
+    "foreground": "#000000",
+    "caret": "#000000",
+    "tokens": {
+      "H1": {
+        "bold": true,
+        "size": 24.0
+      },
+      "H2": {
+        "bold": true,
+        "size": 20.0
+      },
+      "H3": {
+        "bold": true,
+        "size": 17.0
+      },
+      "H4": {
+        "color": "#333333",
+        "bold": true,
+        "size": 15.0
+      },
+      "H5": {
+        "color": "#333333",
+        "bold": true,
+        "size": 13.0
+      },
+      "H6": {
+        "color": "#333333",
+        "bold": true,
+        "size": 11.0
+      },
+      "EMPH": {
+        "italic": true
+      },
+      "STRONG": {
+        "bold": true
+      },
+      "CODE": {
+        "color": "#555555"
+      },
+      "VERBATIM": {
+        "color": "#555555"
+      },
+      "LINK": {
+        "color": "#555555"
+      },
+      "AUTO_LINK_URL": {
+        "color": "#555555"
+      },
+      "IMAGE": {
+        "color": "#555555"
+      },
+      "LIST_BULLET": {
+        "color": "#bbbbbb"
+      },
+      "LIST_ENUMERATOR": {
+        "color": "#bbbbbb"
+      },
+      "BLOCKQUOTE": {
+        "color": "#bbbbbb"
+      },
+      "HRULE": {
+        "color": "#555555"
+      },
+      "COMMENT": {
+        "color": "#bbbbbb"
+      },
+      "REFERENCE": {
+        "color": "#555555"
+      }
+    }
+  },
+  "code": {
+    "comment": "#6a737d",
+    "quote": "#6a737d",
+    "keyword": "#d73a49",
+    "selector-tag": "#22863a",
+    "string": "#032f62",
+    "regexp": "#032f62",
+    "addition": "#22863a",
+    "number": "#005cc5",
+    "literal": "#005cc5",
+    "symbol": "#005cc5",
+    "title": "#6f42c1",
+    "section": "#005cc5",
+    "type": "#d73a49",
+    "built_in": "#e36209",
+    "attr": "#005cc5",
+    "attribute": "#005cc5",
+    "variable": "#e36209",
+    "template-variable": "#d73a49",
+    "tag": "#22863a",
+    "name": "#22863a",
+    "deletion": "#b31d28",
+    "meta": "#005cc5",
+    "params": "#24292e"
+  }
+}

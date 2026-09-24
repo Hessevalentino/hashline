@@ -1,0 +1,2271 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "%@ (custom)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (vlastní)"
+          }
+        }
+      }
+    },
+    "%@ found": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nalezeno: %@"
+          }
+        }
+      }
+    },
+    "%@…": {
+      "shouldTranslate": false
+    },
+    "%lld": {
+      "shouldTranslate": false
+    },
+    "%lld characters": {
+      "localizations": {
+        "cs": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld znaky"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld znaku"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld znak"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld znaků"
+                }
+              }
+            }
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld character"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld characters"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld lines": {
+      "localizations": {
+        "cs": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld řádky"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld řádku"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld řádek"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld řádků"
+                }
+              }
+            }
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld line"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld lines"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld min read": {
+      "localizations": {
+        "cs": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld min čtení"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld min čtení"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld min čtení"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld min čtení"
+                }
+              }
+            }
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld min read"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld min read"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld of %@": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld z %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld of %2$@"
+          }
+        }
+      }
+    },
+    "%lld words": {
+      "localizations": {
+        "cs": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld slova"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld slova"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld slovo"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld slov"
+                }
+              }
+            }
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld word"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld words"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    ".*": {
+      "shouldTranslate": false
+    },
+    "<document name>.assets/": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "<název dokumentu>.assets/"
+          }
+        }
+      }
+    },
+    "A remote image tells its server that you opened the document. Local images always show.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vzdálený obrázek prozradí svému serveru, že jste dokument otevřeli. Místní obrázky se zobrazují vždy."
+          }
+        }
+      }
+    },
+    "A theme is a folder with theme.json (editor colours) and theme.css (preview and export). Changes to themes in the folder apply immediately.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Téma je složka se souborem theme.json (barvy editoru) a theme.css (náhled a export). Změny témat ve složce se projeví okamžitě."
+          }
+        }
+      }
+    },
+    "Aa": {
+      "shouldTranslate": false
+    },
+    "Add Files to Library…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přidat soubory do knihovny…"
+          }
+        }
+      }
+    },
+    "Add to Library": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přidat do knihovny"
+          }
+        }
+      }
+    },
+    "Align": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zarovnání"
+          }
+        }
+      }
+    },
+    "Align Center": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zarovnat na střed"
+          }
+        }
+      }
+    },
+    "Align Left": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zarovnat vlevo"
+          }
+        }
+      }
+    },
+    "Align Right": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zarovnat vpravo"
+          }
+        }
+      }
+    },
+    "All": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vše"
+          }
+        }
+      }
+    },
+    "Allow Access": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Povolit přístup"
+          }
+        }
+      }
+    },
+    "Allow Access…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Povolit přístup…"
+          }
+        }
+      }
+    },
+    "Appearance": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vzhled"
+          }
+        }
+      }
+    },
+    "Appearance:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vzhled:"
+          }
+        }
+      }
+    },
+    "Arguments:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Argumenty:"
+          }
+        }
+      }
+    },
+    "Bold": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tučně"
+          }
+        }
+      }
+    },
+    "Bulleted List": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odrážkový seznam"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zrušit"
+          }
+        }
+      }
+    },
+    "Change Library Folder…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Změnit složku knihovny…"
+          }
+        }
+      }
+    },
+    "Choose Folder…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vybrat složku…"
+          }
+        }
+      }
+    },
+    "Choose Library": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vybrat knihovnu"
+          }
+        }
+      }
+    },
+    "Choose Pandoc…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vybrat Pandoc…"
+          }
+        }
+      }
+    },
+    "Choose a document to convert to Markdown.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyberte dokument k převodu do Markdownu."
+          }
+        }
+      }
+    },
+    "Choose a folder for your Markdown documents. New documents are saved there.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyberte složku pro své dokumenty v Markdownu. Nové dokumenty se ukládají do ní."
+          }
+        }
+      }
+    },
+    "Choose a library folder to open documents quickly.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro rychlé otevírání vyberte složku knihovny."
+          }
+        }
+      }
+    },
+    "Choose the folder where your Markdown documents are stored.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyberte složku, kde máte dokumenty v Markdownu."
+          }
+        }
+      }
+    },
+    "Choose the pandoc program (install it from pandoc.org or with Homebrew).": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyberte program pandoc (nainstalujte ho z pandoc.org nebo přes Homebrew)."
+          }
+        }
+      }
+    },
+    "Choose the program that uploads an image and prints its URL.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyberte program, který nahraje obrázek a vypíše jeho URL."
+          }
+        }
+      }
+    },
+    "Choose…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vybrat…"
+          }
+        }
+      }
+    },
+    "Code": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kód"
+          }
+        }
+      }
+    },
+    "Code Block": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blok kódu"
+          }
+        }
+      }
+    },
+    "Copy As": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopírovat jako"
+          }
+        }
+      }
+    },
+    "Copy Images": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zkopírovat obrázky"
+          }
+        }
+      }
+    },
+    "Copy Local Images to Assets Folder": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zkopírovat místní obrázky do složky assets"
+          }
+        }
+      }
+    },
+    "Copy as HTML": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopírovat jako HTML"
+          }
+        }
+      }
+    },
+    "Copy as Markdown": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopírovat jako Markdown"
+          }
+        }
+      }
+    },
+    "Copy as Plain Text": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopírovat jako prostý text"
+          }
+        }
+      }
+    },
+    "Dark": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tmavý"
+          }
+        }
+      }
+    },
+    "Dark mode": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tmavý režim"
+          }
+        }
+      }
+    },
+    "Dark mode:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tmavý režim:"
+          }
+        }
+      }
+    },
+    "Delete Column": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smazat sloupec"
+          }
+        }
+      }
+    },
+    "Delete Row": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smazat řádek"
+          }
+        }
+      }
+    },
+    "Discard your changes and show the version on disk": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zahodit vaše změny a ukázat verzi z disku"
+          }
+        }
+      }
+    },
+    "Documents": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dokumenty"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hotovo"
+          }
+        }
+      }
+    },
+    "Download Images": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stáhnout obrázky"
+          }
+        }
+      }
+    },
+    "Download Pandoc": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stáhnout Pandoc"
+          }
+        }
+      }
+    },
+    "Download Remote Images to Assets Folder": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stáhnout vzdálené obrázky do složky assets"
+          }
+        }
+      }
+    },
+    "Duplicate Current Theme…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplikovat aktuální téma…"
+          }
+        }
+      }
+    },
+    "Editor": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editor"
+          }
+        }
+      }
+    },
+    "Export": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export"
+          }
+        }
+      }
+    },
+    "Exporting as %@…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export do formátu %@…"
+          }
+        }
+      }
+    },
+    "Export…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportovat…"
+          }
+        }
+      }
+    },
+    "Find": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Najít"
+          }
+        }
+      }
+    },
+    "Find Next": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Najít další"
+          }
+        }
+      }
+    },
+    "Find Previous": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Najít předchozí"
+          }
+        }
+      }
+    },
+    "Find and Replace…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Najít a nahradit…"
+          }
+        }
+      }
+    },
+    "Find in Library": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hledat v knihovně"
+          }
+        }
+      }
+    },
+    "Find in Library…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hledat v knihovně…"
+          }
+        }
+      }
+    },
+    "Find in library": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hledat v knihovně"
+          }
+        }
+      }
+    },
+    "Find…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Najít…"
+          }
+        }
+      }
+    },
+    "Focus Mode": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Režim soustředění"
+          }
+        }
+      }
+    },
+    "Folder:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Složka:"
+          }
+        }
+      }
+    },
+    "Folders": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Složky"
+          }
+        }
+      }
+    },
+    "Font:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Písmo:"
+          }
+        }
+      }
+    },
+    "Footnote": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poznámka pod čarou"
+          }
+        }
+      }
+    },
+    "Forget": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapomenout"
+          }
+        }
+      }
+    },
+    "Format Table": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zformátovat tabulku"
+          }
+        }
+      }
+    },
+    "Format:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Formát:"
+          }
+        }
+      }
+    },
+    "Front Matter": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Front matter"
+          }
+        }
+      }
+    },
+    "Front matter": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Front matter"
+          }
+        }
+      }
+    },
+    "Full Width": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Celá šířka"
+          }
+        }
+      }
+    },
+    "General": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obecné"
+          }
+        }
+      }
+    },
+    "HTML, PDF and PNG are exported by Hashline itself. Other formats and File ▸ Import use Pandoc, which you install separately (pandoc.org or “brew install pandoc”). Hashline runs it only for exports and imports you start.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HTML, PDF a PNG exportuje Hashline sám. Ostatní formáty a Soubor ▸ Import používají Pandoc, který se instaluje zvlášť (pandoc.org nebo „brew install pandoc“). Hashline ho spouští jen pro exporty a importy, které sami zahájíte."
+          }
+        }
+      }
+    },
+    "Hashline exports HTML, PDF and PNG by itself. Word, OpenDocument, RTF, ePub, LaTeX and other formats go through Pandoc, a free converter. Install it (pandoc.org or “brew install pandoc”), then choose the program here.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HTML, PDF a PNG exportuje Hashline sám. Word, OpenDocument, RTF, ePub, LaTeX a další formáty jdou přes Pandoc, bezplatný převodník. Nainstalujte ho (pandoc.org nebo „brew install pandoc“) a pak ho tady vyberte."
+          }
+        }
+      }
+    },
+    "Heading": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nadpis"
+          }
+        }
+      }
+    },
+    "Heading %lld": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nadpis %lld"
+          }
+        }
+      }
+    },
+    "Heading (⌘1–⌘6, ⌘0)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nadpis (⌘1–⌘6, ⌘0)"
+          }
+        }
+      }
+    },
+    "Hide Library": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skrýt knihovnu"
+          }
+        }
+      }
+    },
+    "Hide Preview": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skrýt náhled"
+          }
+        }
+      }
+    },
+    "Highlight ==text==": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zvýraznění ==text=="
+          }
+        }
+      }
+    },
+    "Horizontal Rule": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vodorovná čára"
+          }
+        }
+      }
+    },
+    "Image": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obrázek"
+          }
+        }
+      }
+    },
+    "Images": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obrázky"
+          }
+        }
+      }
+    },
+    "Images are copied next to the document, so it needs a place on disk.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obrázky se kopírují vedle dokumentu, proto musí mít dokument místo na disku."
+          }
+        }
+      }
+    },
+    "Images in “%@” need access.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obrázky ve složce „%@“ potřebují přístup."
+          }
+        }
+      }
+    },
+    "Import": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importovat"
+          }
+        }
+      }
+    },
+    "Import with Pandoc…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importovat přes Pandoc…"
+          }
+        }
+      }
+    },
+    "In text": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "V textu"
+          }
+        }
+      }
+    },
+    "Inline Code": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kód v textu"
+          }
+        }
+      }
+    },
+    "Insert": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložit"
+          }
+        }
+      }
+    },
+    "Insert Column": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložit sloupec"
+          }
+        }
+      }
+    },
+    "Insert Column Left": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložit sloupec vlevo"
+          }
+        }
+      }
+    },
+    "Insert Column Right": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložit sloupec vpravo"
+          }
+        }
+      }
+    },
+    "Insert Image": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložit obrázek"
+          }
+        }
+      }
+    },
+    "Insert Row": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložit řádek"
+          }
+        }
+      }
+    },
+    "Insert Row Above": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložit řádek nad"
+          }
+        }
+      }
+    },
+    "Insert Row Below": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložit řádek pod"
+          }
+        }
+      }
+    },
+    "Invalid pattern": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neplatný vzor"
+          }
+        }
+      }
+    },
+    "Italic": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurzíva"
+          }
+        }
+      }
+    },
+    "Keep Mine": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ponechat moje"
+          }
+        }
+      }
+    },
+    "Keep your version; saving replaces the one on disk": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ponechat vaši verzi; uložení nahradí verzi na disku"
+          }
+        }
+      }
+    },
+    "Library": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Knihovna"
+          }
+        }
+      }
+    },
+    "Light": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Světlý"
+          }
+        }
+      }
+    },
+    "Light mode:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Světlý režim:"
+          }
+        }
+      }
+    },
+    "Light or dark appearance": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Světlý nebo tmavý vzhled"
+          }
+        }
+      }
+    },
+    "Line height:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Výška řádku:"
+          }
+        }
+      }
+    },
+    "Link": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odkaz"
+          }
+        }
+      }
+    },
+    "List": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seznam"
+          }
+        }
+      }
+    },
+    "Load remote images in the preview": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Načítat v náhledu vzdálené obrázky"
+          }
+        }
+      }
+    },
+    "Markdown source": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zdroj v Markdownu"
+          }
+        }
+      }
+    },
+    "Match Case": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozlišovat velikost písmen"
+          }
+        }
+      }
+    },
+    "Match System": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podle systému"
+          }
+        }
+      }
+    },
+    "Math Block": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blok matematiky"
+          }
+        }
+      }
+    },
+    "Medium (88 characters)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Střední (88 znaků)"
+          }
+        }
+      }
+    },
+    "Narrow (72 characters)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Úzká (72 znaků)"
+          }
+        }
+      }
+    },
+    "New Document in Library": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nový dokument v knihovně"
+          }
+        }
+      }
+    },
+    "New Document in Library (⌥⌘N)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nový dokument v knihovně (⌥⌘N)"
+          }
+        }
+      }
+    },
+    "New documents from the library (⌥⌘N) are saved in this folder.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nové dokumenty z knihovny (⌥⌘N) se ukládají do této složky."
+          }
+        }
+      }
+    },
+    "Next (⌘G)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Další (⌘G)"
+          }
+        }
+      }
+    },
+    "Next Cell": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Další buňka"
+          }
+        }
+      }
+    },
+    "No documents yet": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zatím žádné dokumenty"
+          }
+        }
+      }
+    },
+    "No headings": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Žádné nadpisy"
+          }
+        }
+      }
+    },
+    "No matches": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nic nenalezeno"
+          }
+        }
+      }
+    },
+    "No results": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Žádné výsledky"
+          }
+        }
+      }
+    },
+    "Not chosen": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nevybráno"
+          }
+        }
+      }
+    },
+    "Numbered List": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Číslovaný seznam"
+          }
+        }
+      }
+    },
+    "Open Themes Folder": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otevřít složku témat"
+          }
+        }
+      }
+    },
+    "Open quickly": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rychle otevřít"
+          }
+        }
+      }
+    },
+    "OpenDocument (ODT)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenDocument (ODT)"
+          }
+        }
+      }
+    },
+    "Outline": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Osnova"
+          }
+        }
+      }
+    },
+    "PNG Image": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obrázek PNG"
+          }
+        }
+      }
+    },
+    "Pandoc could not convert the document.\n\n%@": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pandoc dokument nepřevedl.\n\n%@"
+          }
+        }
+      }
+    },
+    "Pandoc is needed for this format": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro tento formát je potřeba Pandoc"
+          }
+        }
+      }
+    },
+    "Pandoc is needed for this format.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pro tento formát je potřeba Pandoc."
+          }
+        }
+      }
+    },
+    "Pandoc:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pandoc:"
+          }
+        }
+      }
+    },
+    "Paragraph": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odstavec"
+          }
+        }
+      }
+    },
+    "Paste": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložit"
+          }
+        }
+      }
+    },
+    "Paste Link": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložit odkaz"
+          }
+        }
+      }
+    },
+    "Plain Text": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prostý text"
+          }
+        }
+      }
+    },
+    "Preview": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Náhled"
+          }
+        }
+      }
+    },
+    "Previous (⇧⌘G)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Předchozí (⇧⌘G)"
+          }
+        }
+      }
+    },
+    "Print…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tisk…"
+          }
+        }
+      }
+    },
+    "Program:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Program:"
+          }
+        }
+      }
+    },
+    "Quick Open…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rychle otevřít…"
+          }
+        }
+      }
+    },
+    "Quote": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Citace"
+          }
+        }
+      }
+    },
+    "Reading Mode": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Režim čtení"
+          }
+        }
+      }
+    },
+    "Regular Expression": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regulární výraz"
+          }
+        }
+      }
+    },
+    "Reload": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Načíst znovu"
+          }
+        }
+      }
+    },
+    "Replace": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nahradit"
+          }
+        }
+      }
+    },
+    "Replace ($1 = group 1)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nahradit ($1 = skupina 1)"
+          }
+        }
+      }
+    },
+    "Replace All": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nahradit vše"
+          }
+        }
+      }
+    },
+    "Replace with": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nahradit čím"
+          }
+        }
+      }
+    },
+    "Rich Text (RTF)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Formátovaný text (RTF)"
+          }
+        }
+      }
+    },
+    "Save the document first": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nejdřív dokument uložte"
+          }
+        }
+      }
+    },
+    "Search title or text": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hledat v názvu nebo textu"
+          }
+        }
+      }
+    },
+    "Selection: %lld words, %lld characters": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Výběr: slova %lld, znaky %lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Selection: %1$lld words, %2$lld characters"
+          }
+        }
+      }
+    },
+    "Share": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sdílet"
+          }
+        }
+      }
+    },
+    "Show Library": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobrazit knihovnu"
+          }
+        }
+      }
+    },
+    "Show Preview": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobrazit náhled"
+          }
+        }
+      }
+    },
+    "Show Replace": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobrazit nahrazení"
+          }
+        }
+      }
+    },
+    "Show Status Bar": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobrazit stavový řádek"
+          }
+        }
+      }
+    },
+    "Show in Finder": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ukázat ve Finderu"
+          }
+        }
+      }
+    },
+    "Show status bar (words, characters, reading time)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobrazit stavový řádek (slova, znaky, doba čtení)"
+          }
+        }
+      }
+    },
+    "Show the preview": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobrazit náhled"
+          }
+        }
+      }
+    },
+    "Show the sidebar": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobrazit postranní panel"
+          }
+        }
+      }
+    },
+    "Sidebar": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Postranní panel"
+          }
+        }
+      }
+    },
+    "Size: %lld pt": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Velikost: %lld b."
+          }
+        }
+      }
+    },
+    "Status bar": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stavový řádek"
+          }
+        }
+      }
+    },
+    "Store pasted and dropped images in:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložené a přetažené obrázky ukládat do:"
+          }
+        }
+      }
+    },
+    "Strikethrough": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přeškrtnutí"
+          }
+        }
+      }
+    },
+    "Subscript ~text~": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolní index ~text~"
+          }
+        }
+      }
+    },
+    "Superscript ^text^": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horní index ^text^"
+          }
+        }
+      }
+    },
+    "Syntax Extensions": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozšíření syntaxe"
+          }
+        }
+      }
+    },
+    "System Monospaced": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Systémové neproporcionální"
+          }
+        }
+      }
+    },
+    "Table": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tabulka"
+          }
+        }
+      }
+    },
+    "Table of Contents": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obsah"
+          }
+        }
+      }
+    },
+    "Task List": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seznam úkolů"
+          }
+        }
+      }
+    },
+    "Text Width": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Šířka textu"
+          }
+        }
+      }
+    },
+    "Text width:": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Šířka textu:"
+          }
+        }
+      }
+    },
+    "The document could not be exported as %@.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dokument se nepodařilo exportovat do formátu %@."
+          }
+        }
+      }
+    },
+    "The program receives the image path in place of {file} and must print the image URL. It runs only when switched on here, never through a shell.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Program dostane cestu k obrázku místo {file} a musí vypsat URL obrázku. Spustí se jen tehdy, když je tady zapnutý, a nikdy přes shell."
+          }
+        }
+      }
+    },
+    "The upload command did not print a URL. %@": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Příkaz pro nahrání nevypsal URL. %@"
+          }
+        }
+      }
+    },
+    "Themes": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Témata"
+          }
+        }
+      }
+    },
+    "There is no text to put in a new document.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Není žádný text, který by šel dát do nového dokumentu."
+          }
+        }
+      }
+    },
+    "Toggle Task": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přepnout úkol"
+          }
+        }
+      }
+    },
+    "Typewriter Mode": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Režim psacího stroje"
+          }
+        }
+      }
+    },
+    "Underline": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podtržení"
+          }
+        }
+      }
+    },
+    "Upload Image": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nahrát obrázek"
+          }
+        }
+      }
+    },
+    "Upload images with a command": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nahrávat obrázky příkazem"
+          }
+        }
+      }
+    },
+    "Use Pandoc": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Použít Pandoc"
+          }
+        }
+      }
+    },
+    "Use Program": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Použít program"
+          }
+        }
+      }
+    },
+    "Use Selection for Find": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hledat výběr"
+          }
+        }
+      }
+    },
+    "W": {
+      "shouldTranslate": false
+    },
+    "Whole Words": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Celá slova"
+          }
+        }
+      }
+    },
+    "Wide (110 characters)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Široká (110 znaků)"
+          }
+        }
+      }
+    },
+    "Windows": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okna"
+          }
+        }
+      }
+    },
+    "Word (DOCX)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Word (DOCX)"
+          }
+        }
+      }
+    },
+    "YAML Front Matter": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YAML front matter"
+          }
+        }
+      }
+    },
+    "assets/ next to the document": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "assets/ vedle dokumentu"
+          }
+        }
+      }
+    },
+    "“%@” was changed by another application.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "„%@“ změnila jiná aplikace."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
