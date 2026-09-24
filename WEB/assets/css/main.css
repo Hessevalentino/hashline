@@ -115,11 +115,6 @@ code { font-family: var(--font-mono); font-size: 0.86em; color: var(--ember-hi);
   color: var(--ember-hi); margin-bottom: var(--space-3);
 }
 .label::before { content: "## "; color: var(--muted); }
-.pill {
-  display: inline-block; font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 600;
-  letter-spacing: 0.02em; padding: 0.3rem 0.7rem; border-radius: var(--radius);
-  border: 1px solid currentColor;
-}
 .fine { font-size: 0.8125rem; color: var(--muted); max-width: 48rem; line-height: 1.6; }
 
 /* ---------- 3. Navigace ---------- */
@@ -146,9 +141,25 @@ code { font-family: var(--font-mono); font-size: 0.86em; color: var(--ember-hi);
 .nav__links { display: flex; gap: var(--space-3); list-style: none; margin: 0; padding: 0; font-family: var(--font-mono); font-size: 0.8125rem; }
 .nav__links a { color: inherit; text-decoration: none; opacity: 0.8; }
 .nav__links a:hover { opacity: 1; color: inherit; }
-.pill--nav { color: var(--ember-lo); }
-.nav[data-theme="dark"] .pill--nav { color: var(--ember-hi); }
-@media (max-width: 40rem) { .nav__links { display: none; } .nav nav { margin-left: auto; } .pill--nav { margin-left: auto; } }
+/* Tlačítko ke stažení: bílý text na --ember-lo (6,7:1), jediný primární cíl stránky */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-family: var(--font-mono); font-weight: 600; font-size: 0.9375rem; letter-spacing: 0.01em;
+  padding: 0.75rem 1.25rem; border-radius: var(--radius);
+  background: var(--ember-lo); color: #fff; text-decoration: none;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.15) inset, 0 8px 20px -10px rgb(171 46 18 / 0.7);
+  transition: background-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.btn:hover, .btn:focus-visible { background: #C23A1B; color: #fff; }
+.btn:active { transform: translateY(1px); }
+.btn__arrow { display: inline-block; transition: transform 0.25s var(--ease); }
+.btn:hover .btn__arrow { transform: translateY(2px); }
+.btn--lg { font-size: 1.0625rem; padding: 0.95rem 1.6rem; }
+.btn--nav { font-size: 0.8125rem; padding: 0.4rem 0.8rem; box-shadow: none; }
+.cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin-top: var(--space-6); }
+.cta-row p { font-size: var(--text-sm); color: var(--muted); }
+.cuts .cta-row p { color: var(--muted-on-cream); }
+@media (max-width: 40rem) { .nav__links { display: none; } .nav nav { margin-left: auto; } }
 
 /* ---------- 4. Hero ---------- */
 .hero { position: relative; height: 190vh; background: var(--cream); }
@@ -180,14 +191,19 @@ code { font-family: var(--font-mono); font-size: 0.86em; color: var(--ember-hi);
 .hero__title { font-size: var(--text-hero); letter-spacing: -0.035em; font-weight: 400; line-height: 0.95; max-width: 11ch; }
 .hero__title em { font-style: italic; color: var(--ember-lo); }
 .hero__lead { margin-top: var(--space-4); max-width: 30rem; font-size: var(--text-lg); line-height: 1.45; color: #2E3639; }
-.hero__meta { margin-top: var(--space-4); display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--muted-on-cream); }
-.hero__meta .pill { color: var(--ember-lo); }
+.hero__cta { margin-top: var(--space-4); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.hero__meta { font-size: 0.8125rem; line-height: 1.5; color: var(--muted-on-cream); }
+.hero__meta a { color: var(--ember-lo); }
 .hero__veil { position: absolute; inset: 0; z-index: 3; background: var(--ink); opacity: clamp(0, (var(--p, 0) - 0.55) * 2.4, 1); pointer-events: none; }
 .hero__hint { position: absolute; z-index: 2; left: 50%; bottom: 1.5rem; translate: -50% 0; font-size: 0.75rem; color: var(--muted-on-cream); opacity: clamp(0, 1 - var(--p, 0) * 6, 1); animation: nudge 2.4s var(--ease) infinite; }
 @keyframes nudge { 50% { transform: translateY(6px); } }
 
 @media (max-width: 52rem) {
-  .hero__img { top: auto; height: 40%; }
+  /* Na mobilu obrázek zabere jen místo pod textem, takže se s ním nikdy nepřekryje */
+  .hero__stage { display: flex; flex-direction: column; }
+  .hero__copy { height: auto; flex: none; padding-bottom: var(--space-3); }
+  .hero__img { position: relative; inset: auto; flex: 1; min-height: 0; height: auto; order: 2; }
+  .hero__hint { display: none; }
   .hero__copy { padding-top: 5rem !important; }
   .hero__brand { margin-bottom: var(--space-3); }
   .hero__img img { object-position: 80% 50%; transform-origin: 80% 50%; }
@@ -196,12 +212,11 @@ code { font-family: var(--font-mono); font-size: 0.86em; color: var(--ember-hi);
 }
 
 @media (max-width: 52rem) and (max-height: 740px) {
-  .hero__img { height: 26%; }
   .hero__icon { width: 4rem; }
   .hero__name { font-size: 1.75rem; }
   .hero__brand { margin-bottom: var(--space-2); }
   .hero__lead { margin-top: var(--space-3); }
-  .hero__meta { margin-top: var(--space-3); }
+  .hero__cta { margin-top: var(--space-3); }
 }
 
 /* ---------- 5. Demo okna ---------- */
@@ -363,13 +378,7 @@ code { font-family: var(--font-mono); font-size: 0.86em; color: var(--ember-hi);
 .get__inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .get__icon { width: clamp(6rem, 4rem + 6vw, 8rem); height: auto; border-radius: 22%; transform: scale(calc(0.7 + var(--v, 1) * 0.3)) rotate(calc((1 - var(--v, 1)) * -12deg)); }
 .get__title { font-size: var(--text-h2); letter-spacing: -0.03em; margin-top: var(--space-4); font-weight: 450; }
-.get__soon {
-  margin-top: var(--space-3); font-family: var(--font-mono); font-weight: 600; font-size: 1.0625rem;
-  padding: 0.8rem 1.6rem; border-radius: var(--radius); border: 1px dashed var(--ember-hi); color: var(--ember-hi);
-  letter-spacing: 0.04em;
-}
-.get__download { display: inline-block; text-decoration: none; border-style: solid; }
-.get__download:hover, .get__download:focus-visible { background: var(--ember-hi); color: var(--ink); }
+.get__btn { margin-top: var(--space-3); }
 .get__lead a, .get__req a { color: inherit; }
 .get__lead { margin-top: var(--space-4); max-width: 30rem; color: var(--muted); font-size: var(--text-lg); }
 .get__req { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.5rem; font-size: var(--text-sm); color: var(--muted); }

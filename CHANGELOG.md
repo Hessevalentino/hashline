@@ -1,5 +1,11 @@
 # Změny
 
+## 0.1.1 – 2026-09-24
+
+- Úkolové položky v náhledu, exportu a Quick Looku už nemají vedle zaškrtávátka navíc odrážku
+- Copyright a odkaz na zdrojový kód v okně O aplikaci
+- Hashline je open source pod licencí MIT
+
 ## 0.1.0 – 2026-09-24
 
 První veřejné vydání.

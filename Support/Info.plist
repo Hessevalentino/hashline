@@ -46,9 +46,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1.0</string>
+	<string>0.1.1</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>2</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.productivity</string>
 	<key>LSMinimumSystemVersion</key>
@@ -76,12 +76,12 @@
 			</array>
 		</dict>
 	</array>
+	<key>SUEnableInstallerLauncherService</key>
+	<true/>
 	<key>SUFeedURL</key>
 	<string>https://raw.githubusercontent.com/Hessevalentino/hashline/main/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>QejvlBIrInH6flICaXrwKtztH8j0ccHAcKW4B6hhvZk=</string>
-	<key>SUEnableInstallerLauncherService</key>
-	<true/>
 	<key>SUScheduledCheckInterval</key>
 	<integer>604800</integer>
 	<key>UTImportedTypeDeclarations</key>
