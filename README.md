@@ -55,7 +55,7 @@
 - **Píše se, nic se nenastavuje.** Otevře se okamžitě, ukáže text a pak nepřekáží.
 - **Soubor je pravda.** Pracuje s obyčejnými `.md` na disku. Žádný vlastní formát ani databáze.
 - **Nativní.** Swift, AppKit a TextKit 2, žádný Electron. Světlý i tmavý režim, zkratky, Undo, Služby, Quick Look.
-- **Rychlý.** Psaní pod 10 ms i v 1MB dokumentu, otevření 1 MB pod 200 ms. Měří se, neodhaduje ([docs/perf.md](docs/perf.md)).
+- **Rychlý.** Psaní pod 10 ms i v 1MB dokumentu, otevření 1MB souboru zhruba za 0,2 s. Měří se, neodhaduje ([docs/perf.md](docs/perf.md)).
 - **Bezpečný a soukromý.** Sandbox, náhled bez JavaScriptu stránky, sanitizace HTML, žádná telemetrie.
 
 ## Stažení a instalace
@@ -123,7 +123,7 @@ Kód: ~10 800 řádků Swiftu v aplikaci a jádru (`HashlineCore`, testovatelné
 |---|---|---|
 | Latence psaní v 1MB dokumentu | < 16 ms | p50 ~6 ms, p95 ~7 ms |
 | Otevření 1MB souboru | < 200 ms | 187–202 ms |
-| Přepnutí režimu nebo tématu (1 MB) | < 50 ms | 2–40 ms |
+| Přepnutí režimu nebo tématu (1 MB) | < 50 ms | 2–40 ms (první přepnutí tématu až 70 ms) |
 | Velikost aplikace | < 15 MB | 13 MB |
 
 Podrobnosti a metodika v [docs/perf.md](docs/perf.md).
