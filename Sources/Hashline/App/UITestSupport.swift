@@ -49,6 +49,17 @@ final class UITestSupport: NSObject {
                 await Self.runExportTest(into: folder)
             }
         }
+        if defaults.bool(forKey: "HashlineShowcase") {
+            // Screenshots for the README: the window floats visible (WebKit does not paint covered
+            // windows) without activating the app, so it never takes the keyboard focus.
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(2))
+                for window in NSApp.windows where window.isVisible && window.contentView != nil {
+                    window.level = .floating
+                    window.orderFrontRegardless()
+                }
+            }
+        }
         if defaults.bool(forKey: "HashlineModeBenchmark") {
             Task { @MainActor in
                 try? await Task.sleep(for: .seconds(4))

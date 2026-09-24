@@ -205,6 +205,8 @@ enum Exporter {
             .mermaid-diagram[data-rendered="true"] > pre { display: none; }
             .front-matter { display: none; }
             .footnote { font-size: 0.85em; opacity: 0.85; }
+            .task-list-item { list-style: none; }
+            .task-list-item > input[type=checkbox] { margin: 0 0.4em 0 -1.35em; vertical-align: middle; }
             @media print {
                 body { max-width: none; }
                 pre, blockquote, table, img, svg, .math-display { break-inside: avoid; }

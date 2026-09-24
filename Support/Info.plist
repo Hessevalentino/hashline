@@ -54,7 +54,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>14.0</string>
 	<key>NSHumanReadableCopyright</key>
-	<string></string>
+	<string>© 2026 Hessevalentino · MIT · github.com/Hessevalentino/hashline</string>
 	<key>NSServices</key>
 	<array>
 		<dict>

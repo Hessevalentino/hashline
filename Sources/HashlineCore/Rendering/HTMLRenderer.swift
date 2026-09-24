@@ -211,7 +211,8 @@ extension Renderer {
     }
 
     private mutating func renderListItem(_ item: ListItem) {
-        output += "<li>"
+        // Like GitHub: task items carry a class, so styles can drop the bullet next to the checkbox.
+        output += item.checkbox == nil ? "<li>" : "<li class=\"task-list-item\">"
         if let checkbox = item.checkbox {
             let checked = checkbox == .checked ? " checked=\"\"" : ""
             if options.interactiveTasks {

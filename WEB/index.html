@@ -4,16 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hashline – markdown editor pro macOS se živým náhledem</title>
-<meta name="description" content="Hashline je nativní markdown editor pro macOS. Vlevo zdroj se zvýrazněnou syntaxí, vpravo živý náhled. Obyčejné soubory .md, žádný Electron. Již brzy.">
+<meta name="description" content="Hashline je nativní markdown editor pro macOS. Vlevo zdroj se zvýrazněnou syntaxí, vpravo živý náhled. Obyčejné soubory .md, žádný Electron. Verze 0.1 ke stažení.">
 <meta name="theme-color" content="#1C2427">
 <meta name="color-scheme" content="light dark">
-<!-- Na stagingu přepnout na "noindex, nofollow". Canonical a og:url doplnit po výběru domény. -->
+<!-- Na stagingu přepnout na "noindex, nofollow". -->
 <meta name="robots" content="index, follow">
+<link rel="canonical" href="https://hashline.hesse.works/">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hashline – markdown editor pro macOS">
-<meta property="og:description" content="Vlevo píšete, vpravo čtete. Nativní editor pro obyčejné soubory .md. Již brzy.">
-<meta property="og:image" content="assets/img/og.jpg">
+<meta property="og:description" content="Vlevo píšete, vpravo čtete. Nativní editor pro obyčejné soubory .md. Verze 0.1 ke stažení.">
+<meta property="og:url" content="https://hashline.hesse.works/">
+<meta property="og:image" content="https://hashline.hesse.works/assets/img/og.jpg">
 <meta property="og:locale" content="cs_CZ">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -52,7 +54,7 @@
         <li><a href="#editor">Editor</a></li>
         <li><a href="#rychlost">Rychlost</a></li>
         <li><a href="#soubory">Soubory</a></li>
-        <li><a href="#plan">Plán</a></li>
+        <li><a href="#plan">Co umí</a></li>
       </ul>
     </nav>
     <a class="pill pill--nav" href="#stahnout">Stáhnout</a>
@@ -79,7 +81,7 @@
         </div>
         <p class="hero__kicker mono"><span class="accent">#</span> markdown editor pro macOS</p>
         <h1 class="hero__title">Vlevo píšete.<br><em>Vpravo čtete.</em></h1>
-        <p class="hero__lead">Hashline otevře obyčejný soubor .md za méně než desetinu sekundy. Syntaxi obarví, vedle ukáže hotový text a pak vám nebude stát v&nbsp;cestě.</p>
+        <p class="hero__lead">Hashline otevře obyčejný soubor .md, obarví syntaxi, vedle ukáže hotový text a pak vám nebude stát v&nbsp;cestě. I&nbsp;v&nbsp;megabajtovém souboru zareaguje na úhoz za 6&nbsp;ms.</p>
         <p class="hero__meta mono"><a class="pill" href="#stahnout">Verze 0.1</a> macOS 14+ · Apple Silicon</p>
       </div>
       <div class="hero__veil" aria-hidden="true"></div>
@@ -145,31 +147,31 @@
     <div class="wrap">
       <p class="label mono">Rychlost</p>
       <h2 id="speed-title" class="h2">Měříme ji,<br>neodhadujeme.</h2>
-      <p class="speed__intro">Každá fáze vývoje končí měřením a&nbsp;novým řádkem v&nbsp;tabulce. Když změna překročí rozpočet, nejde dovnitř.</p>
+      <p class="speed__intro">Každá fáze vývoje končí měřením a&nbsp;novým řádkem v&nbsp;tabulce. Rozpočet je daný předem a&nbsp;co ho překročí, se zapíše jako dluh.</p>
 
       <div class="stats">
         <article class="stat" data-view>
-          <p class="stat__num"><span data-count="9">9</span><small>&nbsp;ms</small></p>
+          <p class="stat__num"><span data-count="6">6</span><small>&nbsp;ms</small></p>
           <h3>jeden úhoz</h3>
-          <p>Medián latence psaní v&nbsp;souboru o&nbsp;velikosti 1&nbsp;MB. Rozpočet je 16&nbsp;ms, tedy jeden snímek na 60Hz displeji.</p>
+          <p>Medián latence psaní v&nbsp;souboru o&nbsp;velikosti 1&nbsp;MB, naměřeno 6,0–6,2&nbsp;ms. Rozpočet je 16&nbsp;ms, tedy jeden snímek na 60Hz displeji.</p>
         </article>
         <article class="stat" data-view>
-          <p class="stat__num"><span data-count="89">89</span><small>&nbsp;ms</small></p>
+          <p class="stat__num"><span data-count="202">202</span><small>&nbsp;ms</small></p>
           <h3>otevření 1&nbsp;MB</h3>
-          <p>Od čtení souboru po okno, do kterého jde psát. Nejhorší ze tří měření. Deset megabajtů zabralo nejvýš 112&nbsp;ms.</p>
+          <p>Od čtení souboru po okno, do kterého jde psát. Nejhorší ze čtyř běhů a&nbsp;těsně nad rozpočtem 200&nbsp;ms. Zrychlit první vykreslení okna je na seznamu dluhů.</p>
         </article>
         <article class="stat" data-view>
-          <p class="stat__num"><span class="stat__lt">&lt;</span><span data-count="400">400</span><small>&nbsp;ms</small></p>
-          <h3>studený start</h3>
-          <p>Od spuštění procesu po editovatelné okno. Naměřeno 222–362&nbsp;ms.</p>
+          <p class="stat__num"><span data-count="132">132</span><small>&nbsp;ms</small></p>
+          <h3>hledání v&nbsp;knihovně</h3>
+          <p>Prohledání 5&nbsp;000 souborů mimo hlavní vlákno, takže psaní nečeká. Rozpočet je 300&nbsp;ms.</p>
         </article>
         <article class="stat" data-view>
-          <p class="stat__num"><span data-count="4.1" data-decimals="1">4,1</span><small>&nbsp;MB</small></p>
+          <p class="stat__num"><span data-count="9.9" data-decimals="1">9,9</span><small>&nbsp;MB</small></p>
           <h3>celá aplikace</h3>
-          <p>Velikost .app. Strop je 15&nbsp;MB a&nbsp;žádná závislost se nepřidá bez zdůvodnění.</p>
+          <p>Velikost .app včetně matematiky, diagramů a&nbsp;Quick Looku. Strop je 15&nbsp;MB a&nbsp;žádná závislost se nepřidá bez zdůvodnění.</p>
         </article>
       </div>
-      <p class="fine mono">Release build, MacBook Pro M4 (16 GB), macOS 26.6, rozsah ze tří spuštění. Fáze F1a, 23. 9. 2026. Latence psaní měřena v&nbsp;konfiguraci Profile se zapnutým náhledem.</p>
+      <p class="fine mono">Release build, MacBook Pro M4 (16 GB), macOS 26.6, 3–4 běhy. Fáze F10, 24. 9. 2026. Latenci psaní měří skript, který píše do 1MB dokumentu přímo v&nbsp;aplikaci, se zapnutým náhledem.</p>
     </div>
   </section>
 
@@ -184,15 +186,15 @@
           <p class="card__big"><span class="strike">55</span> → 9&nbsp;ms</p>
           <h3>Touch Bar, který nikdo nemá</h3>
           <p>Při prvním měření trvalo psaní v&nbsp;megabajtovém souboru 55&nbsp;ms na úhoz. Profiler ukázal, že 88&nbsp;% času hlavního vlákna spolkl Touch Bar. AppKit po každém stisku procházel atributy textu kvůli formátovacím tlačítkům, i&nbsp;na Macu, který žádný Touch Bar nemá.</p>
-          <p>Dvě přepsané metody a&nbsp;medián spadl na 9&nbsp;ms.</p>
+          <p>Dvě přepsané metody a&nbsp;medián spadl na 9&nbsp;ms. Dnes je to 6&nbsp;ms.</p>
         </article>
         <article class="card" data-view>
           <h3>Editor bez webového jádra</h3>
-          <p>Text píšete do <code>NSTextView</code> na TextKitu&nbsp;2. WebKit v&nbsp;pravém panelu jen ukazuje výsledek, psaný text nikdy nevykresluje.</p>
+          <p>Text píšete do <code>NSTextView</code> na TextKitu&nbsp;2. WebKit v&nbsp;pravém panelu jen ukazuje výsledek a&nbsp;JavaScript dokumentu v&nbsp;něm nesmí běžet.</p>
         </article>
         <article class="card" data-view>
           <h3>Náhled počká, editor ne</h3>
-          <p>Panel náhledu vzniká až ve chvíli, kdy už můžete psát. Otevření souboru tím kleslo ze 150–220 na 80&nbsp;ms.</p>
+          <p>Panel náhledu vzniká až ve chvíli, kdy už můžete psát. Když je skrytý, WebKit se vůbec nespustí.</p>
         </article>
         <article class="card" data-view>
           <h3>Velké soubory bez čekání</h3>
@@ -200,11 +202,11 @@
         </article>
         <article class="card" data-view>
           <h3>Jako každý dokument v&nbsp;macOS</h3>
-          <p>Automatické ukládání, historie verzí, Otevřít nedávné. Světlý i&nbsp;tmavý režim podle systému.</p>
+          <p>Automatické ukládání, historie verzí, Otevřít nedávné. Quick Look ukáže .md přímo ve Finderu, Služby převedou výběr z&nbsp;jiné aplikace na nový dokument.</p>
         </article>
         <article class="card" data-view>
-          <h3>Témata z&nbsp;MacDownu</h3>
-          <p>Editor barví motivy Mou Paper+ a&nbsp;Tomorrow+, náhled styly GitHub2 a&nbsp;Clearness Dark. Převzaté s&nbsp;licencí MIT.</p>
+          <h3>Témata bez restartu</h3>
+          <p>Paper, Solarized Light, Tomorrow Night a&nbsp;Solarized Dark, zvlášť pro světlý a&nbsp;tmavý režim. Vlastní téma je složka s&nbsp;<code>theme.json</code> a&nbsp;<code>theme.css</code>.</p>
         </article>
       </div>
     </div>
@@ -242,24 +244,23 @@
   <section class="plan" id="plan" data-track data-hscroll aria-labelledby="plan-title">
     <div class="plan__stage">
       <div class="wrap plan__head">
-        <p class="label mono">Plán</p>
-        <h2 id="plan-title" class="h2">Dvanáct fází.<br>Dvě jsou hotové.</h2>
+        <p class="label mono">Co umí</p>
+        <h2 id="plan-title" class="h2">Dvanáct fází.<br>Všechny ve verzi 0.1.</h2>
         <p class="plan__progress mono" aria-hidden="true"><span class="plan__bar"><i></i></span></p>
       </div>
       <ol class="plan__track" tabindex="0" aria-label="Fáze vývoje">
         <li class="phase phase--done"><span class="phase__id mono">F0 · hotovo</span><h3>Kostra</h3><p>Otevřít 1&nbsp;MB, upravit, uložit. Porovnání s&nbsp;originálem je prázdné.</p></li>
-        <li class="phase phase--done"><span class="phase__id mono">F1a · hotovo</span><h3>Editor a&nbsp;náhled</h3><p>Zvýraznění syntaxe, HTML náhled, synchronní scroll, ikona.</p></li>
-        <li class="phase"><span class="phase__id mono">F1b</span><h3>Kód a&nbsp;úkoly</h3><p>Barvy v&nbsp;blocích kódu, klikací checkboxy, ⌘-klik na odkaz.</p></li>
-        <li class="phase"><span class="phase__id mono">F2</span><h3>Psaní</h3><p>Pokračování seznamů, ⌘B, ⌘I, ⌘K, chytré vkládání. Každou automatiku vrátí jedno Undo.</p></li>
-        <li class="phase"><span class="phase__id mono">F3</span><h3>Rozšířená syntaxe</h3><p>Tabulky, poznámky pod čarou, matematika, diagramy Mermaid.</p></li>
-        <li class="phase"><span class="phase__id mono">F4</span><h3>Obrázky</h3><p>Přetáhnete obrázek do textu a&nbsp;kopie skončí v&nbsp;<code>./assets/</code>.</p></li>
-        <li class="phase"><span class="phase__id mono">F5</span><h3>Režimy</h3><p>Focus, typewriter, počet slov. Přepnutí do 50&nbsp;ms i&nbsp;u&nbsp;1&nbsp;MB.</p></li>
-        <li class="phase"><span class="phase__id mono">F6</span><h3>Soubory</h3><p>Postranní panel, hledání ve složce, ⌘P. Pět tisíc souborů do 300&nbsp;ms.</p></li>
-        <li class="phase"><span class="phase__id mono">F7</span><h3>Export</h3><p>HTML, PDF se záložkami, PNG. Přes Pandoc i&nbsp;DOCX, ePub a&nbsp;LaTeX.</p></li>
-        <li class="phase"><span class="phase__id mono">F8</span><h3>Témata</h3><p>Světlá a&nbsp;tmavá, písmo, šířka textu. Přepnutí bez restartu.</p></li>
-        <li class="phase"><span class="phase__id mono">F9</span><h3>Systém</h3><p>Čeština a&nbsp;angličtina, Quick Look, Services, přístupnost.</p></li>
-        <li class="phase"><span class="phase__id mono">F10</span><h3>Bezpečnost</h3><p>Sandbox, sanitizace HTML, náhled bez přístupu k&nbsp;síti.</p></li>
-        <li class="phase"><span class="phase__id mono">F11</span><h3>Distribuce</h3><p>DMG, aktualizace přes Sparkle a&nbsp;návod k&nbsp;instalaci.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F1 · hotovo</span><h3>Editor a&nbsp;náhled</h3><p>Zvýraznění Markdownu i&nbsp;kódu v&nbsp;36 jazycích, klikací úkoly, ⌘-klik na odkaz, synchronní scroll.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F2 · hotovo</span><h3>Psaní</h3><p>Formátovací lišta, ⌘B, ⌘I, ⌘K, pokračování seznamů. HTML ze schránky se vloží jako Markdown.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F3 · hotovo</span><h3>Rozšířená syntaxe</h3><p>Tabulky s&nbsp;přeskakováním Tabem, poznámky pod čarou, <code>[toc]</code>, emoji, matematika, diagramy Mermaid.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F4 · hotovo</span><h3>Obrázky</h3><p>Přetáhnete obrázek do textu a&nbsp;kopie skončí v&nbsp;<code>./assets/</code>. Načítají se jen viditelné.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F5 · hotovo</span><h3>Režimy</h3><p>Čtení ⌘/, soustředění, psací stroj, stavový řádek. Přepnutí u&nbsp;1&nbsp;MB do 33&nbsp;ms.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F6 · hotovo</span><h3>Knihovna</h3><p>Postranní panel, osnova, hledání v&nbsp;knihovně ⇧⌘F, rychlé otevření ⌘P, najít a&nbsp;nahradit s&nbsp;regexem.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F7 · hotovo</span><h3>Export</h3><p>HTML, PDF se záložkami, PNG. Přes Pandoc DOCX, ODT, ePub, LaTeX a&nbsp;další, i&nbsp;import.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F8 · hotovo</span><h3>Témata</h3><p>Čtyři vestavěná, vlastní téma bez restartu, písmo, výška řádku a&nbsp;šířka textu.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F9 · hotovo</span><h3>Systém</h3><p>Čeština a&nbsp;angličtina, Quick Look ve Finderu, Služby, Sdílet, přístupnost.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F10 · hotovo</span><h3>Bezpečnost</h3><p>Sandbox a&nbsp;sanitizace HTML. Ze 77 útočných vzorků se nespustí ani jeden. Žádná telemetrie.</p></li>
+        <li class="phase phase--done"><span class="phase__id mono">F11 · hotovo</span><h3>Distribuce</h3><p>DMG, aktualizace přes Sparkle podepsané klíčem EdDSA, návod k&nbsp;instalaci.</p></li>
       </ol>
     </div>
   </section>
@@ -285,7 +286,7 @@
   <div class="wrap foot__inner">
     <p class="foot__brand"><img src="assets/img/icon-256.png" width="20" height="20" alt="" loading="lazy"> Hashline</p>
     <p>Tahle stránka nepoužívá cookies ani analytiku.</p>
-    <p class="mono">© 2026 Hashline</p>
+    <p class="mono">© 2026 Hashline · open source (MIT) · <a href="https://github.com/Hessevalentino/hashline">GitHub</a></p>
   </div>
 </footer>
 </body>

@@ -353,11 +353,9 @@ code { font-family: var(--font-mono); font-size: 0.86em; color: var(--ember-hi);
 .phase__id { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
 .phase h3 { font-size: 1.5rem; }
 .phase p { color: var(--muted); font-size: 1rem; }
-.phase--done { background: var(--ember-lo); border-color: var(--ember-lo); }
-.phase--done .phase__id { color: #FFE3D9; }
-.phase--done p { color: #FFEDE6; }
-.phase--done h3 { color: #fff; }
-.phase--done code, .phase code { color: inherit; }
+.phase--done { border-top: 3px solid var(--ember); }
+.phase--done .phase__id { color: var(--ember-hi); }
+.phase code { color: inherit; }
 @media (max-width: 40rem) { .plan__head { grid-template-columns: 1fr; } .plan__progress { margin-top: var(--space-2); } }
 
 /* ---------- 11. Stažení ---------- */

@@ -25,6 +25,8 @@ extension PreviewController {
         .mermaid-diagram[data-rendered="true"] > pre { display: none; }
         .mermaid-error { color: #d73a49; font-size: 0.85em; }
         .footnote { font-size: 0.85em; opacity: 0.85; }
+        .task-list-item { list-style: none; }
+        .task-list-item > input[type=checkbox] { margin: 0 0.4em 0 -1.35em; vertical-align: middle; }
         </style>
         <style id="hashline-theme-light" media="(prefers-color-scheme: light)">\(light)</style>
         <style id="hashline-theme-dark" media="(prefers-color-scheme: dark)">\(dark)</style>

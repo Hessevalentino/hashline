@@ -56,6 +56,8 @@ final class PreviewProvider: QLPreviewProvider, QLPreviewingController {
             .math-display { overflow-x: auto; margin: 1em 0; }
             .front-matter { display: none; }
             .hashline-truncated { opacity: 0.6; font-style: italic; }
+            .task-list-item { list-style: none; }
+            .task-list-item > input[type=checkbox] { margin: 0 0.4em 0 -1.35em; vertical-align: middle; }
             """
         if katex { sheet += resource("katex-inline.css") }
         return sheet
