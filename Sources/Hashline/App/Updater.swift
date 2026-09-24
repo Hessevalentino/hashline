@@ -31,7 +31,8 @@ final class Updater {
     func start() {
         guard Self.isEnabled else { return }
         controller.startUpdater()
-        observation = controller.updater.observe(\.canCheckForUpdates, options: [.initial, .new]) { [weak self] updater, _ in
+        observation = controller.updater.observe(\.canCheckForUpdates,
+                                                 options: [.initial, .new]) { [weak self] updater, _ in
             let value = updater.canCheckForUpdates
             MainActor.assumeIsolated { self?.canCheckForUpdates = value }
         }
