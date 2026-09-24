@@ -5,5 +5,14 @@
     <link>https://hashline.hesse.works/</link>
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
+    <item>
+      <title>Hashline 0.1.0</title>
+      <pubDate>Thu, 24 Sep 2026 16:49:20 GMT</pubDate>
+      <sparkle:version>1</sparkle:version>
+      <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>První veřejné vydání</li><li>Editor Markdownu se zvýrazněnou syntaxí a živým náhledem</li><li>Knihovna, osnova, hledání, export (HTML, PDF, PNG, Pandoc)</li><li>Témata, přepínač světlý/tmavý, čeština a angličtina, Quick Look</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.1.0/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="Z/e++fwV2qBK3ghgfZUTEflMcijnXRK/xUnoS5WLesIDmUlsXE30aPUdYRDYR8wKiip/wwQWvRCsRgLvB+YuDw==" length="7316173" />
+    </item>
   </channel>
 </rss>
