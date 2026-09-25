@@ -12,6 +12,9 @@ import WebKit
 ///   `NSWindow.sendEvent` (no XCTest, no focus change, no dead keys), logs the latency and quits.
 /// - `-HashlineModeBenchmark YES` switches each view mode on and off and logs the times
 ///   (`Mode switch …`). Do not pass the view-mode keys themselves as arguments: they would win.
+/// - `-HashlineSplitDragTest <divider>` drags that divider (0 = library when shown) 120 points left with
+///   mouse events sent to the window (NSSplitView's own tracking loop), then narrows the window by
+///   300 points and logs the item widths and saved settings (`Split drag …`).
 @MainActor
 final class UITestSupport: NSObject {
     func applicationDidFinishLaunching() {
@@ -44,6 +47,13 @@ final class UITestSupport: NSObject {
                 await Self.runModeBenchmark()
             }
         }
+        if defaults.object(forKey: "HashlineSplitDragTest") != nil {
+            let divider = defaults.integer(forKey: "HashlineSplitDragTest")
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(4))
+                await Self.runSplitDragTest(divider: divider)
+            }
+        }
         if let snapshotName = defaults.string(forKey: "HashlineDebugSnapshot") {
             let delay = max(defaults.double(forKey: "HashlineDebugSnapshotDelay"), 2)
             Task { @MainActor in
@@ -51,6 +61,45 @@ final class UITestSupport: NSObject {
                 await Self.writeSnapshot(named: snapshotName)
             }
         }
+    }
+
+    /// Queues the drag and the mouse-up, then sends the mouse-down: NSSplitView tracks the rest itself.
+    private static func runSplitDragTest(divider: Int) async {
+        guard let window = NSApp.orderedWindows.first(where: { DocumentReveal.session(for: $0) != nil }),
+              let session = DocumentReveal.session(for: window) else {
+            return Performance.logger.error("Split drag: no document window")
+        }
+        var item: NSView? = session.editorScrollView
+        while let current = item, !(current.superview is NSSplitView) { item = current.superview }
+        guard let split = item?.superview as? NSSplitView, divider < split.arrangedSubviews.count - 1 else {
+            return Performance.logger.error("Split drag: no split view or divider")
+        }
+        func log(_ step: String) {
+            let widths = split.arrangedSubviews.map { String(Int($0.frame.width)) }.joined(separator: " | ")
+            let defaults = UserDefaults.standard
+            let ratio = defaults.double(forKey: SplitSettings.editorFractionKey)
+            let library = defaults.double(forKey: SplitSettings.libraryWidthKey)
+            Performance.logger.notice(
+                "Split drag \(step, privacy: .public): \(widths, privacy: .public), ratio \(ratio), library \(library)")
+        }
+        log("before")
+        let dividerX = split.arrangedSubviews[divider].frame.maxX + split.dividerThickness / 2
+        let start = split.convert(NSPoint(x: dividerX, y: split.bounds.midY), to: nil)
+        func event(_ type: NSEvent.EventType, _ offset: CGFloat) -> NSEvent? {
+            NSEvent.mouseEvent(with: type, location: NSPoint(x: start.x + offset, y: start.y), modifierFlags: [],
+                               timestamp: ProcessInfo.processInfo.systemUptime, windowNumber: window.windowNumber,
+                               context: nil, eventNumber: 0, clickCount: 1, pressure: type == .leftMouseUp ? 0 : 1)
+        }
+        for step in 1...6 { event(.leftMouseDragged, CGFloat(-20 * step)).map { NSApp.postEvent($0, atStart: false) } }
+        event(.leftMouseUp, -120).map { NSApp.postEvent($0, atStart: false) }
+        event(.leftMouseDown, 0).map(window.sendEvent)
+        try? await Task.sleep(for: .milliseconds(300))
+        log("dragged")
+        var frame = window.frame
+        frame.size.width -= 300
+        window.setFrame(frame, display: true)
+        try? await Task.sleep(for: .milliseconds(300))
+        log("narrowed")
     }
 
     private func startServiceHook(_ defaults: UserDefaults) {

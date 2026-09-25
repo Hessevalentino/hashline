@@ -58,8 +58,9 @@ extension EditorSession {
     private func splitDidResize(_ split: NSSplitView?, draggedDivider: Int?) {
         guard !isApplyingSplit, let layout = splitLayout(), layout.split === split else { return }
         // Only the user's mouse drag changes the saved layout. SwiftUI also moves dividers
-        // (with an index) when items appear, which must not overwrite it.
-        let isUserDrag = draggedDivider != nil && !layout.split.inLiveResize
+        // (with an index) when items appear, which must not overwrite it. The split view itself
+        // is in live resize while its divider is dragged; only the window's live resize is excluded.
+        let isUserDrag = draggedDivider != nil && layout.split.window?.inLiveResize != true
             && NSApp.currentEvent?.type == .leftMouseDragged
         guard isUserDrag, let draggedDivider else { return scheduleSplitLayout() }
         let items = layout.split.arrangedSubviews
