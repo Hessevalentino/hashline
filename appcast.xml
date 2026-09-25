@@ -6,6 +6,15 @@
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
     <item>
+      <title>Hashline 0.1.6</title>
+      <pubDate>Fri, 25 Sep 2026 20:27:05 GMT</pubDate>
+      <sparkle:version>7</sparkle:version>
+      <sparkle:shortVersionString>0.1.6</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Fix visual problems UI</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.1.6/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="wBfiB03pLlZ1J8XuII3rmcmeBSTOSMkKjxvuaEB7pr1qeQyVwsV8Xp4j3/O/0U3gSeMIB5qQuUHyKuigPwTCBw==" length="7298849" />
+    </item>
+    <item>
       <title>Hashline 0.1.5</title>
       <pubDate>Fri, 25 Sep 2026 19:31:58 GMT</pubDate>
       <sparkle:version>6</sparkle:version>

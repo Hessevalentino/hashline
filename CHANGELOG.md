@@ -1,5 +1,9 @@
 # Změny
 
+## 0.1.6 – 2026-09-25
+
+- Fix visual problems UI
+
 ## 0.1.5 – 2026-09-25
 
 - Dělicí čáry mezi knihovnou, editorem a náhledem končí pod lištou, už neprocházejí titulkovým pruhem
