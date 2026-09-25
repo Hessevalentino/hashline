@@ -1,5 +1,12 @@
 # Změny
 
+## 0.1.5 – 2026-09-25
+
+- Dělicí čáry mezi knihovnou, editorem a náhledem končí pod lištou, už neprocházejí titulkovým pruhem
+- Šířka knihovny a poměr editoru a náhledu se pamatují pro všechna okna a dokumenty i po restartu, dokud dělič znovu nepřetáhnete
+- Tlačítko náhledu přepne z režimu čtení rovnou do rozdělení editor a náhled, není potřeba nejdřív vypnout čtení
+- Dokument otevřený z knihovny v režimu čtení už krátce neprobliká v rozdělení
+
 ## 0.1.4 – 2026-09-24
 
 - Knihovna ukazuje název souboru (jako Finder), ne první nadpis; přejmenování souboru se v ní hned projeví. Nadpis je vidět v náhledu textu pod názvem.

@@ -6,6 +6,15 @@
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
     <item>
+      <title>Hashline 0.1.5</title>
+      <pubDate>Fri, 25 Sep 2026 19:31:58 GMT</pubDate>
+      <sparkle:version>6</sparkle:version>
+      <sparkle:shortVersionString>0.1.5</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Dělicí čáry mezi knihovnou, editorem a náhledem končí pod lištou</li><li>Šířka knihovny a poměr editoru a náhledu se pamatují pro všechna okna i po restartu</li><li>Tlačítko náhledu přepne z režimu čtení rovnou do rozdělení editor a náhled</li><li>Dokument otevřený z knihovny v režimu čtení už neprobliká v rozdělení</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.1.5/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="TL8vRKxZAmqstTdT9yn6C75x0yNb7baGd0w18YxNV5HBMFv62jaJ/It89ImsIY82ADSjck6636eoVVpt2g8KDA==" length="7298996" />
+    </item>
+    <item>
       <title>Hashline 0.1.4</title>
       <pubDate>Thu, 24 Sep 2026 20:29:04 GMT</pubDate>
       <sparkle:version>5</sparkle:version>
