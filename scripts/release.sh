@@ -70,9 +70,14 @@ git commit -m "Release $VERSION ($BUILD)" -m "Co-Authored-By: Claude Opus 5.5 (1
 git tag -f "v$VERSION"
 git push origin HEAD --tags
 NOTES_TEXT=$(printf -- '- %s\n' "${NOTES[@]}")
+# Quoted heredoc: the backticks are Markdown, not command substitution.
+INSTALL_NOTE=$(cat <<'MD'
+Aplikace je podepsaná ad-hoc (bez účtu Apple Developer), macOS stažený DMG napoprvé zablokuje. Nejrychleji: `xattr -d com.apple.quarantine ~/Downloads/Hashline.dmg`, pak DMG otevřít. Bez Terminálu: Nastavení systému ▸ Soukromí a zabezpečení ▸ Přesto otevřít (pro DMG i aplikaci). Podrobně v README.
+MD
+)
 gh release create "v$VERSION" "$DMG" --repo "$REPO" --title "Hashline $VERSION" --notes "$NOTES_TEXT
 
-Aplikace je podepsaná ad-hoc (bez účtu Apple Developer), macOS stažený DMG napoprvé zablokuje. Nejrychleji: `xattr -d com.apple.quarantine ~/Downloads/Hashline.dmg`, pak DMG otevřít. Bez Terminálu: Nastavení systému ▸ Soukromí a zabezpečení ▸ Přesto otevřít (pro DMG i aplikaci). Podrobně v README."
+$INSTALL_NOTE"
 # raw.githubusercontent.com caches for up to 5 minutes; until then Sparkle still sees the old feed.
 echo "== Waiting for the published appcast"
 FEED=$(/usr/libexec/PlistBuddy -c "Print SUFeedURL" Support/Info.plist)
