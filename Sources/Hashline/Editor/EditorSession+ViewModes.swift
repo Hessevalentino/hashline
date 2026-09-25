@@ -21,7 +21,7 @@ extension EditorSession {
             return
         }
         window.makeFirstResponder(textView)
-        if applySplitFraction() { return }
+        if applySplitLayout() { return }
         // A re-added split item gets an arbitrary width; restore the previous layout.
         var view: NSView? = scrollView
         while let current = view, !(current.superview is NSSplitView) { view = current.superview }

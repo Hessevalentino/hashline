@@ -27,13 +27,14 @@ struct DocumentView: View {
                 if showsLibrary {
                     // The store (and the folder scan) is created only when the panel is first shown.
                     Sidebar(store: LibraryStore.shared, session: session)
-                        .frame(minWidth: 220, idealWidth: 270, maxWidth: 380, maxHeight: .infinity)
+                        .frame(minWidth: SplitSettings.libraryWidths.lowerBound, idealWidth: 270,
+                               maxWidth: SplitSettings.libraryWidths.upperBound, maxHeight: .infinity)
                         .accessibilityElement(children: .contain)
                         .accessibilityLabel("Sidebar")
                 }
                 // Reading mode removes the editor but keeps its view in the session (caret, scroll,
                 // undo survive). The preview keeps its place, so its web view is never re-parented.
-                if !readingMode || !session.readiness.isEditable {
+                if !readingMode {
                     VStack(spacing: 0) {
                         if session.find.isVisible {
                             FindBar(find: session.find)
@@ -41,15 +42,27 @@ struct DocumentView: View {
                         }
                         MarkdownEditor(session: session)
                     }
-                    .frame(minWidth: 320, idealWidth: 600, maxWidth: .infinity, maxHeight: .infinity)
+                    .frame(minWidth: SplitSettings.editorMinWidth, idealWidth: 600,
+                           maxWidth: .infinity, maxHeight: .infinity)
                     .accessibilityElement(children: .contain)
                     .accessibilityLabel("Editor")
                 }
-                if showsPreview || (readingMode && session.readiness.isEditable) {
+                if showsPreview || readingMode {
                     PreviewColumn(controller: session.previewController())
-                        .frame(minWidth: 280, idealWidth: 600, maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(minWidth: SplitSettings.previewMinWidth, idealWidth: 600,
+                               maxWidth: .infinity, maxHeight: .infinity)
                         .accessibilityElement(children: .contain)
                         .accessibilityLabel("Preview")
+                }
+            }
+            .background {
+                // Opened in reading mode: the editor joins the window unseen, outside the split,
+                // so it becomes editable (and starts the preview) without flashing the split layout.
+                if readingMode && !session.readiness.isEditable {
+                    MarkdownEditor(session: session)
+                        .frame(width: 1, height: 1)
+                        .opacity(0)
+                        .accessibilityHidden(true)
                 }
             }
             if showsStatusBar {
@@ -168,6 +181,19 @@ enum SyntaxExtensionSettings {
 
 enum PreviewSettings {
     static let showsPreviewKey = "showsPreview"
+
+    /// Editor + preview ↔ editor alone. From reading mode it goes straight to editor + preview.
+    @MainActor
+    static func togglePreview() {
+        let defaults = UserDefaults.standard
+        if defaults.bool(forKey: ViewSettings.readingModeKey) {
+            defaults.set(true, forKey: showsPreviewKey)
+            defaults.set(false, forKey: ViewSettings.readingModeKey)
+            return
+        }
+        let shows = defaults.object(forKey: showsPreviewKey) == nil || defaults.bool(forKey: showsPreviewKey)
+        defaults.set(!shows, forKey: showsPreviewKey)
+    }
 }
 
 extension FocusedValues {
@@ -183,6 +209,7 @@ struct PreviewCommands: Commands {
     @FocusedValue(\.editorSession) private var session
     @AppStorage(PreviewSettings.showsPreviewKey) private var showsPreview = true
     @AppStorage(LibrarySettings.showsLibraryKey) private var showsLibrary = false
+    @AppStorage(ViewSettings.readingModeKey) private var readingMode = false
 
     var body: some Commands {
         CommandGroup(after: .toolbar) {
@@ -190,8 +217,9 @@ struct PreviewCommands: Commands {
                 showsLibrary.toggle()
             }
             .keyboardShortcut("l", modifiers: [.command, .shift])
-            Button(showsPreview ? String(localized: "Hide Preview") : String(localized: "Show Preview")) {
-                showsPreview.toggle()
+            let hidesPreview = showsPreview && !readingMode
+            Button(hidesPreview ? String(localized: "Hide Preview") : String(localized: "Show Preview")) {
+                PreviewSettings.togglePreview()
             }
             .keyboardShortcut("p", modifiers: [.command, .option])
         }

@@ -64,6 +64,19 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
         guard window.toolbar == nil || window.toolbar?.identifier != identifier else { return }
         window.toolbar = NSToolbar(identifier: "cz.hashline.placeholder")
         window.toolbarStyle = .unifiedCompact
+        separateContent(in: window)
+    }
+
+    /// Content starts below the title bar: split dividers and the library's background would
+    /// otherwise run up through the toolbar and move with every divider drag.
+    private static func separateContent(in window: NSWindow) {
+        guard window.styleMask.contains(.fullSizeContentView) else { return }
+        // Keep the window's frame (restored by SwiftUI); the content shrinks by the title bar.
+        let frame = window.frame
+        window.styleMask.remove(.fullSizeContentView)
+        window.setFrame(frame, display: false)
+        window.titlebarAppearsTransparent = false
+        window.titlebarSeparatorStyle = .line
     }
 
     /// Installs the bar once per window. Creating the items (13 SF Symbols, layout) costs about
@@ -80,6 +93,7 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
         toolbar.centeredItemIdentifiers = Set(formatting)
         window.toolbar = toolbar
         window.toolbarStyle = .unifiedCompact
+        separateContent(in: window)
         // Documents opened from the library join this window as tabs.
         window.tabbingMode = .preferred
         return controller
@@ -191,9 +205,6 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
     }
 
     @objc private func togglePreview(_ sender: Any?) {
-        let defaults = UserDefaults.standard
-        let shows = defaults.object(forKey: PreviewSettings.showsPreviewKey) == nil
-            || defaults.bool(forKey: PreviewSettings.showsPreviewKey)
-        defaults.set(!shows, forKey: PreviewSettings.showsPreviewKey)
+        PreviewSettings.togglePreview()
     }
 }

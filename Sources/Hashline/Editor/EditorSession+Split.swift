@@ -3,31 +3,46 @@ import AppKit
 enum SplitSettings {
     /// The editor's share of the editor + preview width, set by dragging the divider.
     static let editorFractionKey = "editorSplitFraction"
+    /// The library's width in points, set by dragging its divider.
+    static let libraryWidthKey = "librarySplitWidth"
+    static let libraryWidths: ClosedRange<CGFloat> = 220...380
+    static let editorMinWidth: CGFloat = 320
+    static let previewMinWidth: CGFloat = 280
 }
 
-// MARK: Divider between the editor and the preview, remembered across windows and launches
+// MARK: Dividers (library | editor | preview), remembered across windows, documents and launches
 
 extension EditorSession {
 
-    /// The split view with the editor item and the preview item right after it.
-    private struct EditorSplit {
+    /// The window's split view and which of its items are visible.
+    private struct SplitLayout {
         let split: NSSplitView
-        let index: Int
-        let editor: NSView
-        let preview: NSView
+        let library: NSView?
+        let editor: NSView?
+        let preview: NSView?
     }
 
-    private func editorSplit() -> EditorSplit? {
-        var view: NSView? = editorScrollView
-        while let current = view, !(current.superview is NSSplitView) { view = current.superview }
-        guard let item = view, let split = item.superview as? NSSplitView,
-              let index = split.arrangedSubviews.firstIndex(of: item),
-              index + 1 < split.arrangedSubviews.count else { return nil }
-        return EditorSplit(split: split, index: index, editor: item, preview: split.arrangedSubviews[index + 1])
+    /// The split view item holding `view`.
+    private func splitItem(containing view: NSView?) -> NSView? {
+        var current = view
+        while let item = current, !(item.superview is NSSplitView) { current = item.superview }
+        return current
     }
 
-    /// A drag of the editor/preview divider saves the ratio; any other resize (window, library,
-    /// the preview or the editor coming back) puts the divider back to it.
+    private func splitLayout() -> SplitLayout? {
+        let editorView = editorScrollView?.window == nil ? nil : editorScrollView
+        let previewView = preview?.containerView.window == nil ? nil : preview?.containerView
+        let editor = splitItem(containing: editorView)
+        let preview = splitItem(containing: previewView)
+        guard let split = (editor ?? preview)?.superview as? NSSplitView else { return nil }
+        // The library is always the first item; it is neither the editor nor the preview.
+        let first = split.arrangedSubviews.first
+        let library = first === editor || first === preview ? nil : first
+        return SplitLayout(split: split, library: library, editor: editor, preview: preview)
+    }
+
+    /// A drag of a divider saves the layout; any other resize (window, library, the preview or
+    /// the editor coming back, SwiftUI's own layout) puts the dividers back to it.
     func observeSplit() {
         guard splitObserver == nil else { return }
         splitObserver = NotificationCenter.default.addObserver(
@@ -37,45 +52,67 @@ extension EditorSession {
             let split = notification.object as? NSSplitView
             MainActor.assumeIsolated { self?.splitDidResize(split, draggedDivider: dividerIndex) }
         }
-        applySplitFraction()
+        applySplitLayout()
     }
 
     private func splitDidResize(_ split: NSSplitView?, draggedDivider: Int?) {
-        guard !isApplyingSplit, let current = editorSplit(), current.split === split else { return }
-        if draggedDivider == current.index {
-            let total = current.editor.frame.width + current.preview.frame.width
+        guard !isApplyingSplit, let layout = splitLayout(), layout.split === split else { return }
+        // Only the user's mouse drag changes the saved layout. SwiftUI also moves dividers
+        // (with an index) when items appear, which must not overwrite it.
+        let isUserDrag = draggedDivider != nil && !layout.split.inLiveResize
+            && NSApp.currentEvent?.type == .leftMouseDragged
+        guard isUserDrag, let draggedDivider else { return scheduleSplitLayout() }
+        let items = layout.split.arrangedSubviews
+        let defaults = UserDefaults.standard
+        if let library = layout.library, items.firstIndex(of: library) == draggedDivider {
+            defaults.set(Double(library.frame.width), forKey: SplitSettings.libraryWidthKey)
+            // The editor absorbed the change; keep the editor/preview ratio.
+            scheduleSplitLayout()
+        } else if let editor = layout.editor, let preview = layout.preview,
+                  items.firstIndex(of: editor) == draggedDivider {
+            let total = editor.frame.width + preview.frame.width
             guard total > 0 else { return }
-            UserDefaults.standard.set(Double(current.editor.frame.width / total),
-                                      forKey: SplitSettings.editorFractionKey)
-            return
+            defaults.set(Double(editor.frame.width / total), forKey: SplitSettings.editorFractionKey)
         }
-        scheduleSplitFraction()
     }
 
     /// Once per run-loop turn: live window resizing posts many notifications.
-    func scheduleSplitFraction() {
+    func scheduleSplitLayout() {
         guard !isSplitApplyScheduled else { return }
         isSplitApplyScheduled = true
         DispatchQueue.main.async { [weak self] in
             self?.isSplitApplyScheduled = false
-            self?.applySplitFraction()
+            self?.applySplitLayout()
         }
     }
 
-    /// Moves the divider to the saved ratio; false without a saved ratio or a visible preview.
+    /// Moves the dividers to the saved library width and editor/preview ratio; true when the
+    /// editor/preview divider was placed from a saved ratio.
     @discardableResult
-    func applySplitFraction() -> Bool {
+    func applySplitLayout() -> Bool {
+        guard let layout = splitLayout() else { return false }
         let defaults = UserDefaults.standard
-        guard defaults.object(forKey: SplitSettings.editorFractionKey) != nil,
-              let current = editorSplit() else { return false }
-        let fraction = min(max(defaults.double(forKey: SplitSettings.editorFractionKey), 0.1), 0.9)
-        let total = current.editor.frame.width + current.preview.frame.width
-        guard total > 0 else { return false }
-        let target = current.editor.frame.minX + (total * fraction).rounded()
-        guard abs(current.editor.frame.maxX - target) > 1 else { return true }
+        let items = layout.split.arrangedSubviews
         isApplyingSplit = true
-        current.split.setPosition(target, ofDividerAt: current.index)
-        isApplyingSplit = false
+        defer { isApplyingSplit = false }
+        if let library = layout.library, let index = items.firstIndex(of: library),
+           defaults.object(forKey: SplitSettings.libraryWidthKey) != nil {
+            let bounds = SplitSettings.libraryWidths
+            let width = min(max(defaults.double(forKey: SplitSettings.libraryWidthKey), bounds.lowerBound),
+                            bounds.upperBound)
+            let target = library.frame.minX + width.rounded()
+            if abs(library.frame.maxX - target) > 1 { layout.split.setPosition(target, ofDividerAt: index) }
+        }
+        guard let editor = layout.editor, let preview = layout.preview, let index = items.firstIndex(of: editor),
+              defaults.object(forKey: SplitSettings.editorFractionKey) != nil else { return false }
+        let fraction = min(max(defaults.double(forKey: SplitSettings.editorFractionKey), 0.1), 0.9)
+        let total = editor.frame.width + preview.frame.width
+        guard total > 0 else { return false }
+        // Within the minimum widths: a divider pushed past them would move the library's too.
+        let editorWidth = min(max((total * fraction).rounded(), SplitSettings.editorMinWidth),
+                              total - SplitSettings.previewMinWidth)
+        let target = editor.frame.minX + editorWidth
+        if abs(editor.frame.maxX - target) > 1 { layout.split.setPosition(target, ofDividerAt: index) }
         return true
     }
 }
