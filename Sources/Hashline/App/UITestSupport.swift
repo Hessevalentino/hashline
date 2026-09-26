@@ -12,6 +12,8 @@ import WebKit
 ///   `NSWindow.sendEvent` (no XCTest, no focus change, no dead keys), logs the latency and quits.
 /// - `-HashlineAssistantSelfTest YES` with `-HashlineAssistantFake YES` runs the assistant's edit, undo
 ///   and stop flow without focus and logs `Assistant self-test: …` (see AssistantFake).
+/// - `-HashlineAssistantLocalSelfTest ollama|lmstudio` sends one real instruction to a local server
+///   and logs `Assistant local self-test: …` (see AssistantFake).
 /// - `-HashlineModeBenchmark YES` switches each view mode on and off and logs the times
 ///   (`Mode switch …`). Do not pass the view-mode keys themselves as arguments: they would win.
 /// - `-HashlineSplitDragTest <divider>` drags that divider (0 = library when shown) 120 points left with
@@ -19,6 +21,21 @@ import WebKit
 ///   300 points and logs the item widths and saved settings (`Split drag …`).
 @MainActor
 final class UITestSupport: NSObject {
+    private func startAssistantHooks(_ defaults: UserDefaults) {
+        if defaults.bool(forKey: "HashlineAssistantSelfTest") {
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(4))
+                await AssistantFake.runSelfTest()
+            }
+        }
+        if let provider = defaults.string(forKey: "HashlineAssistantLocalSelfTest") {
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(4))
+                await AssistantFake.runLocalSelfTest(provider)
+            }
+        }
+    }
+
     func applicationDidFinishLaunching() {
         let defaults = UserDefaults.standard
         if let name = defaults.string(forKey: "HashlineUITestDocument") {
@@ -43,12 +60,7 @@ final class UITestSupport: NSObject {
             }
         }
         startShowcaseHook(defaults)
-        if defaults.bool(forKey: "HashlineAssistantSelfTest") {
-            Task { @MainActor in
-                try? await Task.sleep(for: .seconds(4))
-                await AssistantFake.runSelfTest()
-            }
-        }
+        startAssistantHooks(defaults)
         if defaults.bool(forKey: "HashlineModeBenchmark") {
             Task { @MainActor in
                 try? await Task.sleep(for: .seconds(4))

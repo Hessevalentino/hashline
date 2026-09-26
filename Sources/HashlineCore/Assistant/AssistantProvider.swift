@@ -6,52 +6,70 @@ public enum AssistantProtocol: Sendable {
     case openAIResponses
 }
 
-/// A provider of the document assistant. The user enters a key for each one they want to use.
+/// A provider of the document assistant. The user enters a key for each cloud provider they want
+/// to use, or the address of a local server (Ollama, LM Studio) whose models run on their own Mac.
 public enum AssistantProvider: String, CaseIterable, Sendable, Codable {
     case claude
     case openAI = "openai"
     case deepSeek = "deepseek"
+    case ollama
+    case lmStudio = "lmstudio"
 
     public var displayName: String {
         switch self {
         case .claude: "Claude"
         case .openAI: "OpenAI"
         case .deepSeek: "DeepSeek"
+        case .ollama: "Ollama"
+        case .lmStudio: "LM Studio"
         }
+    }
+
+    /// A server the user runs themselves: no key, no price, models listed by the server.
+    public var isLocal: Bool {
+        self == .ollama || self == .lmStudio
     }
 
     public var wireProtocol: AssistantProtocol {
         switch self {
-        case .claude, .deepSeek: .anthropicMessages
+        // Ollama and LM Studio serve Anthropic Messages at `/v1/messages`, tools and streaming
+        // included (checked with Ollama 0.20 and LM Studio 0.4, 2026-09-26).
+        case .claude, .deepSeek, .ollama, .lmStudio: .anthropicMessages
         case .openAI: .openAIResponses
         }
     }
 
-    /// Base URL; the protocol appends `/v1/messages`, `/v1/responses` or `/v1/models`.
+    /// Base URL; the protocol appends `/v1/messages`, `/v1/responses` or `/v1/models`. For a local
+    /// provider it is the server's default address, which the user may change.
     public var baseURL: URL {
         switch self {
         case .claude: .web("https://api.anthropic.com")
         case .openAI: .web("https://api.openai.com")
         // DeepSeek's Anthropic-compatible endpoint (research 2026-09-26).
         case .deepSeek: .web("https://api.deepseek.com/anthropic")
+        case .ollama: .web("http://localhost:11434")
+        case .lmStudio: .web("http://localhost:1234")
         }
     }
 
-    /// The provider's price list; prices change too often to keep in the app.
-    public var pricingURL: URL {
+    /// The provider's price list; prices change too often to keep in the app. None for local servers.
+    public var pricingURL: URL? {
         switch self {
         case .claude: .web("https://www.anthropic.com/pricing#api")
         case .openAI: .web("https://openai.com/api/pricing/")
         case .deepSeek: .web("https://api-docs.deepseek.com/quick_start/pricing")
+        case .ollama, .lmStudio: nil
         }
     }
 
-    /// Where keys are created.
+    /// Where keys are created, or where a local server is downloaded.
     public var keysURL: URL {
         switch self {
         case .claude: .web("https://platform.claude.com/settings/keys")
         case .openAI: .web("https://platform.openai.com/api-keys")
         case .deepSeek: .web("https://platform.deepseek.com/api_keys")
+        case .ollama: .web("https://ollama.com/download")
+        case .lmStudio: .web("https://lmstudio.ai/download")
         }
     }
 
@@ -71,15 +89,23 @@ public enum AssistantProvider: String, CaseIterable, Sendable, Codable {
             // Web search is hidden until a real call shows DeepSeek runs it (research, A5).
             [AssistantModel(provider: self, id: "deepseek-v4-pro", name: "DeepSeek V4 Pro", webSearch: nil),
              AssistantModel(provider: self, id: "deepseek-flash", name: "DeepSeek Flash", webSearch: nil)]
+        case .ollama, .lmStudio:
+            // Whatever the user has downloaded; the app asks the server (`localModels(from:)`).
+            []
         }
     }
 
-    /// Request headers with the key (never logged).
+    /// A model of a local server, known only by the id the server lists.
+    public func localModel(id: String) -> AssistantModel {
+        AssistantModel(provider: self, id: id, name: id, webSearch: nil)
+    }
+
+    /// Request headers with the key (never logged). A local server takes none.
     public func headers(apiKey: String) -> [String: String] {
         var headers = ["content-type": "application/json"]
         switch wireProtocol {
         case .anthropicMessages:
-            headers["x-api-key"] = apiKey
+            if !apiKey.isEmpty { headers["x-api-key"] = apiKey }
             headers["anthropic-version"] = "2023-06-01"
         case .openAIResponses:
             headers["authorization"] = "Bearer \(apiKey)"
@@ -87,21 +113,33 @@ public enum AssistantProvider: String, CaseIterable, Sendable, Codable {
         return headers
     }
 
-    /// The key check: every provider lists its models for a valid key.
-    public func modelsRequest(apiKey: String) -> URLRequest {
-        var request = URLRequest(url: modelsURL)
+    /// The key check: every provider lists its models for a valid key. A local server lists the
+    /// models it can run at `server` (its base URL).
+    public func modelsRequest(apiKey: String, server: URL? = nil) -> URLRequest {
+        var request = URLRequest(url: modelsURL(server: server ?? baseURL))
         for (field, value) in headers(apiKey: apiKey) where field != "content-type" {
             request.setValue(value, forHTTPHeaderField: field)
         }
-        request.timeoutInterval = 20
+        request.timeoutInterval = isLocal ? 5 : 20
         return request
     }
 
-    private var modelsURL: URL {
+    private func modelsURL(server: URL) -> URL {
         switch self {
-        case .claude, .openAI: baseURL.appending(path: "v1/models")
+        // Ollama and LM Studio list their models in the OpenAI shape at the same path.
+        case .claude, .openAI, .ollama, .lmStudio: server.appending(path: "v1/models")
         // The Anthropic-compatible path has no model list; the provider's own one takes the same key.
         case .deepSeek: .web("https://api.deepseek.com/models")
+        }
+    }
+
+    /// The chat models of a local server's `/v1/models` answer (`{"data": [{"id": …}]}`), without
+    /// embedding models, which cannot answer.
+    public func localModels(from data: Data) -> [AssistantModel] {
+        guard case .array(let entries)? = (try? JSONValue.parse(data))?["data"] else { return [] }
+        return entries.compactMap { entry in
+            guard let id = entry["id"]?.string, !id.lowercased().contains("embed") else { return nil }
+            return localModel(id: id)
         }
     }
 }
@@ -128,6 +166,7 @@ public struct AssistantModel: Sendable, Hashable, Identifiable {
     public static func model(forKey key: String) -> AssistantModel? {
         let parts = key.split(separator: "/", maxSplits: 1).map(String.init)
         guard parts.count == 2, let provider = AssistantProvider(rawValue: parts[0]) else { return nil }
+        if provider.isLocal { return provider.localModel(id: parts[1]) }
         return provider.models.first { $0.id == parts[1] }
     }
 }

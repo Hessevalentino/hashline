@@ -98,7 +98,7 @@ Když už aplikaci máte v Aplikacích a macOS ji blokuje, pomůže i `xattr -dr
 | 🧘 **Režimy** | Soustředění F8, psací stroj F9, stavový řádek se slovy, znaky a dobou čtení |
 | 📤 **Export** | Markdown (kopie kamkoli), HTML, PDF se záložkami, PNG, přes [Pandoc](https://pandoc.org) DOCX, ODT, RTF, ePub, LaTeX, MediaWiki, RST, import přes Pandoc |
 | 🍎 **macOS** | Quick Look pro `.md` ve Finderu, Služby („Nový dokument Hashline s výběrem“), Sdílení, čeština a angličtina, přístupnost |
-| 🤖 **Asistent AI** | Volitelný, ve výchozím stavu vypnutý (Nastavení ▸ Obecné ▸ Pokročilé). Chat u každého dokumentu s Claude, OpenAI nebo DeepSeek na vlastní klíč API (uložený jen v Klíčence). Na požádání rovnou upravuje text, každý pokyn jde vrátit jedním ⌘Z, volitelná rešerše na webu se zdroji. Vidí jen svůj dokument. |
+| 🤖 **Asistent AI** | Volitelný, ve výchozím stavu vypnutý (Nastavení ▸ Obecné ▸ Pokročilé). Chat u každého dokumentu s Claude, OpenAI nebo DeepSeek na vlastní klíč API (uložený jen v Klíčence), nebo s lokálním modelem v Ollamě či LM Studiu, kdy text neopustí Mac. Na požádání rovnou upravuje text, každý pokyn jde vrátit jedním ⌘Z, volitelná rešerše na webu se zdroji. Vidí jen svůj dokument. |
 | 🔒 **Bezpečnost** | App Sandbox, CSP, allow-list sanitizace HTML, test proti 77 XSS vektorům, ochrana proti nepřátelským dokumentům |
 
 ## Technologie

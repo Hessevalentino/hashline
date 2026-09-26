@@ -1,3 +1,5 @@
+import Foundation
+
 /// One finished exchange of the conversation, kept provider-neutral so the user can switch models
 /// between questions.
 public struct AssistantTurn: Sendable, Equatable {
@@ -50,9 +52,15 @@ public struct AssistantRequest: Sendable {
     /// Provider-native messages of the running turn (tool calls and their results), appended
     /// after `turns`.
     public var continuation: [JSONValue]
+    /// The address of a local server when the user changed it; otherwise the provider's `baseURL`.
+    public var server: URL?
+
+    public var baseURL: URL { server ?? model.provider.baseURL }
 
     public init(model: AssistantModel, instructions: String, document: String, turns: [AssistantTurn],
-                tools: [AssistantTool] = [], webSearch: Bool = false, continuation: [JSONValue] = []) {
+                tools: [AssistantTool] = [], webSearch: Bool = false, continuation: [JSONValue] = [],
+                server: URL? = nil) {
+        self.server = server
         self.model = model
         self.instructions = instructions
         self.document = document

@@ -54,6 +54,22 @@ enum AssistantClient {
         throw error
     }
 
+    /// The chat models a local server can run; failing means the server is not reachable.
+    static func localModels(_ provider: AssistantProvider, server: URL) async
+        -> Result<[AssistantModel], AssistantError> {
+        do {
+            let request = provider.modelsRequest(apiKey: "", server: server)
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+            guard (200..<300).contains(status) else {
+                return .failure(AssistantError(status: status, body: String(bytes: data, encoding: .utf8) ?? ""))
+            }
+            return .success(provider.localModels(from: data))
+        } catch {
+            return .failure(AssistantError(message: error.localizedDescription))
+        }
+    }
+
     /// Checks a key by listing the provider's models (no tokens are spent).
     static func verify(_ apiKey: String, provider: AssistantProvider) async -> Result<Void, AssistantError> {
         do {

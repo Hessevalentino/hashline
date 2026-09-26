@@ -99,14 +99,17 @@ final class AssistantSession {
         let text = document.text
         let selection = document.selection
         // Each message sends the whole document: ask once per conversation before a large one goes out.
+        // A local model costs nothing and the text stays on the user's server.
         let estimate = AssistantCost.estimatedTokens(text)
-        if scope == nil, estimate > AssistantCost.confirmationThreshold, !isLargeDocumentConfirmed {
+        if scope == nil, !model.provider.isLocal, estimate > AssistantCost.confirmationThreshold,
+           !isLargeDocumentConfirmed {
             largeDocumentEstimate = estimate
             return
         }
         largeDocumentEstimate = nil
         let scope = scope ?? .document
-        if scope == .document { isLargeDocumentConfirmed = true }
+        // A local send confirms nothing: switching to a cloud model later must still ask.
+        if scope == .document, !model.provider.isLocal { isLargeDocumentConfirmed = true }
         let sendsSelection = scope == .selection && selection != nil
 
         draft = ""
@@ -121,7 +124,8 @@ final class AssistantSession {
             document: sendsSelection ? selection ?? "" : text, turns: turns,
             tools: sendsSelection ? DocumentEditTools.all.filter { $0.name == DocumentEditTools.editName }
                 : DocumentEditTools.all,
-            webSearch: searchesWeb && model.webSearch != nil)
+            webSearch: searchesWeb && model.webSearch != nil,
+            server: AssistantKeys.shared.servers[model.provider])
         messages.append(AssistantMessage(role: .assistant, text: "", isStreaming: true))
         isRunning = true
         document.lock()

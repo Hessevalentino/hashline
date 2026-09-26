@@ -13,12 +13,19 @@ struct AdvancedSettings: View {
                     Toggle("Enable the AI assistant", isOn: $assistantEnabled)
                     if assistantEnabled {
                         ForEach(AssistantProvider.allCases, id: \.self) { provider in
-                            APIKeyRow(provider: provider)
+                            if provider.isLocal {
+                                LocalServerRow(provider: provider)
+                            } else {
+                                APIKeyRow(provider: provider)
+                            }
                         }
                         Text("""
                             The document's text and your messages are sent to the provider of the model you \
                             choose in the chat. You pay according to its price list. DeepSeek processes data \
-                            in China. Keys are stored only in the Keychain of this Mac.
+                            in China. Keys are stored only in the Keychain of this Mac. Ollama and LM Studio \
+                            run models on your own computer: the text does not leave it unless the server's \
+                            address points to another one. Give the model a context long enough for the \
+                            whole document.
                             """)
                             .font(.caption)
                             .foregroundStyle(.secondary)
@@ -65,7 +72,7 @@ private struct APIKeyRow: View {
                 HStack(spacing: 10) {
                     statusView
                     Link("Get a key", destination: provider.keysURL)
-                    Link("Prices", destination: provider.pricingURL)
+                    if let pricingURL = provider.pricingURL { Link("Prices", destination: pricingURL) }
                 }
                 .font(.caption)
             }
@@ -102,6 +109,84 @@ private struct APIKeyRow: View {
         Task {
             switch await AssistantClient.verify(key, provider: provider) {
             case .success: status = .valid
+            case .failure(let error): status = .failed(error.message)
+            }
+        }
+    }
+}
+
+/// A local server (Ollama, LM Studio): its address, connected once it lists its models. No key.
+private struct LocalServerRow: View {
+    let provider: AssistantProvider
+    @State private var keys = AssistantKeys.shared
+    @State private var draft = ""
+    @State private var status: Status?
+
+    private enum Status {
+        case checking, connected(Int), failed(String)
+    }
+
+    var body: some View {
+        LabeledContent {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    if let server = keys.servers[provider] {
+                        Text(verbatim: server.absoluteString).foregroundStyle(.secondary)
+                        Button("Refresh") { connect(server) }
+                        Button("Disconnect") {
+                            keys.disconnect(provider)
+                            status = nil
+                        }
+                    } else {
+                        TextField("Server", text: $draft, prompt: Text(verbatim: provider.baseURL.absoluteString))
+                            .labelsHidden()
+                            .frame(maxWidth: 220)
+                            .onSubmit(connectDraft)
+                        Button("Connect") { connectDraft() }
+                    }
+                }
+                HStack(spacing: 10) {
+                    statusView
+                    Link("Download", destination: provider.keysURL)
+                }
+                .font(.caption)
+            }
+        } label: {
+            Text(verbatim: "\(provider.displayName):")
+        }
+    }
+
+    @ViewBuilder private var statusView: some View {
+        switch status {
+        case .checking: ProgressView().controlSize(.mini)
+        case .connected(let count):
+            Label("\(count) models available", systemImage: "checkmark.circle").foregroundStyle(.green)
+        case .failed(let message):
+            Label { Text(verbatim: message).lineLimit(2) } icon: { Image(systemName: "xmark.circle") }
+                .foregroundStyle(.red)
+        case nil: EmptyView()
+        }
+    }
+
+    /// An empty field connects to the server's default address.
+    private func connectDraft() {
+        let text = draft.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let server = text.isEmpty ? provider.baseURL : AssistantSettings.serverURL(from: text) else {
+            status = .failed(String(localized: """
+                Enter an address such as http://localhost:11434. A server outside this network needs https.
+                """))
+            return
+        }
+        connect(server)
+    }
+
+    private func connect(_ server: URL) {
+        status = .checking
+        Task {
+            switch await keys.connect(provider, server: server) {
+            case .success(let models):
+                draft = ""
+                status = .connected(models.count)
             case .failure(let error): status = .failed(error.message)
             }
         }

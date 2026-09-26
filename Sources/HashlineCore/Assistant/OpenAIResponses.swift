@@ -8,7 +8,7 @@ public enum OpenAIResponses {
 
     public static func urlRequest(_ request: AssistantRequest, apiKey: String) -> URLRequest {
         let provider = request.model.provider
-        var urlRequest = URLRequest(url: provider.baseURL.appending(path: "v1/responses"))
+        var urlRequest = URLRequest(url: request.baseURL.appending(path: "v1/responses"))
         urlRequest.httpMethod = "POST"
         for (field, value) in provider.headers(apiKey: apiKey) {
             urlRequest.setValue(value, forHTTPHeaderField: field)

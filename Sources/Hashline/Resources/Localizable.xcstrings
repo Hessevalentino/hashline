@@ -183,6 +183,58 @@
         }
       }
     },
+    "%lld models available": {
+      "localizations": {
+        "cs": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld dostupné modely"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld dostupného modelu"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld dostupný model"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld dostupných modelů"
+                }
+              }
+            }
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld models available"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld models available"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld of %@": {
       "localizations": {
         "cs": {
@@ -333,12 +385,12 @@
         }
       }
     },
-    "Add an API key for Claude, OpenAI or DeepSeek in Settings ▸ General ▸ Advanced.": {
+    "Add an API key for Claude, OpenAI or DeepSeek, or connect Ollama or LM Studio, in Settings ▸ General ▸ Advanced.": {
       "localizations": {
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Klíč API pro Claude, OpenAI nebo DeepSeek zadáte v Nastavení ▸ Obecné ▸ Pokročilé."
+            "value": "Klíč API pro Claude, OpenAI nebo DeepSeek zadáte, případně Ollamu nebo LM Studio připojíte, v Nastavení ▸ Obecné ▸ Pokročilé."
           }
         }
       }
@@ -693,6 +745,16 @@
         }
       }
     },
+    "Connect": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Připojit"
+          }
+        }
+      }
+    },
     "Copy As": {
       "localizations": {
         "cs": {
@@ -813,6 +875,16 @@
         }
       }
     },
+    "Disconnect": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odpojit"
+          }
+        }
+      }
+    },
     "Documents": {
       "localizations": {
         "cs": {
@@ -829,6 +901,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hotovo"
+          }
+        }
+      }
+    },
+    "Download": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stáhnout"
           }
         }
       }
@@ -909,6 +991,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Zadejte nový název pro „%@“."
+          }
+        }
+      }
+    },
+    "Enter an address such as http://localhost:11434. A server outside this network needs https.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zadejte adresu, například http://localhost:11434. Server mimo tuto síť potřebuje https."
           }
         }
       }
@@ -2023,6 +2115,16 @@
         }
       }
     },
+    "Refresh": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obnovit"
+          }
+        }
+      }
+    },
     "Regular Expression": {
       "localizations": {
         "cs": {
@@ -2265,6 +2367,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Poslat přes AirDrop…"
+          }
+        }
+      }
+    },
+    "Server": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server"
           }
         }
       }
@@ -2589,12 +2701,12 @@
         }
       }
     },
-    "The document's text and your messages are sent to the provider of the model you choose in the chat. You pay according to its price list. DeepSeek processes data in China. Keys are stored only in the Keychain of this Mac.": {
+    "The document's text and your messages are sent to the provider of the model you choose in the chat. You pay according to its price list. DeepSeek processes data in China. Keys are stored only in the Keychain of this Mac. Ollama and LM Studio run models on your own computer: the text does not leave it unless the server's address points to another one. Give the model a context long enough for the whole document.": {
       "localizations": {
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Text dokumentu a vaše zprávy se posílají poskytovateli modelu, který zvolíte v chatu. Platíte podle jeho ceníku. DeepSeek zpracovává data v Číně. Klíče jsou uložené jen v Klíčence tohoto Macu."
+            "value": "Text dokumentu a vaše zprávy se posílají poskytovateli modelu, který zvolíte v chatu. Platíte podle jeho ceníku. DeepSeek zpracovává data v Číně. Klíče jsou uložené jen v Klíčence tohoto Macu. Ollama a LM Studio spouštějí modely na vašem vlastním počítači: text ho neopustí, pokud adresa serveru nevede na jiný. Nastavte modelu kontext dost dlouhý na celý dokument."
           }
         }
       }

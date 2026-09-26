@@ -239,8 +239,15 @@ CS = {
     # AI assistant (ADR 0019)
     "%lld tokens in, %lld out": "Tokeny: %lld na vstupu, %lld na výstupu",
     "API key": "Klíč API",
-    "Add an API key for Claude, OpenAI or DeepSeek in Settings ▸ General ▸ Advanced.":
-        "Klíč API pro Claude, OpenAI nebo DeepSeek zadáte v Nastavení ▸ Obecné ▸ Pokročilé.",
+    "%lld models available": {"one": "%lld dostupný model", "few": "%lld dostupné modely", "many": "%lld dostupného modelu", "other": "%lld dostupných modelů"},
+    "Add an API key for Claude, OpenAI or DeepSeek, or connect Ollama or LM Studio, in Settings ▸ General ▸ Advanced.":
+        "Klíč API pro Claude, OpenAI nebo DeepSeek zadáte, případně Ollamu nebo LM Studio připojíte, v Nastavení ▸ Obecné ▸ Pokročilé.",
+    "Connect": "Připojit",
+    "Disconnect": "Odpojit",
+    "Download": "Stáhnout",
+    "Enter an address such as http://localhost:11434. A server outside this network needs https.": "Zadejte adresu, například http://localhost:11434. Server mimo tuto síť potřebuje https.",
+    "Refresh": "Obnovit",
+    "Server": "Server",
     "Advanced": "Pokročilé",
     "Ask about this document, have it reviewed or research its topic. The assistant sees only this document.":
         "Zeptejte se na dokument, nechte ho zkontrolovat nebo si nechte udělat rešerši tématu. Asistent vidí jen tento dokument.",
@@ -278,8 +285,8 @@ CS = {
     "The document is read-only until the assistant finishes.": "Dokument je jen pro čtení, dokud asistent nedokončí práci.",
     "The API key is missing in Settings.": "V Nastavení chybí klíč API.",
     "The answer reached the length limit.": "Odpověď narazila na limit délky.",
-    "The document's text and your messages are sent to the provider of the model you choose in the chat. You pay according to its price list. DeepSeek processes data in China. Keys are stored only in the Keychain of this Mac.":
-        "Text dokumentu a vaše zprávy se posílají poskytovateli modelu, který zvolíte v chatu. Platíte podle jeho ceníku. DeepSeek zpracovává data v Číně. Klíče jsou uložené jen v Klíčence tohoto Macu.",
+    "The document's text and your messages are sent to the provider of the model you choose in the chat. You pay according to its price list. DeepSeek processes data in China. Keys are stored only in the Keychain of this Mac. Ollama and LM Studio run models on your own computer: the text does not leave it unless the server's address points to another one. Give the model a context long enough for the whole document.":
+        "Text dokumentu a vaše zprávy se posílají poskytovateli modelu, který zvolíte v chatu. Platíte podle jeho ceníku. DeepSeek zpracovává data v Číně. Klíče jsou uložené jen v Klíčence tohoto Macu. Ollama a LM Studio spouštějí modely na vašem vlastním počítači: text ho neopustí, pokud adresa serveru nevede na jiný. Nastavte modelu kontext dost dlouhý na celý dokument.",
     "The key could not be saved in the Keychain.": "Klíč se nepodařilo uložit do Klíčenky.",
     "The model declined this request.": "Model tento požadavek odmítl.",
     "This document has about %lld tokens, and every message sends it whole. Check the provider's price list before you continue.":

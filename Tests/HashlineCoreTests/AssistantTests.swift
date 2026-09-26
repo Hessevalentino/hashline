@@ -71,6 +71,54 @@ struct AssistantTests {
         #expect(body["tools"] == nil)
     }
 
+    // MARK: Local servers
+
+    @Test func localServerTakesNoKeyAndItsOwnAddress() throws {
+        let model = try #require(AssistantModel.model(forKey: "ollama/gemma4:e4b"))
+        #expect(model.provider == .ollama && model.id == "gemma4:e4b" && model.webSearch == nil)
+        let turns = [AssistantTurn(role: .user, text: "Hi")]
+        let request = AssistantRequest(model: model, instructions: "", document: "", turns: turns,
+                                       tools: DocumentEditTools.all, webSearch: true)
+        let urlRequest = AnthropicMessages.urlRequest(request, apiKey: "")
+        #expect(urlRequest.url?.absoluteString == "http://localhost:11434/v1/messages")
+        #expect(urlRequest.value(forHTTPHeaderField: "x-api-key") == nil)
+        let body = AnthropicMessages.body(request)
+        #expect(body["fallbacks"] == nil)
+        #expect(body["tools"]?.array?.count == DocumentEditTools.all.count)
+
+        var moved = request
+        moved.server = URL(string: "http://studio.local:1234")
+        #expect(AnthropicMessages.urlRequest(moved, apiKey: "").url?.absoluteString
+                == "http://studio.local:1234/v1/messages")
+    }
+
+    /// Ids with a slash (LM Studio's `publisher/model`) survive the stored `provider/model` key.
+    @Test func localModelKeyKeepsSlashes() throws {
+        let model = AssistantProvider.lmStudio.localModel(id: "google/gemma-4-12b")
+        #expect(AssistantModel.model(forKey: model.key) == model)
+    }
+
+    @Test func listsLocalChatModelsWithoutEmbeddings() {
+        let data = Data("""
+            {"object":"list","data":[{"id":"nomic-embed-text-v2-moe:latest","object":"model"},
+            {"id":"gemma4:e4b","object":"model"},{"id":"text-embedding-nomic-embed-text-v1.5"}]}
+            """.utf8)
+        #expect(AssistantProvider.ollama.localModels(from: data).map(\.id) == ["gemma4:e4b"])
+        #expect(AssistantProvider.ollama.localModels(from: Data("nope".utf8)).isEmpty)
+        let request = AssistantProvider.lmStudio.modelsRequest(apiKey: "")
+        #expect(request.url?.absoluteString == "http://localhost:1234/v1/models")
+    }
+
+    /// Recorded from Ollama 0.20: thinking without a signature, then a tool call.
+    @Test func decodesOllamaToolCall() throws {
+        let (events, decoder) = try decode("ollama-tool")
+        let input: JSONValue = ["original": "Helo", "replacement": "Hello"]
+        #expect(events.contains(.toolCall(id: "call_zsyjdthb", name: "edit_document", input: input)))
+        #expect(decoder.stopReason == .toolUse)
+        #expect(decoder.content.first?["type"] == "thinking")
+        #expect(decoder.content.last?["input"] == input)
+    }
+
     // MARK: Stream
 
     /// Decodes a recorded stream from the test resources, line by line as `URLSession` delivers it

@@ -25,6 +25,8 @@ struct AssistantPanel: View {
         .environment(\.openURL, OpenURLAction { url in
             ["http", "https"].contains(url.scheme?.lowercased()) ? .systemAction : .discarded
         })
+        // Models downloaded or removed in Ollama or LM Studio since the last look.
+        .task { await keys.refreshLocalModels() }
     }
 
     private func header(models: [AssistantModel]) -> some View {
@@ -66,7 +68,10 @@ private struct NoKeyView: View {
         VStack(spacing: 10) {
             Spacer()
             Image(systemName: "key").font(.title2).foregroundStyle(.secondary)
-            Text("Add an API key for Claude, OpenAI or DeepSeek in Settings ▸ General ▸ Advanced.")
+            Text("""
+                Add an API key for Claude, OpenAI or DeepSeek, or connect Ollama or LM Studio, \
+                in Settings ▸ General ▸ Advanced.
+                """)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
             SettingsLink { Text("Open Settings…") }

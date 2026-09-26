@@ -1,14 +1,14 @@
 import Foundation
 
-/// Anthropic Messages (Claude, and DeepSeek through its `/anthropic` endpoint): request body and
-/// stream decoding. Pure functions; the app owns the network.
+/// Anthropic Messages (Claude, DeepSeek through its `/anthropic` endpoint, Ollama, LM Studio):
+/// request body and stream decoding. Pure functions; the app owns the network.
 public enum AnthropicMessages {
     /// Output limit of one response; streaming keeps long answers within HTTP timeouts.
     static let maxTokens = 32_000
 
     public static func urlRequest(_ request: AssistantRequest, apiKey: String) -> URLRequest {
         let provider = request.model.provider
-        var urlRequest = URLRequest(url: provider.baseURL.appending(path: "v1/messages"))
+        var urlRequest = URLRequest(url: request.baseURL.appending(path: "v1/messages"))
         urlRequest.httpMethod = "POST"
         for (field, value) in provider.headers(apiKey: apiKey) {
             urlRequest.setValue(value, forHTTPHeaderField: field)

@@ -48,7 +48,7 @@ extension AssistantFake {
             Performance.logger.notice("Assistant self-test: \(result, privacy: .public)")
             NSApp.terminate(nil)
         }
-        guard let window = NSApp.orderedWindows.first(where: { $0.firstResponder is EditorTextView }),
+        guard let window = NSApp.orderedWindows.first(where: { DocumentReveal.session(for: $0) != nil }),
               let session = DocumentReveal.session(for: window), let textView = session.textView,
               let undoManager = textView.undoManager else {
             failures.append("no editor window")
@@ -80,9 +80,66 @@ extension AssistantFake {
         if !textView.isEditable { failures.append("read-only after stop") }
     }
 
+    /// `-HashlineAssistantLocalSelfTest ollama|lmstudio`: one real instruction to the first model of
+    /// the local server at its default address (network in the sandbox, tools, one undo step), logs
+    /// `Assistant local self-test: …` and quits. A server connected only for the test is disconnected.
     @MainActor
-    private static func waitUntilIdle(_ assistant: AssistantSession) async {
-        for _ in 0..<100 where assistant.isRunning {
+    static func runLocalSelfTest(_ providerName: String) async {
+        var failures: [String] = []
+        let keys = AssistantKeys.shared
+        var connectedForTest = false
+        // The test's model choice must not replace the user's last chosen model.
+        let savedModel = UserDefaults.standard.string(forKey: AssistantSettings.modelKey)
+        defer {
+            UserDefaults.standard.set(savedModel, forKey: AssistantSettings.modelKey)
+            if connectedForTest, let provider = AssistantProvider(rawValue: providerName) {
+                keys.disconnect(provider)
+            }
+            let result = failures.isEmpty ? "passed" : "FAILED: " + failures.joined(separator: "; ")
+            Performance.logger.notice("Assistant local self-test: \(result, privacy: .public)")
+            NSApp.terminate(nil)
+        }
+        guard let provider = AssistantProvider(rawValue: providerName), provider.isLocal else {
+            failures.append("not a local provider: \(providerName)")
+            return
+        }
+        guard let window = NSApp.orderedWindows.first(where: { DocumentReveal.session(for: $0) != nil }),
+              let session = DocumentReveal.session(for: window), let textView = session.textView,
+              let undoManager = textView.undoManager else {
+            failures.append("no editor window")
+            return
+        }
+        connectedForTest = keys.servers[provider] == nil
+        let server = keys.servers[provider] ?? provider.baseURL
+        guard case .success(let models) = await keys.connect(provider, server: server),
+              let model = models.first else {
+            failures.append("no models at \(server.absoluteString)")
+            return
+        }
+        let original = "Hello world, again."
+        textView.insertText(original, replacementRange: NSRange(location: 0, length: 0))
+        textView.breakUndoCoalescing()
+        let assistant = session.assistant
+        assistant.model = model
+        assistant.draft = #"Use edit_document to replace the word "world" with "Hashline". Change nothing else."#
+        let start = ContinuousClock.now
+        assistant.send(using: keys.models)
+        await waitUntilIdle(assistant, seconds: 300)
+        Performance.logger.notice("""
+            Assistant local self-test: \(model.key, privacy: .public) took \
+            \(String(describing: ContinuousClock.now - start), privacy: .public)
+            """)
+        if let error = assistant.messages.last(where: { $0.role == .error }) {
+            failures.append("error: \(error.text)")
+        }
+        if textView.string != "Hello Hashline, again." { failures.append("text after edit: \(textView.string)") }
+        undoManager.undo()
+        if textView.string != original { failures.append("text after one undo: \(textView.string)") }
+    }
+
+    @MainActor
+    private static func waitUntilIdle(_ assistant: AssistantSession, seconds: Int = 10) async {
+        for _ in 0..<(seconds * 10) where assistant.isRunning {
             try? await Task.sleep(for: .milliseconds(100))
         }
     }
