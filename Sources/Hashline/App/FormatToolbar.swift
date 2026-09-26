@@ -239,10 +239,18 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
         }
     }
 
+    /// Set while one window changes the item: AppKit copies the change to the other toolbars with
+    /// the same identifier and autosaves the configuration on the way, and the resulting defaults
+    /// notification must not insert the item again (NSToolbar asserts, 0.3.0 crash).
+    private static var isUpdatingAssistantItem = false
+
     /// Adds the item at the end of the bar when the assistant becomes available and removes it
     /// otherwise. Windows share one toolbar configuration, so the check prevents duplicates.
     private func updateAssistantItem() {
-        guard let toolbar = window?.toolbar, toolbar.identifier == Self.identifier else { return }
+        guard !Self.isUpdatingAssistantItem,
+              let toolbar = window?.toolbar, toolbar.identifier == Self.identifier else { return }
+        Self.isUpdatingAssistantItem = true
+        defer { Self.isUpdatingAssistantItem = false }
         let index = toolbar.items.firstIndex { $0.itemIdentifier == Self.assistant }
         let available = AssistantKeys.isAvailable
         if available, index == nil {

@@ -14,6 +14,8 @@ import WebKit
 ///   and stop flow without focus and logs `Assistant self-test: …` (see AssistantFake).
 /// - `-HashlineAssistantLocalSelfTest ollama|lmstudio` sends one real instruction to a local server
 ///   and logs `Assistant local self-test: …` (see AssistantFake).
+/// - `-HashlineToolbarTest YES` opens a second document, turns the assistant off and on and logs
+///   `Toolbar test: …` with the number of assistant items in each window's toolbar.
 /// - `-HashlineModeBenchmark YES` switches each view mode on and off and logs the times
 ///   (`Mode switch …`). Do not pass the view-mode keys themselves as arguments: they would win.
 /// - `-HashlineSplitDragTest <divider>` drags that divider (0 = library when shown) 120 points left with
@@ -34,6 +36,35 @@ final class UITestSupport: NSObject {
                 await AssistantFake.runLocalSelfTest(provider)
             }
         }
+        if defaults.bool(forKey: "HashlineToolbarTest") {
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(4))
+                await Self.runToolbarTest()
+            }
+        }
+    }
+
+    /// Windows share one toolbar configuration: turning the assistant off and on must leave exactly
+    /// one assistant item in each toolbar (0.3.0 crashed on the re-entrant insertion).
+    private static func runToolbarTest() async {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("toolbar-test.md")
+        if !FileManager.default.fileExists(atPath: url.path) {
+            FileManager.default.createFile(atPath: url.path, contents: Data())
+        }
+        _ = try? await NSDocumentController.shared.openDocument(withContentsOf: url, display: true)
+        try? await Task.sleep(for: .seconds(2))
+        let defaults = UserDefaults.standard
+        let wasEnabled = defaults.bool(forKey: AssistantSettings.enabledKey)
+        defaults.set(false, forKey: AssistantSettings.enabledKey)
+        defaults.set(true, forKey: AssistantSettings.enabledKey)
+        try? await Task.sleep(for: .seconds(1))
+        let counts = NSApp.windows.compactMap { window in
+            window.toolbar?.items.filter { $0.itemIdentifier.rawValue == "cz.hashline.toolbar.assistant" }.count
+        }
+        defaults.set(wasEnabled, forKey: AssistantSettings.enabledKey)
+        let result = counts.count >= 2 && counts.allSatisfy { $0 == 1 } ? "passed" : "FAILED"
+        Performance.logger.notice("Toolbar test: \(result, privacy: .public) \(counts, privacy: .public)")
+        NSApp.terminate(nil)
     }
 
     func applicationDidFinishLaunching() {
