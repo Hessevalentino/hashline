@@ -6,6 +6,15 @@
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
     <item>
+      <title>Hashline 0.2.0</title>
+      <pubDate>Sat, 26 Sep 2026 17:05:12 GMT</pubDate>
+      <sparkle:version>8</sparkle:version>
+      <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Asistent AI u dokumentu (volitelný, ve výchozím stavu vypnutý): Claude, OpenAI nebo DeepSeek na vlastní klíč API, zapíná se v Nastavení ▸ Obecné ▸ Pokročilé</li><li>Asistent na požádání rovnou upravuje text; celý pokyn vrátí jedno ⌘Z, dokument je během práce jen pro čtení</li><li>Volitelná rešerše na webu se zdroji, chat u každého dokumentu zvlášť, klíče jen v Klíčence</li><li>Nová ikona aplikace</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.2.0/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="TreXpe8dYP6YperZl/RK+0Kdw95nOJCwg5duwWd9rWCjKoLO2s9doSpSAI9mfOZg+5mxcY4sWXrlxUJF1IH6Cg==" length="6914280" />
+    </item>
+    <item>
       <title>Hashline 0.1.6</title>
       <pubDate>Fri, 25 Sep 2026 20:27:05 GMT</pubDate>
       <sparkle:version>7</sparkle:version>
