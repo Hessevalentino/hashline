@@ -1,5 +1,10 @@
 # Změny
 
+## 0.3.0 – 2026-09-26
+
+- Asistent AI umí lokální modely přes Ollamu a LM Studio: text dokumentu neopustí Mac a není potřeba klíč API. V Nastavení ▸ Obecné ▸ Pokročilé stačí u Ollamy nebo LM Studia kliknout na Připojit (výchozí adresa localhost, jde změnit). Model se vybírá v chatu jako dosud.
+- Claude, OpenAI a DeepSeek fungují beze změny.
+
 ## 0.2.0 – 2026-09-26
 
 - Asistent AI u dokumentu (volitelný, ve výchozím stavu vypnutý): zapíná se v Nastavení ▸ Obecné ▸ Pokročilé, kde zadáte vlastní klíč API pro Claude, OpenAI nebo DeepSeek. Klíče jsou jen v Klíčence. Ikona robota v liště (⌥⌘A) se objeví až po zapnutí a zadání klíče.

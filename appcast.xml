@@ -6,6 +6,15 @@
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
     <item>
+      <title>Hashline 0.3.0</title>
+      <pubDate>Sat, 26 Sep 2026 19:20:08 GMT</pubDate>
+      <sparkle:version>9</sparkle:version>
+      <sparkle:shortVersionString>0.3.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Asistent AI umí lokální modely přes Ollamu a LM Studio: text dokumentu neopustí Mac a není potřeba klíč API (Nastavení ▸ Obecné ▸ Pokročilé ▸ Připojit).</li><li>Claude, OpenAI a DeepSeek fungují beze změny.</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.3.0/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="44zf4nrBpM5hKEdUJq/B+NCCIEOC3ZUZX1CPv0b+4jVpkqTyoXrO9aFujnsUPsqpHOVWYOIUSzVLC33O8WbjBg==" length="6946051" />
+    </item>
+    <item>
       <title>Hashline 0.2.0</title>
       <pubDate>Sat, 26 Sep 2026 17:05:12 GMT</pubDate>
       <sparkle:version>8</sparkle:version>
