@@ -1,5 +1,9 @@
 # Změny
 
+## 0.3.1 – 2026-09-26
+
+- Oprava pádu aplikace při zapnutí asistenta nebo připojení Ollamy či LM Studia, když bylo otevřeno víc oken nebo panelů
+
 ## 0.3.0 – 2026-09-26
 
 - Asistent AI umí lokální modely přes Ollamu a LM Studio: text dokumentu neopustí Mac a není potřeba klíč API. V Nastavení ▸ Obecné ▸ Pokročilé stačí u Ollamy nebo LM Studia kliknout na Připojit (výchozí adresa localhost, jde změnit). Model se vybírá v chatu jako dosud.

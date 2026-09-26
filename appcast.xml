@@ -6,6 +6,15 @@
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
     <item>
+      <title>Hashline 0.3.1</title>
+      <pubDate>Sat, 26 Sep 2026 20:08:44 GMT</pubDate>
+      <sparkle:version>10</sparkle:version>
+      <sparkle:shortVersionString>0.3.1</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Oprava pádu aplikace při zapnutí asistenta nebo připojení Ollamy či LM Studia, když bylo otevřeno víc oken nebo panelů</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.3.1/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="ErQMrcmfjXMAHe3ozGB290dMHGPRU8bE9F5e1pgJw6NpFYJ5LQZJWXkiFy1xnSj2LHFnykpSeIzwyxbXrXI9Dw==" length="6892830" />
+    </item>
+    <item>
       <title>Hashline 0.3.0</title>
       <pubDate>Sat, 26 Sep 2026 19:20:08 GMT</pubDate>
       <sparkle:version>9</sparkle:version>
