@@ -1,5 +1,13 @@
 # Změny
 
+## 0.2.0 – 2026-09-26
+
+- Asistent AI u dokumentu (volitelný, ve výchozím stavu vypnutý): zapíná se v Nastavení ▸ Obecné ▸ Pokročilé, kde zadáte vlastní klíč API pro Claude, OpenAI nebo DeepSeek. Klíče jsou jen v Klíčence. Ikona robota v liště (⌥⌘A) se objeví až po zapnutí a zadání klíče.
+- Chat vpravo vedle náhledu, pro každý dokument vlastní. Model se volí přímo v chatu. Asistent vidí jen svůj dokument, konverzace se neukládá.
+- Pokyny jako „přepiš úvod čtivěji“ nebo „zkrať výběr“ asistent provede rovnou v textu. Během práce je dokument jen pro čtení, změněná místa se zvýrazní a celý pokyn vrátí jedno ⌘Z. Tlačítko Stop práci přeruší.
+- Volitelná rešerše na webu (Claude, OpenAI) se zdroji jako odkazy. U velkých dokumentů se před odesláním zobrazí odhad tokenů a nabídka poslat jen výběr.
+- Nová ikona aplikace
+
 ## 0.1.6 – 2026-09-25
 
 - Fix visual problems UI

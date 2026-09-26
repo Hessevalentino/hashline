@@ -199,6 +199,22 @@
         }
       }
     },
+    "%lld tokens in, %lld out": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tokeny: %lld na vstupu, %lld na výstupu"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld tokens in, %2$lld out"
+          }
+        }
+      }
+    },
     "%lld words": {
       "localizations": {
         "cs": {
@@ -294,6 +310,16 @@
         }
       }
     },
+    "API key": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klíč API"
+          }
+        }
+      }
+    },
     "Aa": {
       "shouldTranslate": false
     },
@@ -307,12 +333,32 @@
         }
       }
     },
+    "Add an API key for Claude, OpenAI or DeepSeek in Settings ▸ General ▸ Advanced.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klíč API pro Claude, OpenAI nebo DeepSeek zadáte v Nastavení ▸ Obecné ▸ Pokročilé."
+          }
+        }
+      }
+    },
     "Add to Library": {
       "localizations": {
         "cs": {
           "stringUnit": {
             "state": "translated",
             "value": "Přidat do knihovny"
+          }
+        }
+      }
+    },
+    "Advanced": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pokročilé"
           }
         }
       }
@@ -417,6 +463,46 @@
         }
       }
     },
+    "Ask about this document, have it reviewed or research its topic. The assistant sees only this document.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeptejte se na dokument, nechte ho zkontrolovat nebo si nechte udělat rešerši tématu. Asistent vidí jen tento dokument."
+          }
+        }
+      }
+    },
+    "Ask about this document…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeptejte se na dokument…"
+          }
+        }
+      }
+    },
+    "Assistant": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asistent"
+          }
+        }
+      }
+    },
+    "Assistant Edit": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Úprava asistentem"
+          }
+        }
+      }
+    },
     "Bold": {
       "localizations": {
         "cs": {
@@ -433,6 +519,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Odrážkový seznam"
+          }
+        }
+      }
+    },
+    "Cached input tokens: %lld": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tokeny vstupu z cache: %lld"
           }
         }
       }
@@ -767,6 +863,16 @@
         }
       }
     },
+    "Drag to resize the message field": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tažením změníte výšku pole pro zprávu"
+          }
+        }
+      }
+    },
     "Duplicate Current Theme…": {
       "localizations": {
         "cs": {
@@ -783,6 +889,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Editor"
+          }
+        }
+      }
+    },
+    "Enable the AI assistant": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Povolit asistenta AI"
           }
         }
       }
@@ -1037,6 +1153,16 @@
         }
       }
     },
+    "Get a key": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Získat klíč"
+          }
+        }
+      }
+    },
     "HTML, PDF and PNG are exported by Hashline itself. Other formats and File ▸ Import use Pandoc, which you install separately (pandoc.org or “brew install pandoc”). Hashline runs it only for exports and imports you start.": {
       "localizations": {
         "cs": {
@@ -1083,6 +1209,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nadpis (⌘1–⌘6, ⌘0)"
+          }
+        }
+      }
+    },
+    "Hide Assistant": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skrýt asistenta"
           }
         }
       }
@@ -1327,6 +1463,26 @@
         }
       }
     },
+    "Key saved": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klíč je uložený"
+          }
+        }
+      }
+    },
+    "Key works": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klíč funguje"
+          }
+        }
+      }
+    },
     "Library": {
       "localizations": {
         "cs": {
@@ -1457,6 +1613,26 @@
         }
       }
     },
+    "Message field height": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Výška pole pro zprávu"
+          }
+        }
+      }
+    },
+    "Model": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Model"
+          }
+        }
+      }
+    },
     "Move to Trash": {
       "localizations": {
         "cs": {
@@ -1493,6 +1669,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nový dokument v knihovně (⌥⌘N)"
+          }
+        }
+      }
+    },
+    "New conversation": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nová konverzace"
           }
         }
       }
@@ -1593,6 +1779,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Otevřít"
+          }
+        }
+      }
+    },
+    "Open Settings…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otevřít Nastavení…"
           }
         }
       }
@@ -1717,6 +1913,26 @@
         }
       }
     },
+    "Paste key": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložte klíč"
+          }
+        }
+      }
+    },
+    "Places changed: %lld": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Změněná místa: %lld"
+          }
+        }
+      }
+    },
     "Plain Text": {
       "localizations": {
         "cs": {
@@ -1743,6 +1959,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Předchozí (⇧⌘G)"
+          }
+        }
+      }
+    },
+    "Prices": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ceník"
           }
         }
       }
@@ -1817,6 +2043,16 @@
         }
       }
     },
+    "Remove": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odstranit"
+          }
+        }
+      }
+    },
     "Rename": {
       "localizations": {
         "cs": {
@@ -1887,12 +2123,42 @@
         }
       }
     },
+    "Research on the web": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rešerše na webu"
+          }
+        }
+      }
+    },
+    "Research on the web (each search costs extra)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rešerše na webu (každé hledání se platí zvlášť)"
+          }
+        }
+      }
+    },
     "Rich Text (RTF)": {
       "localizations": {
         "cs": {
           "stringUnit": {
             "state": "translated",
             "value": "Formátovaný text (RTF)"
+          }
+        }
+      }
+    },
+    "Save": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uložit"
           }
         }
       }
@@ -1917,6 +2183,26 @@
         }
       }
     },
+    "Searched: %@": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hledáno: %@"
+          }
+        }
+      }
+    },
+    "Select the first change in the document; ⌘Z undoes the whole instruction": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vybere v dokumentu první změnu; ⌘Z vrátí celý pokyn"
+          }
+        }
+      }
+    },
     "Selection: %lld words, %lld characters": {
       "localizations": {
         "cs": {
@@ -1929,6 +2215,46 @@
           "stringUnit": {
             "state": "new",
             "value": "Selection: %1$lld words, %2$lld characters"
+          }
+        }
+      }
+    },
+    "Send": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odeslat"
+          }
+        }
+      }
+    },
+    "Send (Return)": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odeslat (Return)"
+          }
+        }
+      }
+    },
+    "Send Anyway": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přesto odeslat"
+          }
+        }
+      }
+    },
+    "Send Selection Only": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odeslat jen výběr"
           }
         }
       }
@@ -1959,6 +2285,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sdílet…"
+          }
+        }
+      }
+    },
+    "Show": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobrazit"
+          }
+        }
+      }
+    },
+    "Show Assistant": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobrazit asistenta"
           }
         }
       }
@@ -2083,6 +2429,16 @@
         }
       }
     },
+    "Stop": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zastavit"
+          }
+        }
+      }
+    },
     "Store pasted and dropped images in:": {
       "localizations": {
         "cs": {
@@ -2193,12 +2549,82 @@
         }
       }
     },
+    "The API key is missing in Settings.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "V Nastavení chybí klíč API."
+          }
+        }
+      }
+    },
+    "The answer reached the length limit.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odpověď narazila na limit délky."
+          }
+        }
+      }
+    },
     "The document could not be exported as %@.": {
       "localizations": {
         "cs": {
           "stringUnit": {
             "state": "translated",
             "value": "Dokument se nepodařilo exportovat do formátu %@."
+          }
+        }
+      }
+    },
+    "The document is read-only until the assistant finishes.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dokument je jen pro čtení, dokud asistent nedokončí práci."
+          }
+        }
+      }
+    },
+    "The document's text and your messages are sent to the provider of the model you choose in the chat. You pay according to its price list. DeepSeek processes data in China. Keys are stored only in the Keychain of this Mac.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text dokumentu a vaše zprávy se posílají poskytovateli modelu, který zvolíte v chatu. Platíte podle jeho ceníku. DeepSeek zpracovává data v Číně. Klíče jsou uložené jen v Klíčence tohoto Macu."
+          }
+        }
+      }
+    },
+    "The key could not be saved in the Keychain.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klíč se nepodařilo uložit do Klíčenky."
+          }
+        }
+      }
+    },
+    "The model declined this request.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Model tento požadavek odmítl."
+          }
+        }
+      }
+    },
+    "The model that answers your next message": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Model, který odpoví na další zprávu"
           }
         }
       }
@@ -2259,6 +2685,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Není žádný text, který by šel dát do nového dokumentu."
+          }
+        }
+      }
+    },
+    "This document has about %lld tokens, and every message sends it whole. Check the provider's price list before you continue.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dokument má zhruba %lld tokenů a každá zpráva ho posílá celý. Než budete pokračovat, podívejte se do ceníku poskytovatele."
           }
         }
       }
@@ -2359,6 +2795,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hledat výběr"
+          }
+        }
+      }
+    },
+    "Verify": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ověřit"
           }
         }
       }

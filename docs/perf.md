@@ -10,6 +10,7 @@ Každá fáze přidá řádek. Měří se Release build na MacBook Pro M4 (16 GB
 | Fáze | Datum | Start prázdné | Start 1 MB | Otevření 1 MB | Otevření 10 MB | Psaní 1 MB (p50 / p95 / max) | Paměť prázdné / 1 MB / 10 MB | Uložení 1 MB / 10 MB | .app |
 |---|---|---|---|---|---|---|---|---|---|
 | Rozpočet | | < 400 ms | < 400 ms | < 200 ms | – | < 16 ms | < 60 / < 150 MB / – | – | < 15 MB |
+| AI A1–A6 | 2026-09-26 | – | 476 ms⁽ᵃ⁾ | – | – | vypnuto 3.8–4.2 / 11.2–14.3 / 30 ms; panel 4.0–5.0 / 6.6–14.4 / 24 ms | – | – | 14 MB |
 | F10 | 2026-09-24 | – | – | 187–202 ms¹⁶ | – | 6.0–6.2 / 6.8–7.1 / 10 ms | – | – | 9.9 MB |
 | F9 | 2026-09-24 | – | – | 179–193 ms | – | 5.9–6.6 / 8.5–10.2 / 34 ms | – | – | 9.9 MB¹⁵ |
 | F8 | 2026-09-24 | – | – | 170–190 ms¹⁴ | – | 6.5–6.9 / 9.1–10.0 / 32 ms | – | – | 12 MB |
@@ -71,3 +72,5 @@ scripts/bench-typing.sh 2 -showsPreview NO    # totéž bez náhledu
 HASHLINE_PERF=1 swift test -c release --filter PerformanceProbeTests   # cena úhozu v jádru na 1 MB
 xcrun xctrace record --template 'Time Profiler' --attach <pid> --time-limit 6s --output typing.trace
 ```
+
+⁽ᵃ⁾ Asistent AI (ADR 0019): Profile build, 2 běhy po 100 úhozech v 1MB souboru, ručně (měřeno ve vývojové kopii pod názvem Hashline AI). Asistent vypnutý nemá v cestě žádný kód; otevřený panel s falešným poskytovatelem latenci nemění. Start 1 MB je z běhu s panelem. Velikost .app zahrnuje Sparkle (F11), podíl asistenta zvlášť změřený není.

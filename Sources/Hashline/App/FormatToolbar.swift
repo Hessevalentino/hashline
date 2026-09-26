@@ -7,6 +7,7 @@ import AppKit
 @MainActor
 final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerToolbarItemDelegate {
     private weak var window: NSWindow?
+    nonisolated(unsafe) private var assistantObservers: [NSObjectProtocol] = []
     private struct Item {
         let identifier: NSToolbarItem.Identifier
         let title: LocalizedStringResource
@@ -27,6 +28,8 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
     private static let share = id("share")
     private static let appearance = id("appearance")
     private static let reading = id("reading")
+    /// Not a default item: it is inserted only while the assistant is available (ADR 0019).
+    private static let assistant = id("assistant")
 
     private static let buttons: [Item] = [
         Item(identifier: id("bold"), title: "Bold", symbol: "bold",
@@ -96,7 +99,12 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
         separateContent(in: window)
         // Documents opened from the library join this window as tabs.
         window.tabbingMode = .preferred
+        controller.observeAssistantAvailability()
         return controller
+    }
+
+    deinit {
+        for observer in assistantObservers { NotificationCenter.default.removeObserver(observer) }
     }
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
@@ -104,18 +112,15 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
     }
 
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        Self.defaultOrder + [.flexibleSpace, .space]
+        Self.defaultOrder + [Self.assistant, .flexibleSpace, .space]
     }
 
     func toolbar(_ toolbar: NSToolbar, itemForItemIdentifier identifier: NSToolbarItem.Identifier,
                  willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
         switch identifier {
         case Self.library:
-            let item = button(Item(identifier: identifier, title: "Library", symbol: "sidebar.left",
-                                   action: #selector(toggleLibrary(_:)), shortcut: "⇧⌘L"))
-            item.target = self
-            item.autovalidates = false
-            return item
+            return windowButton(identifier, title: "Library", symbol: "sidebar.left",
+                                action: #selector(toggleLibrary(_:)), shortcut: "⇧⌘L")
         case Self.heading:
             let entries: [(LocalizedStringResource, Selector)] =
                 [("Paragraph", #selector(EditorTextView.setParagraph(_:)))]
@@ -142,20 +147,29 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
             item.delegate = self
             return item
         case Self.reading:
-            let item = button(Item(identifier: identifier, title: "Reading Mode", symbol: "book",
-                                   action: #selector(toggleReading(_:)), shortcut: "⌘/"))
-            item.target = self
-            item.autovalidates = false
+            return windowButton(identifier, title: "Reading Mode", symbol: "book",
+                                action: #selector(toggleReading(_:)), shortcut: "⌘/")
+        case Self.assistant:
+            let item = windowButton(identifier, title: "Assistant", symbol: "",
+                                    action: #selector(toggleAssistant(_:)), shortcut: "⌥⌘A")
+            item.image = AssistantIcon.image
             return item
         case Self.preview:
-            let item = button(Item(identifier: identifier, title: "Preview", symbol: "rectangle.split.2x1",
-                                   action: #selector(togglePreview(_:)), shortcut: "⌥⌘P"))
-            item.target = self
-            item.autovalidates = false
-            return item
+            return windowButton(identifier, title: "Preview", symbol: "rectangle.split.2x1",
+                                action: #selector(togglePreview(_:)), shortcut: "⌥⌘P")
         default:
             return Self.buttons.first { $0.identifier == identifier }.map(button)
         }
+    }
+
+    /// A button acting on the window rather than on the editor (panels and modes).
+    private func windowButton(_ identifier: NSToolbarItem.Identifier, title: LocalizedStringResource, symbol: String,
+                              action: Selector, shortcut: String) -> NSToolbarItem {
+        let item = button(Item(identifier: identifier, title: title, symbol: symbol, action: action,
+                               shortcut: shortcut))
+        item.target = self
+        item.autovalidates = false
+        return item
     }
 
     private func button(_ spec: Item) -> NSToolbarItem {
@@ -206,5 +220,35 @@ final class FormatToolbar: NSObject, NSToolbarDelegate, NSSharingServicePickerTo
 
     @objc private func togglePreview(_ sender: Any?) {
         PreviewSettings.togglePreview()
+    }
+
+    @objc private func toggleAssistant(_ sender: Any?) {
+        let defaults = UserDefaults.standard
+        defaults.set(!defaults.bool(forKey: AssistantSettings.showsPanelKey), forKey: AssistantSettings.showsPanelKey)
+    }
+
+    // MARK: Assistant item
+
+    private func observeAssistantAvailability() {
+        updateAssistantItem()
+        let center = NotificationCenter.default
+        for name in [UserDefaults.didChangeNotification, .assistantAvailabilityChanged] {
+            assistantObservers.append(center.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.updateAssistantItem() }
+            })
+        }
+    }
+
+    /// Adds the item at the end of the bar when the assistant becomes available and removes it
+    /// otherwise. Windows share one toolbar configuration, so the check prevents duplicates.
+    private func updateAssistantItem() {
+        guard let toolbar = window?.toolbar, toolbar.identifier == Self.identifier else { return }
+        let index = toolbar.items.firstIndex { $0.itemIdentifier == Self.assistant }
+        let available = AssistantKeys.isAvailable
+        if available, index == nil {
+            toolbar.insertItem(withItemIdentifier: Self.assistant, at: toolbar.items.count)
+        } else if !available, let index {
+            toolbar.removeItem(at: index)
+        }
     }
 }

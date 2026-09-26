@@ -17,6 +17,8 @@ final class EditorSession {
     let find = FindController()
     let navigation = DocumentNavigation()
     let conflict = DiskConflict()
+    /// The assistant's conversation, created when its panel first shows (ADR 0019).
+    private(set) lazy var assistant = makeAssistant()
     private var fileMonitor: FileChangeMonitor?
     /// The editor's scroll view, kept while reading mode removes it from the window.
     var editorScrollView: NSScrollView?

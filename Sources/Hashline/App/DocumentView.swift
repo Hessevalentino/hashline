@@ -6,6 +6,8 @@ struct DocumentView: View {
     @State private var session: EditorSession
     @AppStorage(PreviewSettings.showsPreviewKey) private var showsPreview = true
     @AppStorage(LibrarySettings.showsLibraryKey) private var showsLibrary = false
+    @AppStorage(AssistantSettings.enabledKey) private var assistantEnabled = false
+    @AppStorage(AssistantSettings.showsPanelKey) private var showsAssistant = false
 
     let fileURL: URL?
 
@@ -53,6 +55,14 @@ struct DocumentView: View {
                                maxWidth: .infinity, maxHeight: .infinity)
                         .accessibilityElement(children: .contain)
                         .accessibilityLabel("Preview")
+                }
+                // Last column; absent (no view, no session, no network) while the assistant is off.
+                if assistantEnabled && showsAssistant {
+                    AssistantPanel(session: session.assistant)
+                        .frame(minWidth: AssistantSettings.panelWidths.lowerBound, idealWidth: 340,
+                               maxWidth: AssistantSettings.panelWidths.upperBound, maxHeight: .infinity)
+                        .accessibilityElement(children: .contain)
+                        .accessibilityLabel("Assistant")
                 }
             }
             .background {
@@ -210,6 +220,8 @@ struct PreviewCommands: Commands {
     @AppStorage(PreviewSettings.showsPreviewKey) private var showsPreview = true
     @AppStorage(LibrarySettings.showsLibraryKey) private var showsLibrary = false
     @AppStorage(ViewSettings.readingModeKey) private var readingMode = false
+    @AppStorage(AssistantSettings.enabledKey) private var assistantEnabled = false
+    @AppStorage(AssistantSettings.showsPanelKey) private var showsAssistant = false
 
     var body: some Commands {
         CommandGroup(after: .toolbar) {
@@ -222,6 +234,12 @@ struct PreviewCommands: Commands {
                 PreviewSettings.togglePreview()
             }
             .keyboardShortcut("p", modifiers: [.command, .option])
+            if assistantEnabled, AssistantKeys.isAvailable {
+                Button(showsAssistant ? String(localized: "Hide Assistant") : String(localized: "Show Assistant")) {
+                    showsAssistant.toggle()
+                }
+                .keyboardShortcut("a", modifiers: [.command, .option])
+            }
         }
         CommandGroup(before: .sidebar) {
             ViewModeCommands()

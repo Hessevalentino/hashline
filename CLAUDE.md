@@ -68,7 +68,7 @@ Závazný plán je v `docs/roadmap.md` (fáze F0–F11). Rozsah níže je původ
 
 **MVP:** otevření, úprava a uložení `.md` (autosave, verze); živý náhled (nadpisy, odstavce, tučné a kurzíva, inline kód, odkazy, citace, seznamy včetně úkolových, bloky kódu se zvýrazněním, horizontální čára, GFM tabulky); obrázky (lokální i relativní, drag & drop do `./assets/`); zdrojový režim ⌘/; focus a typewriter mode; počet slov a znaků (lze skrýt); export do HTML a PDF; světlé/tmavé téma, volba písma a šířky textu.
 
-**Mimo rozsah:** synchronizace, spolupráce v reálném čase, pluginy, AI, mobilní verze. Nápady zapisuj do `docs/ideas.md`.
+**Mimo rozsah:** synchronizace, spolupráce v reálném čase, pluginy, mobilní verze. Výjimka: asistent AI u dokumentu (ADR 0019), ve výchozím stavu vypnutý. Nápady zapisuj do `docs/ideas.md`.
 
 ## Konvence
 
@@ -112,6 +112,7 @@ scripts/bench-typing.sh 3     # latence psaní bez XCTestu
 - Témata: `Sources/Hashline/Resources/Themes/*.hashlinetheme` jsou v bundlu jako složka (`type: folder` v `project.yml`). Nové téma = složka s `theme.json` + `theme.css`; `ThemeTests` hlídá vestavěná témata.
 - Export ověřuje `scripts/verify-export.sh` (háček `-HashlineExportTest <složka>`). Pandoc v sandboxu: spustí se jen soubor, který aplikace smí číst, tedy vybraný uživatelem v Nastavení. Kopie v kontejneru nejde, protože má `com.apple.provenance`. Pro test Pandocu: `scripts/verify-export.sh <cesta>` s dočasnou výjimkou `temporary-exception.files.absolute-path.read-only` v entitlements (nikdy necommitovat).
 - `-HashlineTypingBenchmarkKeepOpen YES` nechá dokument po psaní otevřený (zkoušky konfliktu se souborem na disku).
+- Asistent AI (ADR 0019): `-HashlineAssistantFake YES` nahradí poskytovatele skriptem bez sítě a klíče, `-HashlineAssistantSelfTest YES` (spolu s ním) projde úpravu, Undo a Stop v aplikaci bez fokusu a zapíše `Assistant self-test: …` do logu. Klíče jsou v Klíčence; po novém ad-hoc buildu se macOS zeptá na přístup při první zprávě.
 - Přepnutí režimů měří `-HashlineModeBenchmark YES`. Klíče režimů (`focusMode`, `readingMode`…) nepředávej jako argumenty, doména argumentů přebije zápis do UserDefaults.
 
 - `ReferenceFileDocument.snapshot` volá NSDocument na vlákně na pozadí (async save a autosave), main thread je přitom blokovaný. Proto je `snapshot` `nonisolated`. Nikdy ho neoznačuj `@MainActor`, jinak aplikace při ukládání spadne.

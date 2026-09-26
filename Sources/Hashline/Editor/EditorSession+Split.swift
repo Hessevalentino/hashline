@@ -10,7 +10,7 @@ enum SplitSettings {
     static let previewMinWidth: CGFloat = 280
 }
 
-// MARK: Dividers (library | editor | preview), remembered across windows, documents and launches
+// MARK: Dividers (library | editor | preview | assistant), remembered across windows, documents and launches
 
 extension EditorSession {
 
@@ -20,6 +20,7 @@ extension EditorSession {
         let library: NSView?
         let editor: NSView?
         let preview: NSView?
+        let assistant: NSView?
     }
 
     /// The split view item holding `view`.
@@ -38,7 +39,10 @@ extension EditorSession {
         // The library is always the first item; it is neither the editor nor the preview.
         let first = split.arrangedSubviews.first
         let library = first === editor || first === preview ? nil : first
-        return SplitLayout(split: split, library: library, editor: editor, preview: preview)
+        // The assistant is always the last item when it shows.
+        let last = split.arrangedSubviews.last
+        let assistant = last === editor || last === preview || last === library ? nil : last
+        return SplitLayout(split: split, library: library, editor: editor, preview: preview, assistant: assistant)
     }
 
     /// A drag of a divider saves the layout; any other resize (window, library, the preview or
@@ -68,6 +72,10 @@ extension EditorSession {
         if let library = layout.library, items.firstIndex(of: library) == draggedDivider {
             defaults.set(Double(library.frame.width), forKey: SplitSettings.libraryWidthKey)
             // The editor absorbed the change; keep the editor/preview ratio.
+            scheduleSplitLayout()
+        } else if let assistant = layout.assistant, let index = items.firstIndex(of: assistant),
+                  index - 1 == draggedDivider {
+            defaults.set(Double(assistant.frame.width), forKey: AssistantSettings.panelWidthKey)
             scheduleSplitLayout()
         } else if let editor = layout.editor, let preview = layout.preview,
                   items.firstIndex(of: editor) == draggedDivider {
@@ -103,6 +111,17 @@ extension EditorSession {
                             bounds.upperBound)
             let target = library.frame.minX + width.rounded()
             if abs(library.frame.maxX - target) > 1 { layout.split.setPosition(target, ofDividerAt: index) }
+        }
+        if let assistant = layout.assistant, let index = items.firstIndex(of: assistant), index > 0 {
+            // SwiftUI would give the panel an equal share; until a drag saves a width it gets the default.
+            let bounds = AssistantSettings.panelWidths
+            let saved = defaults.object(forKey: AssistantSettings.panelWidthKey) == nil
+                ? AssistantSettings.defaultPanelWidth : defaults.double(forKey: AssistantSettings.panelWidthKey)
+            let width = min(max(saved, bounds.lowerBound), bounds.upperBound).rounded()
+            let target = assistant.frame.maxX - width - layout.split.dividerThickness
+            if abs(assistant.frame.minX - layout.split.dividerThickness - target) > 1 {
+                layout.split.setPosition(target, ofDividerAt: index - 1)
+            }
         }
         guard let editor = layout.editor, let preview = layout.preview, let index = items.firstIndex(of: editor),
               defaults.object(forKey: SplitSettings.editorFractionKey) != nil else { return false }

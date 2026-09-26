@@ -10,6 +10,8 @@ import WebKit
 ///   to the container's tmp folder after two seconds.
 /// - `-HashlineTypingBenchmark <count>` types `count` characters into the editor through
 ///   `NSWindow.sendEvent` (no XCTest, no focus change, no dead keys), logs the latency and quits.
+/// - `-HashlineAssistantSelfTest YES` with `-HashlineAssistantFake YES` runs the assistant's edit, undo
+///   and stop flow without focus and logs `Assistant self-test: …` (see AssistantFake).
 /// - `-HashlineModeBenchmark YES` switches each view mode on and off and logs the times
 ///   (`Mode switch …`). Do not pass the view-mode keys themselves as arguments: they would win.
 /// - `-HashlineSplitDragTest <divider>` drags that divider (0 = library when shown) 120 points left with
@@ -41,6 +43,12 @@ final class UITestSupport: NSObject {
             }
         }
         startShowcaseHook(defaults)
+        if defaults.bool(forKey: "HashlineAssistantSelfTest") {
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(4))
+                await AssistantFake.runSelfTest()
+            }
+        }
         if defaults.bool(forKey: "HashlineModeBenchmark") {
             Task { @MainActor in
                 try? await Task.sleep(for: .seconds(4))

@@ -56,7 +56,7 @@
 - **Soubor je pravda.** Pracuje s obyčejnými `.md` na disku. Žádný vlastní formát ani databáze.
 - **Nativní.** Swift, AppKit a TextKit 2, žádný Electron. Světlý i tmavý režim, zkratky, Undo, Služby, Quick Look.
 - **Rychlý.** Psaní pod 10 ms i v 1MB dokumentu, otevření 1MB souboru zhruba za 0,2 s. Měří se, neodhaduje ([docs/perf.md](docs/perf.md)).
-- **Bezpečný a soukromý.** Sandbox, náhled bez JavaScriptu stránky, sanitizace HTML, žádná telemetrie.
+- **Bezpečný a soukromý.** Sandbox, náhled bez JavaScriptu stránky, sanitizace HTML, žádná telemetrie. Asistent AI je jen volitelný a bez vašeho klíče nic neposílá.
 
 ## Stažení a instalace
 
@@ -98,6 +98,7 @@ Když už aplikaci máte v Aplikacích a macOS ji blokuje, pomůže i `xattr -dr
 | 🧘 **Režimy** | Soustředění F8, psací stroj F9, stavový řádek se slovy, znaky a dobou čtení |
 | 📤 **Export** | Markdown (kopie kamkoli), HTML, PDF se záložkami, PNG, přes [Pandoc](https://pandoc.org) DOCX, ODT, RTF, ePub, LaTeX, MediaWiki, RST, import přes Pandoc |
 | 🍎 **macOS** | Quick Look pro `.md` ve Finderu, Služby („Nový dokument Hashline s výběrem“), Sdílení, čeština a angličtina, přístupnost |
+| 🤖 **Asistent AI** | Volitelný, ve výchozím stavu vypnutý (Nastavení ▸ Obecné ▸ Pokročilé). Chat u každého dokumentu s Claude, OpenAI nebo DeepSeek na vlastní klíč API (uložený jen v Klíčence). Na požádání rovnou upravuje text, každý pokyn jde vrátit jedním ⌘Z, volitelná rešerše na webu se zdroji. Vidí jen svůj dokument. |
 | 🔒 **Bezpečnost** | App Sandbox, CSP, allow-list sanitizace HTML, test proti 77 XSS vektorům, ochrana proti nepřátelským dokumentům |
 
 ## Technologie

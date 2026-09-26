@@ -81,6 +81,7 @@ struct GeneralSettingsView: View {
                     Button("Check for Updates…") { Updater.shared.checkForUpdates() }
                 }
             }
+            AdvancedSettings()
         }
         .formStyle(.columns)
     }

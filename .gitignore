@@ -8,3 +8,5 @@ DerivedData/
 Fixtures/generated/
 
 build/
+.grepai/
+.gitnexus/

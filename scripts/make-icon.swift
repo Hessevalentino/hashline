@@ -1,10 +1,15 @@
-// Builds the macOS app icon from Design/LOGO-hashline.jpeg: the logo clipped to the
-// macOS icon shape (824 pt rounded square on a 1024 canvas, continuous corners) plus a soft shadow.
+// Builds the macOS app icon from Design/hashline-LOGO-no-text.svg: the logo on its background colour,
+// inside the macOS icon shape (824 pt rounded square on a 1024 canvas) with a soft shadow. The SVG's
+// glyph fills 90 % of its canvas, so it is drawn smaller (about 70 % of the icon, Apple's guidance).
 // Usage: swift scripts/make-icon.swift
 import AppKit
 
 let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
-let source = root.appendingPathComponent("Design/LOGO-hashline.jpeg")
+let source = root.appendingPathComponent("Design/hashline-LOGO-no-text.svg")
+/// The SVG's background (its first rect), so the margin around the smaller logo matches it.
+let background = NSColor(srgbRed: 0x1c / 255, green: 0x24 / 255, blue: 0x27 / 255, alpha: 1)
+/// The logo's drawn size as a share of the icon shape.
+let logoScale: CGFloat = 0.78
 let output = root.appendingPathComponent("Sources/Hashline/Resources/Assets.xcassets/AppIcon.appiconset")
 
 guard let logo = NSImage(contentsOf: source) else { fatalError("Missing \(source.path)") }
@@ -29,8 +34,11 @@ func render(size: Int) -> Data {
     shape.fill()
     NSGraphicsContext.restoreGraphicsState()
     shape.addClip()
+    background.setFill()
+    shape.fill()
     context.imageInterpolation = .high
-    logo.draw(in: body, from: .zero, operation: .copy, fraction: 1)
+    let logoRect = body.insetBy(dx: body.width * (1 - logoScale) / 2, dy: body.height * (1 - logoScale) / 2)
+    logo.draw(in: logoRect, from: .zero, operation: .sourceOver, fraction: 1)
     NSGraphicsContext.restoreGraphicsState()
     guard let png = bitmap.representation(using: .png, properties: [:]) else { fatalError("png") }
     return png
