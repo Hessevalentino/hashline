@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hashline – markdown editor pro macOS se živým náhledem</title>
-<meta name="description" content="Hashline je nativní markdown editor pro macOS. Vlevo zdroj se zvýrazněnou syntaxí, vpravo živý náhled. Obyčejné soubory .md, žádný Electron. Verze 0.1.5 ke stažení.">
+<meta name="description" content="Hashline je nativní markdown editor pro macOS. Vlevo zdroj se zvýrazněnou syntaxí, vpravo živý náhled. Obyčejné soubory .md, žádný Electron. Verze 0.2.0 ke stažení.">
 <meta name="theme-color" content="#1C2427">
 <meta name="color-scheme" content="light dark">
 <!-- Na stagingu přepnout na "noindex, nofollow". -->
@@ -13,14 +13,14 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hashline – markdown editor pro macOS">
-<meta property="og:description" content="Vlevo píšete, vpravo čtete. Nativní editor pro obyčejné soubory .md. Verze 0.1.5 ke stažení.">
+<meta property="og:description" content="Vlevo píšete, vpravo čtete. Nativní editor pro obyčejné soubory .md. Verze 0.2.0 ke stažení.">
 <meta property="og:url" content="https://hashline.hesse.works/">
-<meta property="og:image" content="https://hashline.hesse.works/assets/img/og.jpg">
+<meta property="og:image" content="https://hashline.hesse.works/assets/img/og.jpg?v=0.2.0">
 <meta property="og:locale" content="cs_CZ">
 <meta name="twitter:card" content="summary_large_image">
 
-<link rel="icon" type="image/png" href="assets/img/favicon-64.png">
-<link rel="apple-touch-icon" href="assets/img/icon-256.png">
+<link rel="icon" type="image/png" href="assets/img/favicon-64.png?v=0.2.0">
+<link rel="apple-touch-icon" href="assets/img/icon-256.png?v=0.2.0">
 <link rel="preload" as="font" href="assets/fonts/newsreader-latin.woff2" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero-1408.webp" imagesrcset="assets/img/hero-800.webp 800w, assets/img/hero-1408.webp 1408w" imagesizes="100vw" type="image/webp">
 <link rel="stylesheet" href="assets/css/main.css">
@@ -35,9 +35,9 @@
   "operatingSystem": "macOS 14 nebo novější, Apple Silicon",
   "description": "Nativní markdown editor pro macOS se zvýrazněnou syntaxí a živým HTML náhledem. Pracuje s obyčejnými soubory .md.",
   "inLanguage": "cs",
-  "softwareVersion": "0.1.5",
+  "softwareVersion": "0.2.0",
   "downloadUrl": "https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg",
-  "fileSize": "7,30 MB"
+  "fileSize": "6,91 MB"
 }
 </script>
 </head>
@@ -47,7 +47,7 @@
 <header class="nav" data-nav>
   <div class="nav__inner">
     <a class="nav__brand" href="#top" aria-label="Hashline – na začátek">
-      <img src="assets/img/icon-256.png" width="28" height="28" alt="">
+      <img src="assets/img/icon-256.png?v=0.2.0" width="28" height="28" alt="">
       <span>Hashline</span>
     </a>
     <nav aria-label="Hlavní">
@@ -78,8 +78,8 @@
       <div class="hero__copy">
         <div class="hero__brand">
           <picture>
-            <source type="image/webp" srcset="assets/img/icon-288.webp">
-            <img class="hero__icon" src="assets/img/icon-288.png" width="144" height="144" alt="">
+            <source type="image/webp" srcset="assets/img/icon-288.webp?v=0.2.0">
+            <img class="hero__icon" src="assets/img/icon-288.png?v=0.2.0" width="144" height="144" alt="">
           </picture>
           <p class="hero__name">Hashline</p>
         </div>
@@ -88,7 +88,7 @@
         <p class="hero__lead">Hashline otevře obyčejný soubor .md, obarví syntaxi, vedle ukáže hotový text a pak vám nebude stát v&nbsp;cestě. I&nbsp;v&nbsp;megabajtovém souboru zareaguje na úhoz za 6&nbsp;ms.</p>
         <div class="hero__cta">
           <a class="btn btn--lg" href="https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg"><span class="btn__arrow" aria-hidden="true">↓</span> Stáhnout pro Mac</a>
-          <p class="hero__meta mono">Verze 0.1.5 · DMG 7,30&nbsp;MB<br>macOS 14+ · Apple Silicon · <a href="#stahnout">instalace</a></p>
+          <p class="hero__meta mono">Verze 0.2.0 · DMG 6,91&nbsp;MB<br>macOS 14+ · Apple Silicon · <a href="#stahnout">instalace</a></p>
         </div>
       </div>
       <div class="hero__veil" aria-hidden="true"></div>
@@ -173,12 +173,12 @@
           <p>Prohledání 5&nbsp;000 souborů mimo hlavní vlákno, takže psaní nečeká. Rozpočet je 300&nbsp;ms.</p>
         </article>
         <article class="stat" data-view>
-          <p class="stat__num"><span data-count="9.9" data-decimals="1">9,9</span><small>&nbsp;MB</small></p>
+          <p class="stat__num"><span data-count="13">13</span><small>&nbsp;MB</small></p>
           <h3>celá aplikace</h3>
-          <p>Velikost .app včetně matematiky, diagramů a&nbsp;Quick Looku. Strop je 15&nbsp;MB a&nbsp;žádná závislost se nepřidá bez zdůvodnění.</p>
+          <p>Velikost .app včetně matematiky, diagramů, Quick Looku a&nbsp;automatických aktualizací. Strop je 15&nbsp;MB a&nbsp;žádná závislost se nepřidá bez zdůvodnění.</p>
         </article>
       </div>
-      <p class="fine mono">Release build, MacBook Pro M4 (16 GB), macOS 26.6, 3–4 běhy. Fáze F10, 24. 9. 2026. Latenci psaní měří skript, který píše do 1MB dokumentu přímo v&nbsp;aplikaci, se zapnutým náhledem.</p>
+      <p class="fine mono">Release build, MacBook Pro M4 (16 GB), macOS 26.6, 3–4 běhy. Fáze F10, 24. 9. 2026, velikost aplikace ve verzi 0.2.0. Latenci psaní měří skript, který píše do 1MB dokumentu přímo v&nbsp;aplikaci, se zapnutým náhledem.</p>
     </div>
   </section>
 
@@ -217,8 +217,8 @@
         </article>
       </div>
       <div class="cta-row">
-        <a class="btn" href="https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg"><span class="btn__arrow" aria-hidden="true">↓</span> Stáhnout Hashline 0.1.4</a>
-        <p class="mono">DMG 7,30&nbsp;MB · macOS 14+ · Apple Silicon</p>
+        <a class="btn" href="https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg"><span class="btn__arrow" aria-hidden="true">↓</span> Stáhnout Hashline 0.2.0</a>
+        <p class="mono">DMG 6,91&nbsp;MB · macOS 14+ · Apple Silicon</p>
       </div>
     </div>
   </section>
@@ -244,13 +244,12 @@
         <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>Vlastní cloud a&nbsp;synchronizace</s><span class="tl mono" aria-hidden="true">~~</span></li>
         <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>Spolupráce v&nbsp;reálném čase</s><span class="tl mono" aria-hidden="true">~~</span></li>
         <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>Pluginy</s><span class="tl mono" aria-hidden="true">~~</span></li>
-        <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>AI asistent</s><span class="tl mono" aria-hidden="true">~~</span></li>
         <li data-view><span class="tl mono" aria-hidden="true">~~</span><s>Telemetrie</s><span class="tl mono" aria-hidden="true">~~</span></li>
       </ul>
       <p class="cuts__after">Co v&nbsp;seznamu chybí, nechává Hashline systému. Soubory synchronizuje iCloud Drive nebo cokoli, co už používáte. Nápady, které se nevešly, čekají v&nbsp;<code>docs/ideas.md</code>.</p>
       <div class="cta-row">
-        <a class="btn" href="https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg"><span class="btn__arrow" aria-hidden="true">↓</span> Stáhnout Hashline 0.1.4</a>
-        <p class="mono">Bez účtu, bez telemetrie. DMG 7,30&nbsp;MB</p>
+        <a class="btn" href="https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg"><span class="btn__arrow" aria-hidden="true">↓</span> Stáhnout Hashline 0.2.0</a>
+        <p class="mono">Bez účtu, bez telemetrie. DMG 6,91&nbsp;MB</p>
       </div>
     </div>
   </section>
@@ -260,7 +259,7 @@
     <div class="plan__stage">
       <div class="wrap plan__head">
         <p class="label mono">Co umí</p>
-        <h2 id="plan-title" class="h2">Dvanáct fází.<br>Všechny ve verzi 0.1.4.</h2>
+        <h2 id="plan-title" class="h2">Dvanáct fází.<br>Všechny ve verzi 0.2.0.</h2>
         <p class="plan__progress mono" aria-hidden="true"><span class="plan__bar"><i></i></span></p>
       </div>
       <ol class="plan__track" tabindex="0" aria-label="Fáze vývoje">
@@ -283,14 +282,14 @@
   <!-- 8 · STAŽENÍ -->
   <section class="get" id="stahnout" aria-labelledby="get-title">
     <div class="wrap get__inner" data-view>
-      <img class="get__icon" src="assets/img/icon-256.png" width="128" height="128" alt="Ikona aplikace Hashline" loading="lazy">
-      <h2 id="get-title" class="get__title">Hashline&nbsp;0.1.4</h2>
+      <img class="get__icon" src="assets/img/icon-256.png?v=0.2.0" width="128" height="128" alt="Ikona aplikace Hashline" loading="lazy">
+      <h2 id="get-title" class="get__title">Hashline&nbsp;0.2.0</h2>
       <a class="btn btn--lg get__btn" href="https://github.com/Hessevalentino/hashline/releases/latest/download/Hashline.dmg"><span class="btn__arrow" aria-hidden="true">↓</span> Stáhnout DMG</a>
       <p class="get__lead">Aplikace je podepsaná bez účtu Apple Developer. macOS ji proto napoprvé zablokuje: stačí jeden příkaz v&nbsp;Terminálu, nebo povolení v&nbsp;Nastavení systému ▸ Soukromí a&nbsp;zabezpečení ▸ Přesto otevřít (<a href="https://github.com/Hessevalentino/hashline#stažení-a-instalace">návod</a>). Aktualizace si pak po vašem souhlasu jednou týdně zkontroluje sama.</p>
       <ul class="get__req mono">
         <li>macOS 14 Sonoma a&nbsp;novější</li>
         <li>Apple Silicon</li>
-        <li>DMG 7,30&nbsp;MB</li>
+        <li>DMG 6,91&nbsp;MB</li>
         <li><a href="https://github.com/Hessevalentino/hashline">Zdrojový kód na GitHubu</a></li>
       </ul>
     </div>
@@ -299,7 +298,7 @@
 
 <footer class="foot">
   <div class="wrap foot__inner">
-    <p class="foot__brand"><img src="assets/img/icon-256.png" width="20" height="20" alt="" loading="lazy"> Hashline</p>
+    <p class="foot__brand"><img src="assets/img/icon-256.png?v=0.2.0" width="20" height="20" alt="" loading="lazy"> Hashline</p>
     <p>Tahle stránka nepoužívá cookies ani analytiku.</p>
     <p class="mono">© 2026 Hashline · open source (MIT) · <a href="https://github.com/Hessevalentino/hashline">GitHub</a></p>
   </div>
