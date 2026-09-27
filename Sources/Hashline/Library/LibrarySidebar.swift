@@ -5,8 +5,16 @@ import SwiftUI
 /// Library panel on the left of the document window (ADR 0006).
 struct LibrarySidebar: View {
     @Bindable var store: LibraryStore
-    @State private var selection: URL?
+    @State private var selection: Selection?
     @State private var isDropTargeted = false
+
+    /// A row of the list: a sub-folder to enter or a document to open.
+    private enum Selection: Hashable {
+        case folder(String)
+        case document(URL)
+    }
+
+    private var isBrowsing: Bool { store.query.trimmingCharacters(in: .whitespaces).isEmpty }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -15,6 +23,10 @@ struct LibrarySidebar: View {
             } else {
                 searchField
                 Divider()
+                if isBrowsing && !store.currentFolder.isEmpty {
+                    folderBar
+                    Divider()
+                }
                 list
                 Divider()
                 bottomBar
@@ -47,18 +59,54 @@ struct LibrarySidebar: View {
         .padding(.vertical, 8)
     }
 
+    /// The browsed folder and the way back up.
+    private var folderBar: some View {
+        HStack(spacing: 6) {
+            Button {
+                store.currentFolder = (store.currentFolder as NSString).deletingLastPathComponent
+            } label: {
+                Label("Back", systemImage: "chevron.left").labelStyle(.iconOnly)
+            }
+            .buttonStyle(.borderless)
+            .help("Back")
+            Image(systemName: "folder").foregroundStyle(.secondary)
+            Text((store.currentFolder as NSString).lastPathComponent)
+                .font(.body.weight(.semibold)).lineLimit(1)
+                .help(store.currentFolder)
+            Spacer()
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+    }
+
     private var list: some View {
         List(selection: $selection) {
-            ForEach(store.visibleItems) { item in
-                LibraryRow(title: item.title, detail: item.snippet, date: item.modified, path: item.relativePath)
-                    .tag(item.url)
+            if isBrowsing {
+                let listing = store.currentListing
+                ForEach(listing.folders) { folder in
+                    Label(folder.name, systemImage: "folder")
+                        .lineLimit(1)
+                        .badge(folder.documentCount)
+                        .help(folder.path)
+                        .tag(Selection.folder(folder.path))
+                }
+                ForEach(listing.documents) { item in
+                    LibraryRow(title: item.title, detail: item.snippet, date: item.modified, path: item.relativePath,
+                               showsFolder: false)
+                        .tag(Selection.document(item.url))
+                }
+            } else {
+                ForEach(store.visibleItems) { item in
+                    LibraryRow(title: item.title, detail: item.snippet, date: item.modified, path: item.relativePath)
+                        .tag(Selection.document(item.url))
+                }
             }
             if !store.contentMatches.isEmpty {
                 Section("In text") {
                     ForEach(store.contentMatches, id: \.item.url) { match in
                         LibraryRow(title: match.item.title, detail: match.line, date: match.item.modified,
                                    path: match.item.relativePath)
-                            .tag(match.item.url)
+                            .tag(Selection.document(match.item.url))
                     }
                 }
             }
@@ -69,15 +117,26 @@ struct LibrarySidebar: View {
                 Text("No documents yet").foregroundStyle(.secondary)
             }
         }
-        .onChange(of: selection) { _, url in
-            guard let url, let item = (store.items.first { $0.url == url }) else { return }
-            store.openDocument(item, besides: NSApp.keyWindow)
+        .onChange(of: selection) { _, selection in
+            switch selection {
+            case .folder(let path):
+                store.currentFolder = path
+                self.selection = nil
+            case .document(let url):
+                guard let item = (store.items.first { $0.url == url }) else { return }
+                store.openDocument(item, besides: NSApp.keyWindow)
+            case nil:
+                break
+            }
         }
-        .contextMenu(forSelectionType: URL.self) { urls in
-            LibraryItemMenu(store: store, urls: Array(urls))
+        .contextMenu(forSelectionType: Selection.self) { selections in
+            // Documents only: trashing a whole folder from here is too easy to do by accident.
+            LibraryItemMenu(store: store, urls: selections.compactMap {
+                if case .document(let url) = $0 { url } else { nil }
+            })
         }
         // Edit ▸ Delete and ⌘⌫ on the selected document.
-        .onDeleteCommand { if let selection { store.moveToTrash([selection]) } }
+        .onDeleteCommand { if case .document(let url) = selection { store.moveToTrash([url]) } }
     }
 
     private var bottomBar: some View {
@@ -149,6 +208,8 @@ private struct LibraryRow: View {
     let detail: String
     let date: Date
     let path: String
+    /// The folder under the date; off while browsing, where it is the browsed folder.
+    var showsFolder = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
@@ -158,7 +219,7 @@ private struct LibraryRow: View {
             }
             HStack(spacing: 4) {
                 Text(date, format: .dateTime.day().month(.abbreviated).year())
-                if path.contains("/") { Text("· " + (path as NSString).deletingLastPathComponent) }
+                if showsFolder, path.contains("/") { Text("· " + (path as NSString).deletingLastPathComponent) }
             }
             .font(.caption).foregroundStyle(.tertiary).lineLimit(1)
         }

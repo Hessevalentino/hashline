@@ -30,6 +30,25 @@ struct NavigationTests {
         #expect(tree[0].children?[0].children?.first?.path == "Notes/2026/y.md")
     }
 
+    @Test func folderListingShowsOneLevel() {
+        func document(_ path: String) -> LibraryDocument {
+            LibraryDocument(url: URL(fileURLWithPath: "/lib/" + path), relativePath: path, title: path,
+                            modified: .now, snippet: "")
+        }
+        let documents = [document("b.md"), document("Notes/x.md"), document("a.md"),
+                         document("Notes/2026/y.md"), document("Archiv/z.md"), document("Notes2.md")]
+        let root = FolderTree.listing(documents, in: "")
+        #expect(root.folders.map(\.name) == ["Archiv", "Notes"])
+        #expect(root.folders.map(\.documentCount) == [1, 2])
+        #expect(root.documents.map(\.relativePath) == ["b.md", "a.md", "Notes2.md"])
+        let notes = FolderTree.listing(documents, in: "Notes")
+        #expect(notes.folders.map(\.path) == ["Notes/2026"])
+        #expect(notes.documents.map(\.relativePath) == ["Notes/x.md"])
+        #expect(FolderTree.existingFolder("Notes/2026", in: documents) == "Notes/2026")
+        #expect(FolderTree.existingFolder("Notes/2025/old", in: documents) == "Notes")
+        #expect(FolderTree.existingFolder("Gone", in: documents) == "")
+    }
+
     // MARK: Fuzzy
 
     @Test func fuzzyRanksWordStartsAndConsecutive() {

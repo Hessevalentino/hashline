@@ -22,6 +22,7 @@ CS = {
     "Allow Access…": "Povolit přístup…",
     "Appearance": "Vzhled",
     "Arguments:": "Argumenty:",
+    "Back": "Zpět",
     "Bold": "Tučně",
     "Bulleted List": "Odrážkový seznam",
     "Cancel": "Zrušit",

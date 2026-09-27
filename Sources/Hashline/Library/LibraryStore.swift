@@ -19,6 +19,18 @@ final class LibraryStore {
     var query = "" {
         didSet { scheduleContentSearch() }
     }
+    /// The folder browsed in the Documents list, relative to the library (`""` is the library itself).
+    /// New and added documents go there. Shared by all windows, like the library.
+    var currentFolder = ""
+
+    /// Sub-folders and documents of `currentFolder`.
+    var currentListing: FolderListing { FolderTree.listing(items, in: currentFolder) }
+
+    /// Where new and added documents go: the browsed folder.
+    private var targetFolder: URL? {
+        guard let folder else { return nil }
+        return currentFolder.isEmpty ? folder : folder.appendingPathComponent(currentFolder, isDirectory: true)
+    }
 
     /// Documents whose title or path matches the query; all documents without a query.
     var visibleItems: [LibraryDocument] {
@@ -61,6 +73,7 @@ final class LibraryStore {
         folder?.stopAccessingSecurityScopedResource()
         _ = url.startAccessingSecurityScopedResource()
         folder = url
+        currentFolder = ""
         if persist, let bookmark = try? url.bookmarkData(options: .withSecurityScope) {
             UserDefaults.standard.set(bookmark, forKey: Self.bookmarkKey)
         }
@@ -93,6 +106,7 @@ final class LibraryStore {
             Performance.signposter.endInterval("LibraryScan", signpost)
             guard let self, !Task.isCancelled else { return }
             self.items = items
+            self.currentFolder = FolderTree.existingFolder(self.currentFolder, in: items)
             self.isScanning = false
             self.scheduleContentSearch()
             self.scheduleFolderSearch()
@@ -221,19 +235,20 @@ final class LibraryStore {
         }
     }
 
-    /// Creates `Untitled.md` in the library and opens it; no save panel.
+    /// Creates `Untitled.md` in the browsed library folder and opens it; no save panel.
     func createDocument(besides window: NSWindow?) {
-        guard let folder else { return chooseFolder() }
+        guard let folder = targetFolder else { return chooseFolder() }
         let url = LibraryIndex.uniqueURL(for: "Untitled.md", in: folder)
         guard FileManager.default.createFile(atPath: url.path, contents: Data()) else { return }
         rescan()
-        let item = LibraryDocument(url: url, relativePath: url.lastPathComponent, title: "Untitled",
+        let relativePath = currentFolder.isEmpty ? url.lastPathComponent : currentFolder + "/" + url.lastPathComponent
+        let item = LibraryDocument(url: url, relativePath: relativePath, title: "Untitled",
                                modified: .now, snippet: "")
         openDocument(item, besides: window)
     }
 
     func importFiles() {
-        guard let folder else { return chooseFolder() }
+        guard let folder = targetFolder else { return chooseFolder() }
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = true
         panel.allowedContentTypes = [UTType(importedAs: "net.daringfireball.markdown"), .plainText]
@@ -243,7 +258,7 @@ final class LibraryStore {
     }
 
     func importFiles(_ urls: [URL]) {
-        guard let folder else { return }
+        guard let folder = targetFolder else { return }
         let documents = urls.filter {
             LibraryIndex.extensions.contains($0.pathExtension.lowercased()) || $0.pathExtension.lowercased() == "txt"
         }

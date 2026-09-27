@@ -555,6 +555,16 @@
         }
       }
     },
+    "Back": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zpět"
+          }
+        }
+      }
+    },
     "Bold": {
       "localizations": {
         "cs": {
