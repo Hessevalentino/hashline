@@ -80,9 +80,9 @@ struct LibrarySidebar: View {
     }
 
     private var list: some View {
-        List(selection: $selection) {
+        let listing = store.currentListing
+        return List(selection: $selection) {
             if isBrowsing {
-                let listing = store.currentListing
                 ForEach(listing.folders) { folder in
                     Label(folder.name, systemImage: "folder")
                         .lineLimit(1)
@@ -113,8 +113,8 @@ struct LibrarySidebar: View {
         }
         .listStyle(.sidebar)
         .overlay {
-            if store.items.isEmpty && !store.isScanning {
-                Text("No documents yet").foregroundStyle(.secondary)
+            if isBrowsing && !store.isScanning && listing.folders.isEmpty && listing.documents.isEmpty {
+                Text(store.currentFolder.isEmpty ? "No documents yet" : "Empty folder").foregroundStyle(.secondary)
             }
         }
         .onChange(of: selection) { _, selection in
@@ -130,10 +130,16 @@ struct LibrarySidebar: View {
             }
         }
         .contextMenu(forSelectionType: Selection.self) { selections in
-            // Documents only: trashing a whole folder from here is too easy to do by accident.
-            LibraryItemMenu(store: store, urls: selections.compactMap {
-                if case .document(let url) = $0 { url } else { nil }
-            })
+            if selections.isEmpty {
+                Button("New Folder…") { store.createFolder() }
+                Button("New Document") { store.createDocument(besides: NSApp.keyWindow) }
+            } else if selections.count == 1, case .folder(let path) = selections.first {
+                LibraryFolderMenu(store: store, path: path)
+            } else {
+                LibraryItemMenu(store: store, urls: selections.compactMap {
+                    if case .document(let url) = $0 { url } else { nil }
+                })
+            }
         }
         // Edit ▸ Delete and ⌘⌫ on the selected document.
         .onDeleteCommand { if case .document(let url) = selection { store.moveToTrash([url]) } }
@@ -145,6 +151,8 @@ struct LibrarySidebar: View {
                 .help("New Document in Library (⌥⌘N)")
             Button { store.importFiles() } label: { Image(systemName: "plus") }
                 .help("Add Files to Library…")
+            Button { store.createFolder() } label: { Image(systemName: "folder.badge.plus") }
+                .help("New Folder…")
             Spacer()
             Menu {
                 Button("Show in Finder") { store.revealInFinder() }
@@ -182,6 +190,21 @@ struct LibraryItemMenu: View {
             Button("Move to Trash", role: .destructive) { store.moveToTrash(urls) }
                 .keyboardShortcut(.delete, modifiers: .command)
         }
+    }
+}
+
+/// Right-click menu of a library folder. Moving it to the Trash asks first (ADR 0006).
+private struct LibraryFolderMenu: View {
+    let store: LibraryStore
+    let path: String
+
+    var body: some View {
+        Button("Open") { store.currentFolder = path }
+        Button("Show in Finder") {
+            if let root = store.folder { store.revealInFinder([root.appendingPathComponent(path, isDirectory: true)]) }
+        }
+        Divider()
+        Button("Move to Trash…", role: .destructive) { store.moveFolderToTrash(path) }
     }
 }
 

@@ -22,6 +22,13 @@ public struct LibraryDocument: Sendable, Identifiable, Hashable {
     }
 }
 
+/// Result of scanning the library folder.
+public struct LibraryContents: Sendable {
+    public let documents: [LibraryDocument]
+    /// Relative paths of all sub-folders, including empty ones, e.g. `Notes/2026`.
+    public let folders: [String]
+}
+
 /// A content search hit: the document and the line that matched.
 public struct LibraryMatch: Sendable, Hashable {
     public let item: LibraryDocument
@@ -37,26 +44,42 @@ public enum LibraryIndex {
     /// All Markdown files under `folder` (recursively, skipping hidden files and packages),
     /// newest first.
     public static func scan(_ folder: URL) -> [LibraryDocument] {
-        let keys: [URLResourceKey] = [.isRegularFileKey, .contentModificationDateKey]
+        scanContents(folder).documents
+    }
+
+    /// Documents (newest first) and every sub-folder, in one walk. Folders are real directories only:
+    /// no symbolic links (which could lead outside the library), packages or hidden folders.
+    public static func scanContents(_ folder: URL) -> LibraryContents {
+        let keys: [URLResourceKey] = [.isRegularFileKey, .isDirectoryKey, .isSymbolicLinkKey, .isPackageKey,
+                                      .contentModificationDateKey]
         guard let enumerator = FileManager.default.enumerator(
             at: folder, includingPropertiesForKeys: keys, options: [.skipsHiddenFiles, .skipsPackageDescendants]
-        ) else { return [] }
+        ) else { return LibraryContents(documents: [], folders: []) }
         let base = folder.standardizedFileURL.path
         var items: [LibraryDocument] = []
-        for case let url as URL in enumerator where extensions.contains(url.pathExtension.lowercased()) {
-            guard let values = try? url.resourceValues(forKeys: Set(keys)), values.isRegularFile == true else {
+        var folders: [String] = []
+        for case let url as URL in enumerator {
+            guard let values = try? url.resourceValues(forKeys: Set(keys)) else { continue }
+            var relative = url.standardizedFileURL.path
+            if relative.hasPrefix(base) { relative = String(relative.dropFirst(base.count)) }
+            relative = relative.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+            if values.isDirectory == true {
+                if values.isSymbolicLink != true, values.isPackage != true, !relative.isEmpty {
+                    folders.append(relative)
+                }
+                continue
+            }
+            guard extensions.contains(url.pathExtension.lowercased()), values.isRegularFile == true else {
                 continue
             }
             let summary = summarize(url)
             let snippet = [summary.title ?? "", summary.snippet].filter { !$0.isEmpty }.joined(separator: " · ")
-            var relative = url.standardizedFileURL.path
-            if relative.hasPrefix(base) { relative = String(relative.dropFirst(base.count)) }
-            relative = relative.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-            items.append(LibraryDocument(url: url, relativePath: relative, title: url.deletingPathExtension().lastPathComponent,
-                                     modified: values.contentModificationDate ?? .distantPast,
-                                     snippet: snippet))
+            items.append(LibraryDocument(url: url, relativePath: relative,
+                                         title: url.deletingPathExtension().lastPathComponent,
+                                         modified: values.contentModificationDate ?? .distantPast,
+                                         snippet: snippet))
         }
-        return items.sorted { $0.modified > $1.modified }
+        return LibraryContents(documents: items.sorted { $0.modified > $1.modified }, folders: folders)
     }
 
     static func summarize(_ url: URL) -> (title: String?, snippet: String) {
@@ -166,11 +189,7 @@ public enum LibraryIndex {
     /// The URL of `url` renamed to `name` in the same folder. Without an extension of its own,
     /// `name` keeps the original one (`Notes` → `Notes.md`); nil when nothing changes.
     public static func renamedURL(_ url: URL, to name: String) throws(RenameError) -> URL? {
-        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty, trimmed != ".", trimmed != ".." else { throw .empty }
-        guard !trimmed.contains("/"), !trimmed.contains(":"), !trimmed.hasPrefix(".") else {
-            throw .invalidCharacters
-        }
+        let trimmed = try validatedName(name)
         let original = url.pathExtension
         let hasOwnExtension = extensions.contains((trimmed as NSString).pathExtension.lowercased())
         let fileName = hasOwnExtension || original.isEmpty ? trimmed : trimmed + "." + original
@@ -180,6 +199,31 @@ public enum LibraryIndex {
         let caseOnly = target.lastPathComponent.lowercased() == url.lastPathComponent.lowercased()
         if !caseOnly, FileManager.default.fileExists(atPath: target.path) { throw .exists }
         return target
+    }
+
+    /// `name` trimmed; rejects empty names, path separators and hidden (dot) names.
+    static func validatedName(_ name: String) throws(RenameError) -> String {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, trimmed != ".", trimmed != ".." else { throw .empty }
+        guard !trimmed.contains("/"), !trimmed.contains(":"), !trimmed.hasPrefix(".") else {
+            throw .invalidCharacters
+        }
+        return trimmed
+    }
+
+    /// The URL for a new folder `name` inside `parent`; throws when the name is unusable or taken.
+    public static func newFolderURL(named name: String, in parent: URL) throws(RenameError) -> URL {
+        let trimmed = try validatedName(name)
+        let target = parent.appendingPathComponent(trimmed, isDirectory: true)
+        guard !FileManager.default.fileExists(atPath: target.path) else { throw .exists }
+        return target
+    }
+
+    /// Whether `url` lies strictly inside `root` once symbolic links are resolved (never `root` itself).
+    public static func isStrictlyInside(_ url: URL, root: URL) -> Bool {
+        let rootPath = root.standardizedFileURL.resolvingSymlinksInPath().path
+        let path = url.standardizedFileURL.resolvingSymlinksInPath().path
+        return path.hasPrefix(rootPath + "/") && path.count > rootPath.count + 1
     }
 
     /// Copies files into the library under unique names; returns the new URLs.

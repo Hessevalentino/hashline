@@ -32,6 +32,42 @@ struct LibraryIndexTests {
         #expect(items.map(\.snippet) == ["No heading, just a link.", "Alpha · First text here."])
     }
 
+    @Test func scanListsFoldersButNotLinksOrHiddenOnes() throws {
+        let folder = try Self.makeFolder(["Notes/a.md": "# A", ".git/HEAD": "x"])
+        let outside = try Self.makeFolder(["elsewhere.md": "# E"])
+        defer {
+            try? FileManager.default.removeItem(at: folder)
+            try? FileManager.default.removeItem(at: outside)
+        }
+        let manager = FileManager.default
+        try manager.createDirectory(at: folder.appendingPathComponent("Empty/Inner"), withIntermediateDirectories: true)
+        try manager.createDirectory(at: folder.appendingPathComponent("Tool.app"), withIntermediateDirectories: true)
+        try manager.createSymbolicLink(at: folder.appendingPathComponent("Link"), withDestinationURL: outside)
+        let contents = LibraryIndex.scanContents(folder)
+        #expect(contents.folders.sorted() == ["Empty", "Empty/Inner", "Notes"])
+        #expect(contents.documents.map(\.relativePath) == ["Notes/a.md"])
+    }
+
+    @Test func newFolderNamesAndContainment() throws {
+        let folder = try Self.makeFolder(["Taken/a.md": "x"])
+        defer { try? FileManager.default.removeItem(at: folder) }
+        #expect(try LibraryIndex.newFolderURL(named: " Projects ", in: folder).lastPathComponent == "Projects")
+        #expect(throws: LibraryIndex.RenameError.exists) { try LibraryIndex.newFolderURL(named: "Taken", in: folder) }
+        #expect(throws: LibraryIndex.RenameError.empty) { try LibraryIndex.newFolderURL(named: "..", in: folder) }
+        #expect(throws: LibraryIndex.RenameError.invalidCharacters) {
+            try LibraryIndex.newFolderURL(named: "a/b", in: folder)
+        }
+        #expect(throws: LibraryIndex.RenameError.invalidCharacters) {
+            try LibraryIndex.newFolderURL(named: ".hidden", in: folder)
+        }
+        #expect(LibraryIndex.isStrictlyInside(folder.appendingPathComponent("Taken"), root: folder))
+        #expect(!LibraryIndex.isStrictlyInside(folder, root: folder))
+        #expect(!LibraryIndex.isStrictlyInside(folder.appendingPathComponent("Taken/../.."), root: folder))
+        #expect(!LibraryIndex.isStrictlyInside(folder.deletingLastPathComponent(), root: folder))
+        let sibling = URL(fileURLWithPath: folder.path + "-other")
+        #expect(!LibraryIndex.isStrictlyInside(sibling, root: folder))
+    }
+
     @Test func titleFromFrontMatter() {
         let summary = LibraryIndex.summarize(text: "---\ntitle: \"Kniha\"\ndate: 2026\n---\n# Kapitola\n\nText")
         #expect(summary.title == "Kniha")

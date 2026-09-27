@@ -15,3 +15,16 @@ Výjimka ze zásady „rozhraní je skryté, dokud není potřeba“: lišta je 
 
 ## Doplněk (2026-09-24)
 Dokument vybraný v knihovně se otevírá jako nativní záložka okna (`NSWindow.tabbingMode = .preferred`, `addTabbedWindow`). Už otevřený dokument se jen přepne. Autosave i verze fungují beze změny, protože každá záložka je vlastní `NSDocument`.
+
+## Doplněk (2026-09-27): složky
+Seznam Dokumenty prochází knihovnu po složkách. Podsložky jsou nahoře, klik složku otevře a šipka Zpět vede o úroveň výš. Hledání dál prochází celou knihovnu. Nové a přidané dokumenty se ukládají do otevřené složky.
+
+Zobrazují se všechny podsložky včetně prázdných, jinak by do nové složky nešlo nic vytvořit. Výjimkou jsou složky obrázků (`assets`, `<dokument>.assets`), které se ukážou jen tehdy, když obsahují dokumenty. Symbolické odkazy, balíčky a skryté složky se nezobrazují.
+
+Složku jde vytvořit (tlačítko ve spodní liště, pravé tlačítko na prázdném místě) a přesunout do koše (pravé tlačítko na složce). Mazání je bezpečné:
+- složka jde jen do koše, nikdy se nemaže natrvalo,
+- vždy se potvrzuje a potvrzení uvádí počet dokumentů; Return mazání zruší,
+- smazat nejde kořen knihovny, nic mimo ni ani symbolický odkaz,
+- otevřené dokumenty ze složky se nejdřív uloží (čeká se na dokončení) a zavřou; když uložení selže, nic se nepřesune.
+
+Přejmenování a přesouvání složek zatím Hashline nedělá, na to je Finder.

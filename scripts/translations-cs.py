@@ -294,6 +294,26 @@ CS = {
         "Dokument má zhruba %lld tokenů a každá zpráva ho posílá celý. Než budete pokračovat, podívejte se do ceníku poskytovatele.",
     "The model that answers your next message": "Model, který odpoví na další zprávu",
     "Verify": "Ověřit",
+    # Library folders
+    "A folder named “%@” already exists.": "Složka s názvem „%@“ už existuje.",
+    "Create": "Vytvořit",
+    "Empty folder": "Prázdná složka",
+    "Enter a name for the new folder.": "Zadejte název nové složky.",
+    "Move the folder “%@” to the Trash?": "Přesunout složku „%@“ do koše?",
+    "Move to Trash…": "Přesunout do koše…",
+    "New Document": "Nový dokument",
+    "New Folder": "Nová složka",
+    "New Folder…": "Nová složka…",
+    "The folder and everything in it, including %lld documents, will be moved to the Trash. You can restore it from there.": {
+        "one": "Složka se vším obsahem včetně %lld dokumentu se přesune do koše. Odtud ji jde obnovit.",
+        "few": "Složka se vším obsahem včetně %lld dokumentů se přesune do koše. Odtud ji jde obnovit.",
+        "many": "Složka se vším obsahem včetně %lld dokumentu se přesune do koše. Odtud ji jde obnovit.",
+        "other": "Složka se vším obsahem včetně %lld dokumentů se přesune do koše. Odtud ji jde obnovit.",
+        "en_one": "The folder and everything in it, including %lld document, will be moved to the Trash. You can restore it from there.",
+    },
+    "The folder contains no documents. You can restore it from the Trash.":
+        "Složka neobsahuje žádné dokumenty. Z koše ji jde obnovit.",
+    "Untitled Folder": "Nová složka",
     # Quick Look extension
     "Open the document to see the rest.": "Zbytek uvidíte po otevření dokumentu.",
 }

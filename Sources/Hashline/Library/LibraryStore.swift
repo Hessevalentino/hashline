@@ -13,6 +13,8 @@ final class LibraryStore {
 
     private(set) var folder: URL?
     private(set) var items: [LibraryDocument] = []
+    /// Relative paths of all library sub-folders, empty ones included.
+    private(set) var folders: [String] = []
     private(set) var contentMatches: [LibraryMatch] = []
     private(set) var isScanning = false
     private(set) var isSearchingContent = false
@@ -24,10 +26,10 @@ final class LibraryStore {
     var currentFolder = ""
 
     /// Sub-folders and documents of `currentFolder`.
-    var currentListing: FolderListing { FolderTree.listing(items, in: currentFolder) }
+    var currentListing: FolderListing { FolderTree.listing(items, folders: folders, in: currentFolder) }
 
     /// Where new and added documents go: the browsed folder.
-    private var targetFolder: URL? {
+    var targetFolder: URL? {
         guard let folder else { return nil }
         return currentFolder.isEmpty ? folder : folder.appendingPathComponent(currentFolder, isDirectory: true)
     }
@@ -102,11 +104,13 @@ final class LibraryStore {
         isScanning = true
         scanTask = Task { [weak self] in
             let signpost = Performance.signposter.beginInterval("LibraryScan")
-            let items = await Task.detached(priority: .userInitiated) { LibraryIndex.scan(folder) }.value
+            let contents = await Task.detached(priority: .userInitiated) { LibraryIndex.scanContents(folder) }.value
             Performance.signposter.endInterval("LibraryScan", signpost)
             guard let self, !Task.isCancelled else { return }
+            let items = contents.documents
             self.items = items
-            self.currentFolder = FolderTree.existingFolder(self.currentFolder, in: items)
+            self.folders = contents.folders
+            self.currentFolder = FolderTree.existingFolder(self.currentFolder, in: items, folders: contents.folders)
             self.isScanning = false
             self.scheduleContentSearch()
             self.scheduleFolderSearch()

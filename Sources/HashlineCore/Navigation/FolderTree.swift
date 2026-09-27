@@ -14,13 +14,24 @@ public struct FolderNode: Sendable, Hashable, Identifiable {
 }
 
 public enum FolderTree {
-    /// Builds the tree from the scanned documents' relative paths.
-    public static func build(_ documents: [LibraryDocument]) -> [FolderNode] {
+    /// Builds the tree from the scanned documents' and folders' relative paths.
+    public static func build(_ documents: [LibraryDocument], folders paths: [String] = []) -> [FolderNode] {
         final class Folder {
             var folders: [String: Folder] = [:]
             var documents: [LibraryDocument] = []
         }
         let root = Folder()
+        // Empty folders too, as in the Documents list; image folders only when they hold documents.
+        for path in paths {
+            let components = path.split(separator: "/").map(String.init)
+            guard !components.contains(where: isAssetsFolder) else { continue }
+            var folder = root
+            for name in components {
+                let next = folder.folders[name] ?? Folder()
+                folder.folders[name] = next
+                folder = next
+            }
+        }
         for document in documents {
             var folder = root
             for component in document.relativePath.split(separator: "/").dropLast() {
@@ -66,9 +77,17 @@ public struct FolderListing: Sendable, Equatable {
 }
 
 extension FolderTree {
-    /// The content of the folder at `path` (`""` is the library itself). Folders exist only as far
-    /// as they contain documents, so an `assets` folder with images alone is not listed.
-    public static func listing(_ documents: [LibraryDocument], in path: String) -> FolderListing {
+    /// Image folders created by pasting or dropping images (`assets`, `<document>.assets`).
+    /// Listed only when they also hold documents.
+    public static func isAssetsFolder(_ name: String) -> Bool {
+        let lowered = name.lowercased()
+        return lowered == "assets" || lowered.hasSuffix(".assets")
+    }
+
+    /// The content of the folder at `path` (`""` is the library itself): every sub-folder in
+    /// `folders` (empty ones too) and every folder holding documents, except image folders without documents.
+    public static func listing(_ documents: [LibraryDocument], folders: [String] = [],
+                               in path: String) -> FolderListing {
         let prefix = path.isEmpty ? "" : path + "/"
         var counts: [String: Int] = [:]
         var direct: [LibraryDocument] = []
@@ -80,16 +99,23 @@ extension FolderTree {
                 direct.append(document)
             }
         }
-        let folders = counts.keys
+        for folder in folders where folder.hasPrefix(prefix) {
+            let name = String(folder.dropFirst(prefix.count).prefix { $0 != "/" })
+            if !name.isEmpty, counts[name] == nil, !isAssetsFolder(name) { counts[name] = 0 }
+        }
+        let subfolders = counts.keys
             .sorted { $0.localizedStandardCompare($1) == .orderedAscending }
             .map { FolderListing.Subfolder(name: $0, path: prefix + $0, documentCount: counts[$0] ?? 0) }
-        return FolderListing(folders: folders, documents: direct)
+        return FolderListing(folders: subfolders, documents: direct)
     }
 
-    /// `path` or its nearest ancestor that still contains documents (after a rescan).
-    public static func existingFolder(_ path: String, in documents: [LibraryDocument]) -> String {
+    /// `path` or its nearest ancestor that still exists (after a rescan).
+    public static func existingFolder(_ path: String, in documents: [LibraryDocument],
+                                      folders: [String] = []) -> String {
+        let existing = Set(folders)
         var path = path
-        while !path.isEmpty, !documents.contains(where: { $0.relativePath.hasPrefix(path + "/") }) {
+        while !path.isEmpty, !existing.contains(path),
+              !documents.contains(where: { $0.relativePath.hasPrefix(path + "/") }) {
             path = (path as NSString).deletingLastPathComponent
         }
         return path

@@ -342,6 +342,16 @@
         }
       }
     },
+    "A folder named “%@” already exists.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Složka s názvem „%@“ už existuje."
+          }
+        }
+      }
+    },
     "A remote image tells its server that you opened the document. Local images always show.": {
       "localizations": {
         "cs": {
@@ -825,6 +835,16 @@
         }
       }
     },
+    "Create": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vytvořit"
+          }
+        }
+      }
+    },
     "Dark": {
       "localizations": {
         "cs": {
@@ -985,12 +1005,32 @@
         }
       }
     },
+    "Empty folder": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prázdná složka"
+          }
+        }
+      }
+    },
     "Enable the AI assistant": {
       "localizations": {
         "cs": {
           "stringUnit": {
             "state": "translated",
             "value": "Povolit asistenta AI"
+          }
+        }
+      }
+    },
+    "Enter a name for the new folder.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zadejte název nové složky."
           }
         }
       }
@@ -1735,6 +1775,16 @@
         }
       }
     },
+    "Move the folder “%@” to the Trash?": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přesunout složku „%@“ do koše?"
+          }
+        }
+      }
+    },
     "Move to Trash": {
       "localizations": {
         "cs": {
@@ -1745,12 +1795,32 @@
         }
       }
     },
+    "Move to Trash…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přesunout do koše…"
+          }
+        }
+      }
+    },
     "Narrow (72 characters)": {
       "localizations": {
         "cs": {
           "stringUnit": {
             "state": "translated",
             "value": "Úzká (72 znaků)"
+          }
+        }
+      }
+    },
+    "New Document": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nový dokument"
           }
         }
       }
@@ -1771,6 +1841,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nový dokument v knihovně (⌥⌘N)"
+          }
+        }
+      }
+    },
+    "New Folder": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nová složka"
+          }
+        }
+      }
+    },
+    "New Folder…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nová složka…"
           }
         }
       }
@@ -2721,6 +2811,68 @@
         }
       }
     },
+    "The folder and everything in it, including %lld documents, will be moved to the Trash. You can restore it from there.": {
+      "localizations": {
+        "cs": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Složka se vším obsahem včetně %lld dokumentů se přesune do koše. Odtud ji jde obnovit."
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Složka se vším obsahem včetně %lld dokumentu se přesune do koše. Odtud ji jde obnovit."
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Složka se vším obsahem včetně %lld dokumentu se přesune do koše. Odtud ji jde obnovit."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Složka se vším obsahem včetně %lld dokumentů se přesune do koše. Odtud ji jde obnovit."
+                }
+              }
+            }
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "The folder and everything in it, including %lld document, will be moved to the Trash. You can restore it from there."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "The folder and everything in it, including %lld documents, will be moved to the Trash. You can restore it from there."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "The folder contains no documents. You can restore it from the Trash.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Složka neobsahuje žádné dokumenty. Z koše ji jde obnovit."
+          }
+        }
+      }
+    },
     "The key could not be saved in the Keychain.": {
       "localizations": {
         "cs": {
@@ -2857,6 +3009,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Bez názvu"
+          }
+        }
+      }
+    },
+    "Untitled Folder": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nová složka"
           }
         }
       }

@@ -49,6 +49,26 @@ struct NavigationTests {
         #expect(FolderTree.existingFolder("Gone", in: documents) == "")
     }
 
+    @Test func emptyFoldersAreListedButNotImageFolders() {
+        func document(_ path: String) -> LibraryDocument {
+            LibraryDocument(url: URL(fileURLWithPath: "/lib/" + path), relativePath: path, title: path,
+                            modified: .now, snippet: "")
+        }
+        let documents = [document("Notes/x.md"), document("Book.assets/notes.md")]
+        let folders = ["Notes", "Empty", "Empty/Inner", "assets", "assets/old", "Idea.assets", "Book.assets",
+                       "Notes/Drafts"]
+        let root = FolderTree.listing(documents, folders: folders, in: "")
+        #expect(root.folders.map(\.name) == ["Book.assets", "Empty", "Notes"])
+        #expect(root.folders.map(\.documentCount) == [1, 0, 1])
+        #expect(FolderTree.listing(documents, folders: folders, in: "Empty").folders.map(\.path) == ["Empty/Inner"])
+        #expect(FolderTree.listing(documents, folders: folders, in: "Notes").folders.map(\.path) == ["Notes/Drafts"])
+        #expect(FolderTree.existingFolder("Empty/Inner", in: documents, folders: folders) == "Empty/Inner")
+        #expect(FolderTree.existingFolder("Empty/Gone", in: documents, folders: folders) == "Empty")
+        let tree = FolderTree.build(documents, folders: folders)
+        #expect(tree.map(\.name) == ["Book.assets", "Empty", "Notes"])
+        #expect(tree[1].children?.map(\.name) == ["Inner"])
+    }
+
     // MARK: Fuzzy
 
     @Test func fuzzyRanksWordStartsAndConsecutive() {

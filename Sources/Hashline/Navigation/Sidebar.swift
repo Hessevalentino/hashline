@@ -66,7 +66,7 @@ private struct FolderTreeView: View {
     @State private var selection: String?
 
     var body: some View {
-        let tree = FolderTree.build(store.items)
+        let tree = FolderTree.build(store.items, folders: store.folders)
         List(tree, children: \.children, selection: $selection) { node in
             Label(node.document?.title ?? node.name, systemImage: node.document == nil ? "folder" : "doc.text")
                 .lineLimit(1)
