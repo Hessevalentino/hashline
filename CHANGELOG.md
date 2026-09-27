@@ -1,5 +1,11 @@
 # Změny
 
+## 0.3.3 – 2026-09-27
+
+- Knihovna ukazuje i prázdné složky, takže do nové složky jde rovnou vytvořit dokument. Složky s obrázky (`assets`) zůstávají skryté.
+- Složky jde vytvářet přímo v knihovně: tlačítko se složkou ve spodní liště nebo pravé tlačítko na prázdném místě
+- Složku jde přesunout do koše přes pravé tlačítko. Hashline se vždy zeptá a ukáže počet dokumentů, otevřené dokumenty ze složky nejdřív uloží a zavře.
+
 ## 0.3.2 – 2026-09-27
 
 - Knihovna ukazuje podsložky: v seznamu Dokumenty jsou složky nahoře i s počtem dokumentů, kliknutím se otevřou a šipka Zpět vede o úroveň výš
