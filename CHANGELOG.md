@@ -1,5 +1,11 @@
 # Změny
 
+## 0.3.2 – 2026-09-27
+
+- Knihovna ukazuje podsložky: v seznamu Dokumenty jsou složky nahoře i s počtem dokumentů, kliknutím se otevřou a šipka Zpět vede o úroveň výš
+- Nový dokument (⌥⌘N) i přidané nebo přetažené soubory se ukládají do právě otevřené složky
+- Hledání dál prochází celou knihovnu
+
 ## 0.3.1 – 2026-09-26
 
 - Oprava pádu aplikace při zapnutí asistenta nebo připojení Ollamy či LM Studia, když bylo otevřeno víc oken nebo panelů
