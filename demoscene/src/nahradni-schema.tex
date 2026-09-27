@@ -1,0 +1,39 @@
+% Náhradní schéma stejnosměrného stroje s cizím buzením (motor).
+% Kompilace: tectonic nahradni-schema.tex
+%
+% Tabulka spojení        součástka | svorka -> uzel
+%   U   (napájení kotvy)   + -> A1,   - -> A2
+%   R_a (odpor kotvy)      A1 -> m
+%   U_i (indukované nap.)  + -> m,    - -> A2
+%   U_f (napájení buzení)  + -> F1,   - -> F2
+%   L_f (budicí vinutí)    F1 -> F2
+\documentclass[border=8pt]{standalone}
+\usepackage{fontspec}
+\setmainfont{texgyreheros}[Extension=.otf, UprightFont=*-regular, BoldFont=*-bold, ItalicFont=*-italic]
+\usepackage{amsmath}
+\usepackage[european resistors,american inductors,american voltages,american currents]{circuitikz}
+\ctikzset{bipoles/thickness=1.2}
+\begin{document}
+\begin{circuitikz}[line width=0.7pt]
+% obvod kotvy
+\coordinate (A1) at (0,3);  \coordinate (A2) at (0,0);
+\coordinate (m)  at (3.6,3); \coordinate (mb) at (3.6,0);
+% V se kreslí od svorky + ke svorce -
+\draw (A1) to[V, l_={$U$}] (A2);
+\draw (A1) to[R, l={$R_a$}, i>^={$I_a$}, *-] (m)
+      to[V, l={$U_i$}] (mb) -- (A2);
+\node[anchor=east, font=\small] at ($(A1)+(-0.12,0.28)$) {A1};
+\node[anchor=east, font=\small] at ($(A2)+(-0.12,-0.28)$) {A2};
+\draw (A2) node[circ]{};
+% obvod buzení
+\coordinate (F1) at (6.6,3); \coordinate (F2) at (6.6,0);
+\draw (F1) to[V, l_={$U_f$}] (F2);
+\draw (F1) -- (9.4,3) to[L, l={$L_f$}, i>^={$I_f$}] (9.4,0)
+      -- (F2);
+\draw (F1) node[circ]{} (F2) node[circ]{};
+\node[anchor=east, font=\small] at ($(F1)+(-0.12,0.28)$) {F1};
+\node[anchor=east, font=\small] at ($(F2)+(-0.12,-0.28)$) {F2};
+\node[font=\small] at (1.8,-0.75) {obvod kotvy};
+\node[font=\small] at (8.0,-0.75) {obvod buzení};
+\end{circuitikz}
+\end{document}
