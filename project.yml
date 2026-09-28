@@ -16,7 +16,7 @@ settings:
     SWIFT_STRICT_CONCURRENCY: complete
     MACOSX_DEPLOYMENT_TARGET: "14.0"
     DEAD_CODE_STRIPPING: YES
-    # Apple Silicon only (CLAUDE.md): a universal binary would double the app size.
+    # Apple Silicon only: a universal binary would double the app size.
     ARCHS: arm64
     # String Catalogs: the compiler lists localizable strings (scripts/sync-strings.sh).
     SWIFT_EMIT_LOC_STRINGS: YES

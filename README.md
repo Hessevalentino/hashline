@@ -48,6 +48,7 @@
 - [Technologie](#technologie)
 - [Výkon](#výkon)
 - [Sestavení ze zdrojů](#sestavení-ze-zdrojů)
+- [Struktura repozitáře](#struktura-repozitáře)
 - [Licence](#licence)
 
 ## Proč Hashline
@@ -55,7 +56,7 @@
 - **Píše se, nic se nenastavuje.** Otevře se okamžitě, ukáže text a pak nepřekáží.
 - **Soubor je pravda.** Pracuje s obyčejnými `.md` na disku. Žádný vlastní formát ani databáze.
 - **Nativní.** Swift, AppKit a TextKit 2, žádný Electron. Světlý i tmavý režim, zkratky, Undo, Služby, Quick Look.
-- **Rychlý.** Psaní pod 10 ms i v 1MB dokumentu, otevření 1MB souboru zhruba za 0,2 s. Měří se, neodhaduje ([docs/perf.md](docs/perf.md)).
+- **Rychlý.** Psaní pod 10 ms i v 1MB dokumentu, otevření 1MB souboru zhruba za 0,2 s. Měří se, neodhaduje.
 - **Bezpečný a soukromý.** Sandbox, náhled bez JavaScriptu stránky, sanitizace HTML, žádná telemetrie. Asistent AI je jen volitelný a bez vašeho klíče nic neposílá.
 
 ## Stažení a instalace
@@ -92,7 +93,7 @@ Když už aplikaci máte v Aplikacích a macOS ji blokuje, pomůže i `xattr -dr
 |---|---|
 | ✍️ **Editor** | TextKit 2, zvýraznění Markdownu i bloků kódu (36 nejběžnějších jazyků), formátovací lišta, chytré seznamy, úprava tabulek tabulátorem |
 | 👁️ **Náhled** | GFM tabulky, úkoly, poznámky pod čarou, `[toc]`, emoji, matematika (KaTeX), diagramy (Mermaid), lokální i vzdálené obrázky, synchronní scrollování |
-| 🗂️ **Knihovna** | Složka dokumentů, strom složek, osnova, hledání v knihovně ⇧⌘F, rychlé otevření ⌘P, najít a nahradit s regexem, přesun do koše (pravé tlačítko nebo ⌘⌫) |
+| 🗂️ **Knihovna** | Složka dokumentů s podsložkami (vytváření i přesun do koše), strom složek, osnova, hledání v knihovně ⇧⌘F, rychlé otevření ⌘P, najít a nahradit s regexem, přesun do koše (pravé tlačítko nebo ⌘⌫) |
 | 🎨 **Vzhled** | Přepínač ☀︎ / ☾ v liště, témata `theme.json` + `theme.css` (Paper, Tomorrow Night, Solarized), písmo, výška řádku, šířka textu |
 | 📖 **Čtení** | Tlačítko s knížkou v liště (⌘/): jen vykreslený dokument jako čitelná stránka, bez zdrojového kódu |
 | 🧘 **Režimy** | Soustředění F8, psací stroj F9, stavový řádek se slovy, znaky a dobou čtení |
@@ -137,7 +138,7 @@ Kód: ~10 800 řádků Swiftu v aplikaci a jádru (`HashlineCore`, testovatelné
 | Přepnutí režimu nebo tématu (1 MB) | < 50 ms | 2–40 ms (první přepnutí tématu až 70 ms) |
 | Velikost aplikace | < 15 MB | 13 MB |
 
-Podrobnosti a metodika v [docs/perf.md](docs/perf.md).
+Měří se přes `os_signpost` v Instruments a skriptem `scripts/bench-typing.sh`.
 
 ## Sestavení ze zdrojů
 
@@ -159,7 +160,21 @@ scripts/verify-security.sh                                 # XSS v prohlížeči
 scripts/bench-typing.sh 3                                  # latence psaní
 ```
 
-Pravidla projektu jsou v [CLAUDE.md](CLAUDE.md), architektonická rozhodnutí v [docs/adr](docs/adr) a plán v [docs/roadmap.md](docs/roadmap.md). Vydání: `scripts/release.sh`. Zdroj webu je ve složce [WEB](WEB).
+## Struktura repozitáře
+
+```
+Sources/HashlineCore/       jádro bez AppKitu: kódování souborů, parser, renderer, export, knihovna
+Sources/Hashline/           aplikace (SwiftUI a AppKit): editor, náhled, knihovna, nastavení, asistent
+Sources/HashlineQuickLook/  rozšíření Quick Look pro .md ve Finderu
+Tests/                      Swift Testing (jádro) a XCUITest (kritické toky)
+Fixtures/                   testovací korpus: kódování, konce řádků, XSS, nepřátelské dokumenty
+Support/                    Info.plist a entitlements
+scripts/                    vydání, lokalizace, měření a ověřovací skripty
+project.yml                 XcodeGen (Hashline.xcodeproj se generuje, není v gitu)
+appcast.xml                 kanál aktualizací Sparkle
+```
+
+Vydání nové verze: `scripts/release.sh`.
 
 ## Licence
 

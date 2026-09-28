@@ -10,3 +10,18 @@ Fixtures/generated/
 build/
 .grepai/
 .gitnexus/
+
+# Local only: website, design sources, project notes and AI tooling (not part of the source release)
+WEB/
+Design/
+LOGO-hashline.jpeg
+demoscene/
+docs/*
+!docs/images/
+CLAUDE.md
+AGENTS.md
+.claude/
+.mcp.json
+.code-intel
+__pycache__/
+scripts/make-icon.swift
