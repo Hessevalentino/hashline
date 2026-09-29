@@ -127,7 +127,7 @@ Když už aplikaci máte v Aplikacích a macOS ji blokuje, pomůže i `xattr -dr
 | Aktualizace | [Sparkle 2](https://sparkle-project.org) s podpisem EdDSA |
 | Build a kvalita | XcodeGen, Swift Testing, XCUITest, SwiftLint, os_signpost + Instruments |
 
-Kód: ~10 800 řádků Swiftu v aplikaci a jádru (`HashlineCore`, testovatelné bez UI), ~2 300 řádků testů.
+Kód: ~11 900 řádků Swiftu v aplikaci a jádru (`HashlineCore`, testovatelné bez UI), ~2 500 řádků testů.
 
 ## Výkon
 
@@ -136,7 +136,7 @@ Kód: ~10 800 řádků Swiftu v aplikaci a jádru (`HashlineCore`, testovatelné
 | Latence psaní v 1MB dokumentu | < 16 ms | p50 ~6 ms, p95 ~7 ms |
 | Otevření 1MB souboru | < 200 ms | 187–202 ms |
 | Přepnutí režimu nebo tématu (1 MB) | < 50 ms | 2–40 ms (první přepnutí tématu až 70 ms) |
-| Velikost aplikace | < 15 MB | 13 MB |
+| Velikost aplikace | < 15 MB | 14 MB |
 
 Měří se přes `os_signpost` v Instruments a skriptem `scripts/bench-typing.sh`.
 
