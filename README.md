@@ -37,7 +37,7 @@
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/screenshot-dark.png">
-  <img src="docs/images/screenshot-light.png" alt="Hashline: vlevo zdroj Markdownu se zvýrazněnou syntaxí, vpravo vykreslený náhled s tabulkou, kódem a matematikou">
+  <img src="docs/images/screenshot-light.png" alt="Hashline: vlevo knihovna se třemi složkami, uprostřed zdroj Markdownu se zvýrazněnou syntaxí, vpravo vykreslený náhled s tabulkou, kódem a matematikou">
 </picture>
 
 ## Obsah
@@ -101,6 +101,15 @@ Když už aplikaci máte v Aplikacích a macOS ji blokuje, pomůže i `xattr -dr
 | 🍎 **macOS** | Quick Look pro `.md` ve Finderu, Služby („Nový dokument Hashline s výběrem“), Sdílení, čeština a angličtina, přístupnost |
 | 🤖 **Asistent AI** | Volitelný, ve výchozím stavu vypnutý (Nastavení ▸ Obecné ▸ Pokročilé). Chat u každého dokumentu s Claude, OpenAI nebo DeepSeek na vlastní klíč API (uložený jen v Klíčence), nebo s lokálním modelem v Ollamě či LM Studiu, kdy text neopustí Mac. Na požádání rovnou upravuje text, každý pokyn jde vrátit jedním ⌘Z, volitelná rešerše na webu se zdroji. Vidí jen svůj dokument. |
 | 🔒 **Bezpečnost** | App Sandbox, CSP, allow-list sanitizace HTML, test proti 77 XSS vektorům, ochrana proti nepřátelským dokumentům |
+
+### Knihovna z více složek
+
+Knihovna ukazuje dokumenty z libovolného počtu složek: poznámky na iCloud Drive, projekty na Synology, blog v Dokumentech. Každá složka je v knihovně nahoře pod svým jménem a pod ní její podsložky a soubory. Složky se přidávají a odebírají v **Nastavení ▸ Knihovna**, kam vede i tlačítko **Složky** ve spodní liště knihovny. Odebrání složky z knihovny nic nemaže z disku.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/library-settings-dark.png">
+  <img src="docs/images/library-settings-light.png" width="450" alt="Nastavení ▸ Knihovna: seznam složek Poznámky, Projekty a Blog s tlačítky pro přidání a odebrání">
+</picture>
 
 ## Technologie
 
