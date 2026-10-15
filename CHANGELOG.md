@@ -1,5 +1,10 @@
 # Změny
 
+## 0.3.5 – 2026-10-16
+
+- Seznam složek v Nastavení ▸ Knihovna má popis pro VoiceOver a každý řádek se čte jako jedna položka (jméno a cesta složky)
+- Opravené automatické testy aplikace: při spuštění už neotevírají prázdné okno navíc
+
 ## 0.3.4 – 2026-10-15
 
 - Knihovna umí libovolný počet složek, dokumenty už nemusí být v jedné. Každá složka je v knihovně nahoře pod svým jménem, pod ní její podsložky a soubory.

@@ -6,6 +6,15 @@
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
     <item>
+      <title>Hashline 0.3.5</title>
+      <pubDate>Thu, 15 Oct 2026 22:28:47 GMT</pubDate>
+      <sparkle:version>14</sparkle:version>
+      <sparkle:shortVersionString>0.3.5</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Seznam složek v Nastavení ▸ Knihovna má popis pro VoiceOver, každý řádek se čte jako jedna položka</li><li>Opravené automatické testy aplikace</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.3.5/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="CKIRgwW/N7yqe9ARYtj/lsLufFanCy7JK0yxG9gNV2m6cCpquuTTbgMWlqASjGXH/Vi5dKPQ4mmyw+QCLmuQCg==" length="7020130" />
+    </item>
+    <item>
       <title>Hashline 0.3.4</title>
       <pubDate>Thu, 15 Oct 2026 21:17:11 GMT</pubDate>
       <sparkle:version>13</sparkle:version>
