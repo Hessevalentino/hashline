@@ -106,10 +106,31 @@ Když už aplikaci máte v Aplikacích a macOS ji blokuje, pomůže i `xattr -dr
 
 Knihovna ukazuje dokumenty z libovolného počtu složek: poznámky na iCloud Drive, projekty na Synology, blog v Dokumentech. Každá složka je v knihovně nahoře pod svým jménem a pod ní její podsložky a soubory. Složky se přidávají a odebírají v **Nastavení ▸ Knihovna**, kam vede i tlačítko **Složky** ve spodní liště knihovny. Odebrání složky z knihovny nic nemaže z disku.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/library-settings-dark.png">
-  <img src="docs/images/library-settings-light.png" width="450" alt="Nastavení ▸ Knihovna: seznam složek Poznámky, Projekty a Blog s tlačítky pro přidání a odebrání">
-</picture>
+<table>
+  <tr>
+    <td align="center"><img src="docs/images/library-settings-light.png" alt="Nastavení ▸ Knihovna ve světlém režimu: složky Poznámky, Projekty a Blog s tlačítky pro přidání a odebrání"></td>
+    <td align="center"><img src="docs/images/library-settings-dark.png" alt="Nastavení ▸ Knihovna v tmavém režimu"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Nastavení ▸ Knihovna, světlý režim</sub></td>
+    <td align="center"><sub>Nastavení ▸ Knihovna, tmavý režim</sub></td>
+  </tr>
+</table>
+
+### Světlý a tmavý režim
+
+Přepínač ☀︎ / ☾ v liště nebo podle systému. Editor i náhled mají vlastní téma pro každý režim.
+
+<table>
+  <tr>
+    <td align="center"><img src="docs/images/screenshot-light.png" alt="Hashline ve světlém režimu: knihovna, editor a náhled"></td>
+    <td align="center"><img src="docs/images/screenshot-dark.png" alt="Hashline v tmavém režimu: knihovna, editor a náhled"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Světlý režim</sub></td>
+    <td align="center"><sub>Tmavý režim</sub></td>
+  </tr>
+</table>
 
 ## Technologie
 
