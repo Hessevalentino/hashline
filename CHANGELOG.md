@@ -1,5 +1,12 @@
 # Změny
 
+## 0.3.4 – 2026-10-15
+
+- Knihovna umí libovolný počet složek, dokumenty už nemusí být v jedné. Každá složka je v knihovně nahoře pod svým jménem, pod ní její podsložky a soubory.
+- Nová záložka Nastavení ▸ Knihovna: přidání složek (i víc najednou), odebrání a zobrazení ve Finderu. Odebrání složky z knihovny nic nesmaže z disku.
+- Tlačítko Složky ve spodní liště knihovny otevře tuto záložku rovnou.
+- Dosavadní složka knihovny zůstane po aktualizaci zachovaná jako první.
+
 ## 0.3.3 – 2026-09-27
 
 - Knihovna ukazuje i prázdné složky, takže do nové složky jde rovnou vytvořit dokument. Složky s obrázky (`assets`) zůstávají skryté.

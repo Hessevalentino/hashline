@@ -6,6 +6,15 @@
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
     <item>
+      <title>Hashline 0.3.4</title>
+      <pubDate>Thu, 15 Oct 2026 21:17:11 GMT</pubDate>
+      <sparkle:version>13</sparkle:version>
+      <sparkle:shortVersionString>0.3.4</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Knihovna umí libovolný počet složek, každá je v knihovně nahoře pod svým jménem</li><li>Nastavení ▸ Knihovna: přidání, odebrání a zobrazení složek ve Finderu; odebrání nic nesmaže z disku</li><li>Tlačítko Složky ve spodní liště knihovny otevře správu složek rovnou</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.3.4/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="TmQrGSXmCXHrDoEVXqEVb5n86yCKAW9zdXQW0YJj/49r5G0uL1ouJTdr1o1GhRxY5pvwPBmq+Qoy4/QHUio3DQ==" length="6966637" />
+    </item>
+    <item>
       <title>Hashline 0.3.3</title>
       <pubDate>Sun, 27 Sep 2026 19:21:55 GMT</pubDate>
       <sparkle:version>12</sparkle:version>
