@@ -49,20 +49,22 @@ public enum LibraryIndex {
 
     /// Documents (newest first) and every sub-folder, in one walk. Folders are real directories only:
     /// no symbolic links (which could lead outside the library), packages or hidden folders.
-    public static func scanContents(_ folder: URL) -> LibraryContents {
+    /// A non-empty `prefix` (the library folder's name) starts every relative path and is listed as a folder.
+    public static func scanContents(_ folder: URL, prefix: String = "") -> LibraryContents {
         let keys: [URLResourceKey] = [.isRegularFileKey, .isDirectoryKey, .isSymbolicLinkKey, .isPackageKey,
                                       .contentModificationDateKey]
         guard let enumerator = FileManager.default.enumerator(
             at: folder, includingPropertiesForKeys: keys, options: [.skipsHiddenFiles, .skipsPackageDescendants]
-        ) else { return LibraryContents(documents: [], folders: []) }
+        ) else { return LibraryContents(documents: [], folders: prefix.isEmpty ? [] : [prefix]) }
         let base = folder.standardizedFileURL.path
         var items: [LibraryDocument] = []
-        var folders: [String] = []
+        var folders: [String] = prefix.isEmpty ? [] : [prefix]
         for case let url as URL in enumerator {
             guard let values = try? url.resourceValues(forKeys: Set(keys)) else { continue }
             var relative = url.standardizedFileURL.path
             if relative.hasPrefix(base) { relative = String(relative.dropFirst(base.count)) }
             relative = relative.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+            if !prefix.isEmpty, !relative.isEmpty { relative = prefix + "/" + relative }
             if values.isDirectory == true {
                 if values.isSymbolicLink != true, values.isPackage != true, !relative.isEmpty {
                     folders.append(relative)
@@ -217,6 +219,33 @@ public enum LibraryIndex {
         let target = parent.appendingPathComponent(trimmed, isDirectory: true)
         guard !FileManager.default.fileExists(atPath: target.path) else { throw .exists }
         return target
+    }
+
+    // MARK: Library folders
+
+    /// Display names of the library folders: the folder name, `name 2`, `name 3`… when taken.
+    public static func rootNames(for folders: [URL]) -> [String] {
+        var taken: Set<String> = []
+        return folders.map { folder in
+            let base = folder.lastPathComponent
+            var name = base
+            var number = 2
+            while taken.contains(name.lowercased()) {
+                name = "\(base) \(number)"
+                number += 1
+            }
+            taken.insert(name.lowercased())
+            return name
+        }
+    }
+
+    /// Whether `url` is one of `folders`, lies inside one or contains one (its documents would show twice).
+    public static func overlaps(_ url: URL, with folders: [URL]) -> Bool {
+        let path = url.standardizedFileURL.resolvingSymlinksInPath().path
+        return folders.contains { folder in
+            let other = folder.standardizedFileURL.resolvingSymlinksInPath().path
+            return path == other || path.hasPrefix(other + "/") || other.hasPrefix(path + "/")
+        }
     }
 
     /// Whether `url` lies strictly inside `root` once symbolic links are resolved (never `root` itself).

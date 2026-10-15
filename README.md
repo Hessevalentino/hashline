@@ -93,7 +93,7 @@ Když už aplikaci máte v Aplikacích a macOS ji blokuje, pomůže i `xattr -dr
 |---|---|
 | ✍️ **Editor** | TextKit 2, zvýraznění Markdownu i bloků kódu (36 nejběžnějších jazyků), formátovací lišta, chytré seznamy, úprava tabulek tabulátorem |
 | 👁️ **Náhled** | GFM tabulky, úkoly, poznámky pod čarou, `[toc]`, emoji, matematika (KaTeX), diagramy (Mermaid), lokální i vzdálené obrázky, synchronní scrollování |
-| 🗂️ **Knihovna** | Složka dokumentů s podsložkami (vytváření i přesun do koše), strom složek, osnova, hledání v knihovně ⇧⌘F, rychlé otevření ⌘P, najít a nahradit s regexem, přesun do koše (pravé tlačítko nebo ⌘⌫) |
+| 🗂️ **Knihovna** | Libovolný počet složek dokumentů s podsložkami (správa v Nastavení ▸ Knihovna, vytváření i přesun do koše), strom složek, osnova, hledání v knihovně ⇧⌘F, rychlé otevření ⌘P, najít a nahradit s regexem, přesun do koše (pravé tlačítko nebo ⌘⌫) |
 | 🎨 **Vzhled** | Přepínač ☀︎ / ☾ v liště, témata `theme.json` + `theme.css` (Paper, Tomorrow Night, Solarized), písmo, výška řádku, šířka textu |
 | 📖 **Čtení** | Tlačítko s knížkou v liště (⌘/): jen vykreslený dokument jako čitelná stránka, bez zdrojového kódu |
 | 🧘 **Režimy** | Soustředění F8, psací stroj F9, stavový řádek se slovy, znaky a dobou čtení |

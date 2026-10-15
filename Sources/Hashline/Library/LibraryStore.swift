@@ -2,16 +2,24 @@ import AppKit
 import CoreServices
 import HashlineCore
 import Observation
-import UniformTypeIdentifiers
 
-/// The library folder shared by all windows: access via a security-scoped bookmark,
-/// the scanned list, search and file operations.
+/// A folder of the library: where it is and the name it shows under at the top of the library.
+struct LibraryRoot: Sendable, Hashable, Identifiable {
+    let name: String
+    let url: URL
+
+    var id: URL { url }
+}
+
+/// The library folders shared by all windows: access via security-scoped bookmarks,
+/// the scanned list, search and file operations. Every folder is a top-level folder of the
+/// library, so relative paths start with its name (`Notes/Ideas/a.md`).
 @MainActor
 @Observable
 final class LibraryStore {
     static let shared = LibraryStore()
 
-    private(set) var folder: URL?
+    private(set) var roots: [LibraryRoot] = []
     private(set) var items: [LibraryDocument] = []
     /// Relative paths of all library sub-folders, empty ones included.
     private(set) var folders: [String] = []
@@ -28,10 +36,16 @@ final class LibraryStore {
     /// Sub-folders and documents of `currentFolder`.
     var currentListing: FolderListing { FolderTree.listing(items, folders: folders, in: currentFolder) }
 
-    /// Where new and added documents go: the browsed folder.
+    /// Where new and added documents go: the browsed folder; at the top level the first library folder.
     var targetFolder: URL? {
-        guard let folder else { return nil }
-        return currentFolder.isEmpty ? folder : folder.appendingPathComponent(currentFolder, isDirectory: true)
+        currentFolder.isEmpty ? roots.first?.url : url(forPath: currentFolder)
+    }
+
+    /// The folder at a library path (`<library folder>/…`); nil for an unknown library folder.
+    func url(forPath path: String) -> URL? {
+        let components = path.split(separator: "/", maxSplits: 1).map(String.init)
+        guard let name = components.first, let root = roots.first(where: { $0.name == name }) else { return nil }
+        return components.count > 1 ? root.url.appendingPathComponent(components[1], isDirectory: true) : root.url
     }
 
     /// Documents whose title or path matches the query; all documents without a query.
@@ -43,74 +57,125 @@ final class LibraryStore {
 
     @ObservationIgnored private var scanTask: Task<Void, Never>?
     @ObservationIgnored private var searchTask: Task<Void, Never>?
-    @ObservationIgnored private var watcher: FolderWatcher?
-    private static let bookmarkKey = "libraryBookmark"
+    @ObservationIgnored private var watchers: [FolderWatcher] = []
+    /// Off for the temporary folders of test hooks, which must not replace the user's library.
+    @ObservationIgnored private var persistsRoots = true
+    private static let bookmarksKey = "libraryBookmarks"
+    /// The single library folder of versions before 0.3.4; read until `bookmarksKey` exists and kept,
+    /// so an older version still finds its library.
+    private static let legacyBookmarkKey = "libraryBookmark"
 
     private init() {
         #if DEBUG || HASHLINE_TEST_HOOKS
-        if let name = UserDefaults.standard.string(forKey: "HashlineLibraryFolder") {
-            let url = FileManager.default.temporaryDirectory.appendingPathComponent(name, isDirectory: true)
-            try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
-            open(url, persist: false)
+        // Comma-separated names of temporary folders.
+        if let names = UserDefaults.standard.string(forKey: "HashlineLibraryFolder") {
+            let urls = names.split(separator: ",").map {
+                FileManager.default.temporaryDirectory.appendingPathComponent(String($0), isDirectory: true)
+            }
+            urls.forEach { try? FileManager.default.createDirectory(at: $0, withIntermediateDirectories: true) }
+            persistsRoots = false
+            setRoots(urls)
             return
         }
         #endif
-        restoreBookmark()
+        restoreBookmarks()
     }
 
-    // MARK: Folder
+    // MARK: Folders
 
-    func chooseFolder() {
+    /// Asks for one or more folders and adds them to the library. A folder inside a library folder
+    /// (or containing one) is refused: its documents would show twice.
+    func addFolders() {
         let panel = NSOpenPanel()
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
         panel.canCreateDirectories = true
-        panel.prompt = String(localized: "Choose Library")
-        panel.message = String(localized: "Choose the folder where your Markdown documents are stored.")
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-        open(url, persist: true)
+        panel.allowsMultipleSelection = true
+        panel.prompt = String(localized: "Add to Library")
+        panel.message = String(localized: "Choose folders where your Markdown documents are stored.")
+        guard panel.runModal() == .OK else { return }
+        var urls = roots.map(\.url)
+        var refused: [String] = []
+        for url in panel.urls {
+            if LibraryIndex.overlaps(url, with: urls) {
+                refused.append((url.path as NSString).abbreviatingWithTildeInPath)
+            } else {
+                _ = url.startAccessingSecurityScopedResource()
+                urls.append(url)
+            }
+        }
+        if urls.count > roots.count { setRoots(urls) }
+        if !refused.isEmpty {
+            let alert = NSAlert()
+            alert.messageText = String(localized: """
+                A folder that is already in the library, lies inside a library folder or contains one \
+                cannot be added.
+                """)
+            alert.informativeText = refused.joined(separator: "\n")
+            alert.runModal()
+        }
     }
 
-    private func open(_ url: URL, persist: Bool) {
-        folder?.stopAccessingSecurityScopedResource()
-        _ = url.startAccessingSecurityScopedResource()
-        folder = url
+    /// Removes a folder from the library; nothing on disk changes. Access to the folder stays until
+    /// quit, so documents still open from it can be saved.
+    func removeFolder(_ root: LibraryRoot) {
+        guard roots.contains(root) else { return }
+        setRoots(roots.map(\.url).filter { $0 != root.url })
+    }
+
+    private func setRoots(_ urls: [URL]) {
+        roots = zip(LibraryIndex.rootNames(for: urls), urls).map { LibraryRoot(name: $0, url: $1) }
         currentFolder = ""
-        if persist, let bookmark = try? url.bookmarkData(options: .withSecurityScope) {
-            UserDefaults.standard.set(bookmark, forKey: Self.bookmarkKey)
+        if persistsRoots {
+            let bookmarks = urls.compactMap { try? $0.bookmarkData(options: .withSecurityScope) }
+            UserDefaults.standard.set(bookmarks, forKey: Self.bookmarksKey)
         }
-        watcher = FolderWatcher(url: url) { [weak self] in self?.rescan() }
+        watchers = urls.map { FolderWatcher(url: $0) { [weak self] in self?.rescan() } }
         rescan()
     }
 
-    private func restoreBookmark() {
-        guard let data = UserDefaults.standard.data(forKey: Self.bookmarkKey) else { return }
-        var isStale = false
-        guard let url = try? URL(resolvingBookmarkData: data, options: .withSecurityScope,
-                                 bookmarkDataIsStale: &isStale) else { return }
-        open(url, persist: isStale)
-    }
-
-    func revealInFinder() {
-        guard let folder else { return }
-        NSWorkspace.shared.activateFileViewerSelecting([folder])
+    private func restoreBookmarks() {
+        let defaults = UserDefaults.standard
+        let current = defaults.array(forKey: Self.bookmarksKey) as? [Data]
+        let stored = current ?? defaults.data(forKey: Self.legacyBookmarkKey).map { [$0] } ?? []
+        var anyStale = current == nil
+        let urls = stored.compactMap { data -> URL? in
+            var isStale = false
+            guard let url = try? URL(resolvingBookmarkData: data, options: .withSecurityScope,
+                                     bookmarkDataIsStale: &isStale) else { return nil }
+            anyStale = anyStale || isStale
+            _ = url.startAccessingSecurityScopedResource()
+            return url
+        }
+        guard !urls.isEmpty else { return }
+        persistsRoots = anyStale
+        setRoots(urls)
+        persistsRoots = true
     }
 
     // MARK: Scanning and search
 
     func rescan() {
-        guard let folder else { return }
         scanTask?.cancel()
+        let roots = roots
+        guard !roots.isEmpty else {
+            items = []
+            folders = []
+            isScanning = false
+            return
+        }
         isScanning = true
         scanTask = Task { [weak self] in
             let signpost = Performance.signposter.beginInterval("LibraryScan")
-            let contents = await Task.detached(priority: .userInitiated) { LibraryIndex.scanContents(folder) }.value
+            let (items, folders) = await Task.detached(priority: .userInitiated) {
+                let parts = roots.map { LibraryIndex.scanContents($0.url, prefix: $0.name) }
+                return (parts.flatMap(\.documents).sorted { $0.modified > $1.modified }, parts.flatMap(\.folders))
+            }.value
             Performance.signposter.endInterval("LibraryScan", signpost)
             guard let self, !Task.isCancelled else { return }
-            let items = contents.documents
             self.items = items
-            self.folders = contents.folders
-            self.currentFolder = FolderTree.existingFolder(self.currentFolder, in: items, folders: contents.folders)
+            self.folders = folders
+            self.currentFolder = FolderTree.existingFolder(self.currentFolder, in: items, folders: folders)
             self.isScanning = false
             self.scheduleContentSearch()
             self.scheduleFolderSearch()
@@ -181,105 +246,9 @@ final class LibraryStore {
             self.isSearchingFolder = false
         }
     }
-
-    // MARK: Documents
-
-    /// Moves documents to the Trash (recoverable there, as in Finder). Windows showing them close
-    /// first, after saving, so no editor keeps writing to a trashed file.
-    func moveToTrash(_ urls: [URL]) {
-        let targets = Set(urls.map(\.standardizedFileURL))
-        guard !targets.isEmpty else { return }
-        for document in NSDocumentController.shared.documents {
-            guard let url = document.fileURL?.standardizedFileURL, targets.contains(url) else { continue }
-            document.autosave(withImplicitCancellability: false) { _ in }
-            document.close()
-        }
-        var failures: [String] = []
-        for url in targets {
-            do {
-                try FileManager.default.trashItem(at: url, resultingItemURL: nil)
-            } catch {
-                failures.append(url.lastPathComponent)
-                Performance.logger.error("Trash failed: \(error.localizedDescription, privacy: .public)")
-            }
-        }
-        rescan()
-        if !failures.isEmpty {
-            let alert = NSAlert()
-            alert.messageText = String(localized: "Some documents could not be moved to the Trash.")
-            alert.informativeText = failures.sorted().joined(separator: "\n")
-            alert.runModal()
-        }
-    }
-
-    func revealInFinder(_ urls: [URL]) {
-        NSWorkspace.shared.activateFileViewerSelecting(urls)
-    }
-
-    /// Opens a library document as a tab of `window` (or brings it forward if already open).
-    func openDocument(_ item: LibraryDocument, besides window: NSWindow?) {
-        openDocument(at: item.url, besides: window)
-    }
-
-    func openDocument(at url: URL, besides window: NSWindow?) {
-        NSDocumentController.shared.openDocument(withContentsOf: url, display: true) { document, _, error in
-            if let error {
-                let path = url.lastPathComponent
-                Performance.logger.error(
-                    "Opening \(path, privacy: .public) failed: \(error.localizedDescription, privacy: .public)"
-                )
-                return
-            }
-            MainActor.assumeIsolated {
-                guard let window, let newWindow = document?.windowControllers.first?.window, newWindow !== window,
-                      !(window.tabbedWindows ?? []).contains(newWindow) else { return }
-                window.addTabbedWindow(newWindow, ordered: .above)
-                newWindow.makeKeyAndOrderFront(nil)
-            }
-        }
-    }
-
-    /// Creates `Untitled.md` in the browsed library folder and opens it; no save panel.
-    func createDocument(besides window: NSWindow?) {
-        guard let folder = targetFolder else { return chooseFolder() }
-        let url = LibraryIndex.uniqueURL(for: "Untitled.md", in: folder)
-        guard FileManager.default.createFile(atPath: url.path, contents: Data()) else { return }
-        rescan()
-        let relativePath = currentFolder.isEmpty ? url.lastPathComponent : currentFolder + "/" + url.lastPathComponent
-        let item = LibraryDocument(url: url, relativePath: relativePath, title: "Untitled",
-                               modified: .now, snippet: "")
-        openDocument(item, besides: window)
-    }
-
-    func importFiles() {
-        guard let folder = targetFolder else { return chooseFolder() }
-        let panel = NSOpenPanel()
-        panel.allowsMultipleSelection = true
-        panel.allowedContentTypes = [UTType(importedAs: "net.daringfireball.markdown"), .plainText]
-        panel.prompt = String(localized: "Add to Library")
-        guard panel.runModal() == .OK else { return }
-        importFiles(panel.urls, into: folder)
-    }
-
-    func importFiles(_ urls: [URL]) {
-        guard let folder = targetFolder else { return }
-        let documents = urls.filter {
-            LibraryIndex.extensions.contains($0.pathExtension.lowercased()) || $0.pathExtension.lowercased() == "txt"
-        }
-        importFiles(documents, into: folder)
-    }
-
-    private func importFiles(_ urls: [URL], into folder: URL) {
-        do {
-            _ = try LibraryIndex.importFiles(urls, into: folder)
-        } catch {
-            NSAlert(error: error).runModal()
-        }
-        rescan()
-    }
 }
 
-/// FSEvents on a folder (recursive), coalesced to one callback per 0.5 s: the library and the
+/// FSEvents on a folder (recursive), coalesced to one callback per 0.5 s: the library folders and the
 /// themes folder. Delivered on the main queue, so a callback can never overlap with deinit.
 @MainActor
 final class FolderWatcher {

@@ -48,6 +48,29 @@ struct LibraryIndexTests {
         #expect(contents.documents.map(\.relativePath) == ["Notes/a.md"])
     }
 
+    @Test func scanPrefixesPathsWithTheLibraryFolderName() throws {
+        let folder = try Self.makeFolder(["Notes/a.md": "# A", "b.md": "# B"])
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let contents = LibraryIndex.scanContents(folder, prefix: "Work")
+        #expect(contents.folders.sorted() == ["Work", "Work/Notes"])
+        #expect(contents.documents.map(\.relativePath).sorted() == ["Work/Notes/a.md", "Work/b.md"])
+        let empty = try Self.makeFolder([:])
+        try FileManager.default.createDirectory(at: empty, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: empty) }
+        #expect(LibraryIndex.scanContents(empty, prefix: "Empty").folders == ["Empty"])
+    }
+
+    @Test func libraryFolderNamesAndOverlap() {
+        let urls = ["/a/Notes", "/b/Notes", "/c/notes", "/d/Work"].map { URL(fileURLWithPath: $0) }
+        #expect(LibraryIndex.rootNames(for: urls) == ["Notes", "Notes 2", "notes 3", "Work"])
+        let roots = [URL(fileURLWithPath: "/x/Notes")]
+        #expect(LibraryIndex.overlaps(URL(fileURLWithPath: "/x/Notes"), with: roots))
+        #expect(LibraryIndex.overlaps(URL(fileURLWithPath: "/x/Notes/Sub"), with: roots))
+        #expect(LibraryIndex.overlaps(URL(fileURLWithPath: "/x"), with: roots))
+        #expect(!LibraryIndex.overlaps(URL(fileURLWithPath: "/x/Notes2"), with: roots))
+        #expect(!LibraryIndex.overlaps(URL(fileURLWithPath: "/y"), with: roots))
+    }
+
     @Test func newFolderNamesAndContainment() throws {
         let folder = try Self.makeFolder(["Taken/a.md": "x"])
         defer { try? FileManager.default.removeItem(at: folder) }

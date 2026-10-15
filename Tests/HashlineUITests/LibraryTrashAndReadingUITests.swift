@@ -28,6 +28,10 @@ final class LibraryTrashAndReadingUITests: XCTestCase {
         second.textViews.firstMatch.typeText("# Throwaway")
         app.typeKey("s", modifierFlags: .command)
 
+        // The library folder is a folder at the top of the library; its documents are inside.
+        let folder = second.outlines.firstMatch.staticTexts[library].firstMatch
+        XCTAssertTrue(folder.waitForExistence(timeout: 5), "The library folder is listed")
+        folder.click()
         let row = second.outlines.firstMatch.staticTexts["Throwaway"].firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 5), "The new document is listed")
         row.rightClick()

@@ -28,9 +28,9 @@ final class FolderAccess {
         return ImageLinks.isInside(url, roots: roots + [container])
     }
 
-    /// Roots readable right now (library folder included when the library is configured).
+    /// Roots readable right now (the library folders included).
     var roots: [URL] {
-        grantedFolders + [LibraryStore.shared.folder].compactMap { $0 }
+        grantedFolders + LibraryStore.shared.roots.map(\.url)
     }
 
     func canAccess(_ url: URL) -> Bool {

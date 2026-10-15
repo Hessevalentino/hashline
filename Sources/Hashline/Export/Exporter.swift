@@ -252,7 +252,7 @@ enum Exporter {
                 let save = NSSavePanel()
                 save.allowedContentTypes = [.markdown]
                 save.nameFieldStringValue = source.deletingPathExtension().lastPathComponent + ".md"
-                if let library = LibraryStore.shared.folder { save.directoryURL = library }
+                if let library = LibraryStore.shared.targetFolder { save.directoryURL = library }
                 guard save.runModal() == .OK, let target = save.url else { return }
                 try markdown.write(to: target, options: .atomic)
                 LibraryStore.shared.openDocument(at: target, besides: NSApp.keyWindow)

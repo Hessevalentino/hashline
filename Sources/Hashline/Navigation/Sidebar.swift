@@ -47,11 +47,11 @@ struct Sidebar: View {
             case .documents:
                 LibrarySidebar(store: store)
             case .folders:
-                if store.folder == nil { LibraryEmptyState(store: store) } else { FolderTreeView(store: store) }
+                if store.roots.isEmpty { LibraryEmptyState(store: store) } else { FolderTreeView(store: store) }
             case .outline:
                 OutlineView(navigation: session.navigation, session: session)
             case .search:
-                if store.folder == nil { LibraryEmptyState(store: store) } else { FolderSearchView(store: store) }
+                if store.roots.isEmpty { LibraryEmptyState(store: store) } else { FolderSearchView(store: store) }
             }
         }
         .background(.background.secondary)

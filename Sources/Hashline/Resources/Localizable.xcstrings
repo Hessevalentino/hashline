@@ -352,6 +352,16 @@
         }
       }
     },
+    "A folder that is already in the library, lies inside a library folder or contains one cannot be added.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nelze přidat složku, která už v knihovně je, leží uvnitř složky knihovny nebo nějakou obsahuje."
+          }
+        }
+      }
+    },
     "A remote image tells its server that you opened the document. Local images always show.": {
       "localizations": {
         "cs": {
@@ -391,6 +401,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Přidat soubory do knihovny…"
+          }
+        }
+      }
+    },
+    "Add Folders…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Přidat složky…"
           }
         }
       }
@@ -615,16 +635,6 @@
         }
       }
     },
-    "Change Library Folder…": {
-      "localizations": {
-        "cs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Změnit složku knihovny…"
-          }
-        }
-      }
-    },
     "Check for Updates…": {
       "localizations": {
         "cs": {
@@ -651,16 +661,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Vybrat složku…"
-          }
-        }
-      }
-    },
-    "Choose Library": {
-      "localizations": {
-        "cs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vybrat knihovnu"
           }
         }
       }
@@ -705,12 +705,12 @@
         }
       }
     },
-    "Choose the folder where your Markdown documents are stored.": {
+    "Choose folders where your Markdown documents are stored.": {
       "localizations": {
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vyberte složku, kde máte dokumenty v Markdownu."
+            "value": "Vyberte složky, kde máte dokumenty v Markdownu."
           }
         }
       }
@@ -995,6 +995,16 @@
         }
       }
     },
+    "Each folder appears at the top of the library under its name. New documents created at the top level go to the first folder. Removing a folder from the library does not delete it.": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Každá složka se v knihovně zobrazí nahoře pod svým jménem. Nové dokumenty vytvořené na nejvyšší úrovni se uloží do první složky. Odebráním z knihovny se složka nesmaže."
+          }
+        }
+      }
+    },
     "Editor": {
       "localizations": {
         "cs": {
@@ -1181,16 +1191,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Režim soustředění"
-          }
-        }
-      }
-    },
-    "Folder:": {
-      "localizations": {
-        "cs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Složka:"
           }
         }
       }
@@ -1705,6 +1705,16 @@
         }
       }
     },
+    "Manage Library Folders…": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spravovat složky knihovny…"
+          }
+        }
+      }
+    },
     "Markdown source": {
       "localizations": {
         "cs": {
@@ -1875,16 +1885,6 @@
         }
       }
     },
-    "New documents from the library (⌥⌘N) are saved in this folder.": {
-      "localizations": {
-        "cs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nové dokumenty z knihovny (⌥⌘N) se ukládají do této složky."
-          }
-        }
-      }
-    },
     "Next (⌘G)": {
       "localizations": {
         "cs": {
@@ -1911,6 +1911,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Zatím žádné dokumenty"
+          }
+        }
+      }
+    },
+    "No folders": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Žádné složky"
           }
         }
       }
@@ -2251,6 +2261,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Odstranit"
+          }
+        }
+      }
+    },
+    "Remove from Library": {
+      "localizations": {
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odebrat z knihovny"
           }
         }
       }

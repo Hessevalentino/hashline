@@ -4,7 +4,7 @@ import HashlineCore
 extension LibraryStore {
     /// Asks for a name and creates an empty folder in the browsed library folder.
     func createFolder() {
-        guard let parent = targetFolder else { return chooseFolder() }
+        guard let parent = targetFolder else { return addFolders() }
         let alert = NSAlert()
         alert.messageText = String(localized: "New Folder")
         alert.informativeText = String(localized: "Enter a name for the new folder.")
@@ -26,14 +26,14 @@ extension LibraryStore {
         rescan()
     }
 
-    /// Moves a library folder with everything in it to the Trash, after a confirmation. Documents
-    /// open from it are saved and closed first; if saving fails, nothing is moved.
+    /// Moves a sub-folder of a library folder with everything in it to the Trash, after a confirmation.
+    /// Documents open from it are saved and closed first; if saving fails, nothing is moved.
     func moveFolderToTrash(_ path: String) {
-        guard let folder, !path.isEmpty else { return }
-        let url = folder.appendingPathComponent(path, isDirectory: true)
-        // Never the library itself, nothing outside it and no symbolic link (its target would go).
+        let rootPath = String(path.prefix { $0 != "/" })
+        guard rootPath != path, let root = url(forPath: rootPath), let url = url(forPath: path) else { return }
+        // Never a library folder itself, nothing outside it and no symbolic link (its target would go).
         let values = try? url.resourceValues(forKeys: [.isDirectoryKey, .isSymbolicLinkKey])
-        guard LibraryIndex.isStrictlyInside(url, root: folder), values?.isDirectory == true,
+        guard LibraryIndex.isStrictlyInside(url, root: root), values?.isDirectory == true,
               values?.isSymbolicLink != true else { return }
         guard confirmTrash(of: path) else { return }
         Task { await trashClosingDocuments(url) }

@@ -22,7 +22,7 @@ final class NavigationUITests: XCTestCase {
         textView.typeText("# Alpha\n\ndate 2026-09-24 and 2025-01-02\n\n## Beta\n\nPříliš žluťoučký kůň")
 
         try checkRegexReplace(app: app, window: window, textView: textView)
-        try checkOutlineSearchAndQuickOpen(app: app, window: window, textView: textView)
+        try checkOutlineSearchAndQuickOpen(app: app, window: window, textView: textView, library: library)
     }
 
     /// Regex replace with groups, all matches as one undo step.
@@ -53,7 +53,7 @@ final class NavigationUITests: XCTestCase {
     /// Outline (a click moves the caret to the heading), find in library, Quick Open.
     @MainActor
     private func checkOutlineSearchAndQuickOpen(app: XCUIApplication, window: XCUIElement,
-                                                textView: XCUIElement) throws {
+                                                textView: XCUIElement, library: String) throws {
         window.radioButtons["Outline"].click()
         let beta = window.buttons["Beta"]
         XCTAssertTrue(beta.waitForExistence(timeout: 3))
@@ -69,7 +69,9 @@ final class NavigationUITests: XCTestCase {
         let folderField = window.textFields["folderSearchField"]
         XCTAssertTrue(folderField.waitForExistence(timeout: 3))
         folderField.typeText("zlutoucky")
-        XCTAssertTrue(window.staticTexts["first.md"].waitForExistence(timeout: 5), "File header of the result")
+        // Paths start with the library folder's name.
+        XCTAssertTrue(window.staticTexts["\(library)/first.md"].waitForExistence(timeout: 5),
+                      "File header of the result")
 
         // Quick Open from another document.
         app.typeKey("n", modifierFlags: [.command, .option])

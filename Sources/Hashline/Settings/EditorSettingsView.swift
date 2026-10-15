@@ -47,28 +47,13 @@ struct EditorSettingsView: View {
     }
 }
 
-/// Library folder and what a new window shows.
+/// What a new window shows, updates and advanced settings.
 struct GeneralSettingsView: View {
     @AppStorage(PreviewSettings.showsPreviewKey) private var showsPreview = true
     @AppStorage(LibrarySettings.showsLibraryKey) private var showsLibrary = false
-    @State private var library = LibraryStore.shared
 
     var body: some View {
         Form {
-            Section("Library") {
-                LabeledContent("Folder:") {
-                    Text(verbatim: library.folder.map { ($0.path as NSString).abbreviatingWithTildeInPath }
-                         ?? String(localized: "Not chosen"))
-                        .lineLimit(1).truncationMode(.middle)
-                }
-                HStack {
-                    Button("Choose Folder…") { library.chooseFolder() }
-                    Button("Show in Finder") { library.revealInFinder() }
-                        .disabled(library.folder == nil)
-                }
-                Text("New documents from the library (⌥⌘N) are saved in this folder.")
-                    .font(.caption).foregroundStyle(.secondary)
-            }
             Section("Windows") {
                 Toggle("Show the preview", isOn: $showsPreview)
                 Toggle("Show the sidebar", isOn: $showsLibrary)

@@ -1,6 +1,15 @@
 # Czech translations for the String Catalogs (applied by scripts/apply-translations.py).
 # Plurals: dict with one/few/many/other (Czech: 1 / 2–4 / fractional / 5+).
 CS = {
+    "A folder that is already in the library, lies inside a library folder or contains one cannot be added.":
+        "Nelze přidat složku, která už v knihovně je, leží uvnitř složky knihovny nebo nějakou obsahuje.",
+    "Add Folders…": "Přidat složky…",
+    "Choose folders where your Markdown documents are stored.": "Vyberte složky, kde máte dokumenty v Markdownu.",
+    "Each folder appears at the top of the library under its name. New documents created at the top level go to the first folder. Removing a folder from the library does not delete it.":
+        "Každá složka se v knihovně zobrazí nahoře pod svým jménem. Nové dokumenty vytvořené na nejvyšší úrovni se uloží do první složky. Odebráním z knihovny se složka nesmaže.",
+    "Manage Library Folders…": "Spravovat složky knihovny…",
+    "No folders": "Žádné složky",
+    "Remove from Library": "Odebrat z knihovny",
     "%@ (custom)": "%@ (vlastní)",
     "%@ found": "nalezeno: %@",
     "%lld characters": {"one": "%lld znak", "few": "%lld znaky", "many": "%lld znaku", "other": "%lld znaků"},
@@ -26,15 +35,12 @@ CS = {
     "Bold": "Tučně",
     "Bulleted List": "Odrážkový seznam",
     "Cancel": "Zrušit",
-    "Change Library Folder…": "Změnit složku knihovny…",
     "Choose Folder…": "Vybrat složku…",
-    "Choose Library": "Vybrat knihovnu",
     "Choose Pandoc…": "Vybrat Pandoc…",
     "Choose a document to convert to Markdown.": "Vyberte dokument k převodu do Markdownu.",
     "Choose a folder for your Markdown documents. New documents are saved there.":
         "Vyberte složku pro své dokumenty v Markdownu. Nové dokumenty se ukládají do ní.",
     "Choose a library folder to open documents quickly.": "Pro rychlé otevírání vyberte složku knihovny.",
-    "Choose the folder where your Markdown documents are stored.": "Vyberte složku, kde máte dokumenty v Markdownu.",
     "Choose the pandoc program (install it from pandoc.org or with Homebrew).":
         "Vyberte program pandoc (nainstalujte ho z pandoc.org nebo přes Homebrew).",
     "Choose…": "Vybrat…",

@@ -7,6 +7,7 @@ struct LibrarySidebar: View {
     @Bindable var store: LibraryStore
     @State private var selection: Selection?
     @State private var isDropTargeted = false
+    @Environment(\.openSettings) private var openSettings
 
     /// A row of the list: a sub-folder to enter or a document to open.
     private enum Selection: Hashable {
@@ -18,7 +19,7 @@ struct LibrarySidebar: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if store.folder == nil {
+            if store.roots.isEmpty {
                 LibraryEmptyState(store: store)
             } else {
                 searchField
@@ -154,13 +155,13 @@ struct LibrarySidebar: View {
             Button { store.createFolder() } label: { Image(systemName: "folder.badge.plus") }
                 .help("New Folder…")
             Spacer()
-            Menu {
-                Button("Show in Finder") { store.revealInFinder() }
-                Button("Change Library Folder…") { store.chooseFolder() }
+            Button {
+                UserDefaults.standard.set(SettingsTab.library.rawValue, forKey: SettingsTab.key)
+                openSettings()
             } label: {
-                Label(store.folder?.lastPathComponent ?? "", systemImage: "folder")
+                Label("Folders", systemImage: "folder.badge.gearshape")
             }
-            .menuStyle(.borderlessButton)
+            .help("Manage Library Folders…")
             .fixedSize()
         }
         .buttonStyle(.borderless)
@@ -193,7 +194,8 @@ struct LibraryItemMenu: View {
     }
 }
 
-/// Right-click menu of a library folder. Moving it to the Trash asks first (ADR 0006).
+/// Right-click menu of a library folder. Moving it to the Trash asks first (ADR 0006); a top-level
+/// library folder is only removed from the library.
 private struct LibraryFolderMenu: View {
     let store: LibraryStore
     let path: String
@@ -201,10 +203,14 @@ private struct LibraryFolderMenu: View {
     var body: some View {
         Button("Open") { store.currentFolder = path }
         Button("Show in Finder") {
-            if let root = store.folder { store.revealInFinder([root.appendingPathComponent(path, isDirectory: true)]) }
+            if let url = store.url(forPath: path) { store.revealInFinder([url]) }
         }
         Divider()
-        Button("Move to Trash…", role: .destructive) { store.moveFolderToTrash(path) }
+        if let root = store.roots.first(where: { $0.name == path }) {
+            Button("Remove from Library") { store.removeFolder(root) }
+        } else {
+            Button("Move to Trash…", role: .destructive) { store.moveFolderToTrash(path) }
+        }
     }
 }
 
@@ -218,7 +224,7 @@ struct LibraryEmptyState: View {
             Text("Library").font(.headline)
             Text("Choose a folder for your Markdown documents. New documents are saved there.")
                 .font(.callout).foregroundStyle(.secondary).multilineTextAlignment(.center)
-            Button("Choose Folder…") { store.chooseFolder() }
+            Button("Choose Folder…") { store.addFolders() }
                 .buttonStyle(.borderedProminent)
         }
         .padding(20)

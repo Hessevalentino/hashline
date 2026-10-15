@@ -48,4 +48,29 @@ final class LibraryUITests: XCTestCase {
         XCTAssertTrue(app.windows["first.md"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.windows.firstMatch.title, "first.md", "Clicking a result shows that document")
     }
+
+    /// Every library folder is a top-level folder; the bottom bar opens Settings on the Library tab.
+    @MainActor
+    func testFoldersAtTopLevelAndSettingsButton() throws {
+        let id = UUID().uuidString.prefix(8)
+        let (one, two) = ("one-\(id)", "two-\(id)")
+        let app = XCUIApplication()
+        app.launchArguments = ["-ApplePersistenceIgnoreState", "YES", "-AppleLanguages", "(en)",
+                               "-HashlineLibraryFolder", "\(one),\(two)",
+                               "-showsLibrary", "YES", "-sidebarTab", "documents",
+                               "-HashlineUITestDocument", "\(two)/doc.md"]
+        app.launch()
+        defer { app.terminate() }
+
+        let window = app.windows["doc.md"]
+        XCTAssertTrue(window.textViews.firstMatch.waitForExistence(timeout: 5))
+        let list = window.outlines.firstMatch
+        XCTAssertTrue(list.staticTexts[one].waitForExistence(timeout: 5), "First folder at the top")
+        XCTAssertTrue(list.staticTexts[two].exists, "Second folder at the top")
+
+        window.buttons["Folders"].click()
+        let settings = app.windows["Library"]
+        XCTAssertTrue(settings.waitForExistence(timeout: 5), "Settings open on the Library tab")
+        XCTAssertTrue(settings.staticTexts[one].exists && settings.staticTexts[two].exists, "Both folders listed")
+    }
 }

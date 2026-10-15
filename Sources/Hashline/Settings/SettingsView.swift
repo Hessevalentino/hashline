@@ -1,19 +1,36 @@
 import SwiftUI
 
+/// The tabs of Settings; the selected one is stored, so other windows can open a given tab.
+enum SettingsTab: String {
+    case general, editor, appearance, library, images, export
+
+    static let key = "settingsTab"
+}
+
 /// Settings: as few items as possible (ADR 0006).
 struct SettingsView: View {
+    @AppStorage(SettingsTab.key) private var tab = SettingsTab.general
+
     var body: some View {
-        TabView {
+        TabView(selection: $tab) {
             GeneralSettingsView()
                 .tabItem { Label("General", systemImage: "gearshape") }
+                .tag(SettingsTab.general)
             EditorSettingsView()
                 .tabItem { Label("Editor", systemImage: "character.cursor.ibeam") }
+                .tag(SettingsTab.editor)
             AppearanceSettingsView()
                 .tabItem { Label("Appearance", systemImage: "paintpalette") }
+                .tag(SettingsTab.appearance)
+            LibrarySettingsView()
+                .tabItem { Label("Library", systemImage: "books.vertical") }
+                .tag(SettingsTab.library)
             ImagesSettings()
                 .tabItem { Label("Images", systemImage: "photo") }
+                .tag(SettingsTab.images)
             ExportSettings()
                 .tabItem { Label("Export", systemImage: "square.and.arrow.up") }
+                .tag(SettingsTab.export)
         }
         .frame(width: 520)
         .scenePadding()
