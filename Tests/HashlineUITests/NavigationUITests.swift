@@ -80,7 +80,7 @@ final class NavigationUITests: XCTestCase {
         app.typeKey("p", modifierFlags: .command)
         let quickOpen = app.textFields["quickOpenField"]
         XCTAssertTrue(quickOpen.waitForExistence(timeout: 3))
-        quickOpen.typeText("alpha\n")
+        quickOpen.typeText("first\n")  // Quick Open matches file names
         let first = NSPredicate(format: "title == 'first.md'")
         expectation(for: first, evaluatedWith: app.windows.firstMatch)
         waitForExpectations(timeout: 5)

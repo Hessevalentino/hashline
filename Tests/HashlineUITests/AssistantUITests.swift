@@ -15,8 +15,6 @@ final class AssistantUITests: XCTestCase {
         let window = app.windows[name]
         let textView = window.textViews.firstMatch
         XCTAssertTrue(textView.waitForExistence(timeout: 5))
-        let untitled = app.windows["Untitled"]
-        if untitled.exists { untitled.buttons["_XCUI:CloseWindow"].click() }
         textView.click()
         textView.typeText("Hello world, again.")
 
@@ -29,7 +27,10 @@ final class AssistantUITests: XCTestCase {
         expectation(for: edited, evaluatedWith: textView)
         waitForExpectations(timeout: 5)
         XCTAssertTrue(window.descendants(matching: .any)["assistantEdits"].waitForExistence(timeout: 5))
-        XCTAssertTrue(window.staticTexts["Replaced one word."].waitForExistence(timeout: 5))
+        // Both rounds of the reply share one message bubble.
+        let reply = window.groups["Assistant"].staticTexts
+            .matching(NSPredicate(format: "value CONTAINS %@", "Replaced one word.")).firstMatch
+        XCTAssertTrue(reply.waitForExistence(timeout: 5))
 
         textView.click()
         app.typeKey("z", modifierFlags: .command)

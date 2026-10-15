@@ -21,9 +21,6 @@ final class AccessibilityUITests: XCTestCase {
         let textView = window.textViews.firstMatch
         XCTAssertTrue(textView.waitForExistence(timeout: 5))
         textView.typeText("# Nadpis\n\nOdstavec s **tučným** textem.\n\n## Druhý\n")
-        // SwiftUI opens an untitled window at launch next to the hook's document; audit only ours.
-        let untitled = app.windows["Untitled"]
-        if untitled.exists { untitled.buttons["_XCUI:CloseWindow"].click() }
         window.click()
         app.typeKey("f", modifierFlags: .command)
         XCTAssertTrue(window.textFields["findField"].waitForExistence(timeout: 3))
@@ -42,12 +39,10 @@ final class AccessibilityUITests: XCTestCase {
         app.launch()
         defer { app.terminate() }
         XCTAssertTrue(app.windows["audit-settings.md"].textViews.firstMatch.waitForExistence(timeout: 5))
-        let untitled = app.windows["Untitled"]
-        if untitled.exists { untitled.buttons["_XCUI:CloseWindow"].click() }
         app.typeKey(",", modifierFlags: .command)
         let settings = app.windows["com_apple_SwiftUI_Settings_window"]
         XCTAssertTrue(settings.waitForExistence(timeout: 5))
-        for tab in ["General", "Editor", "Appearance", "Images", "Export"] {
+        for tab in ["General", "Editor", "Appearance", "Library", "Images", "Export"] {
             settings.toolbars.buttons[tab].click()
             sleep(2)  // the tab switch cross-fades and resizes; mid-animation colours fail the contrast check
             let titles = Set(app.windows.allElementsBoundByIndex.map(\.title))
@@ -58,13 +53,15 @@ final class AccessibilityUITests: XCTestCase {
     }
 
     /// Elements AppKit and SwiftUI own and Hashline cannot change: the Touch Bar (its emoji picker),
-    /// SwiftUI menu pickers without AXPress, dimmed disabled labels,
+    /// the window tab bar, SwiftUI menu pickers without AXPress, dimmed disabled labels,
     /// the window title, the title-bar internals (parent/child mismatches in every SwiftUI app) and
     /// the unlabelled container groups of `HSplitView` (labels set on the panes do not reach them).
     static func isSystemElement(_ issue: XCUIAccessibilityAuditIssue, windowTitles: Set<String>) -> Bool {
         guard let element = issue.element else { return issue.auditType == .parentChild }
         let description = element.debugDescription
         if description.contains("TouchBar") || element.label == "emoji & symbols" { return true }
+        // The window tab bar is AppKit's (shown when the user turns on View ▸ Show Tab Bar).
+        if element.elementType == .tab || element.elementType == .tabGroup { return true }
         if issue.auditType == .contrast, let value = element.value as? String, windowTitles.contains(value) {
             return true
         }

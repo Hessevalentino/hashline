@@ -71,6 +71,11 @@ final class LibraryUITests: XCTestCase {
         window.buttons["Folders"].click()
         let settings = app.windows["Library"]
         XCTAssertTrue(settings.waitForExistence(timeout: 5), "Settings open on the Library tab")
-        XCTAssertTrue(settings.staticTexts[one].exists && settings.staticTexts[two].exists, "Both folders listed")
+        // Each row is one accessibility element: its value holds the folder name and path.
+        let rows = settings.outlines["Library folders"].staticTexts
+        for name in [one, two] {
+            XCTAssertTrue(rows.matching(NSPredicate(format: "value CONTAINS %@", name)).firstMatch.exists,
+                          "\(name) listed")
+        }
     }
 }

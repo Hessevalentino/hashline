@@ -67,6 +67,14 @@ final class UITestSupport: NSObject {
         NSApp.terminate(nil)
     }
 
+    /// Closes empty, never-saved documents.
+    private static func closeUntitledDocuments() {
+        for document in NSDocumentController.shared.documents
+        where document.fileURL == nil && !document.isDocumentEdited {
+            document.close()
+        }
+    }
+
     func applicationDidFinishLaunching() {
         let defaults = UserDefaults.standard
         if let name = defaults.string(forKey: "HashlineUITestDocument") {
@@ -74,7 +82,14 @@ final class UITestSupport: NSObject {
             if !FileManager.default.fileExists(atPath: url.path) {
                 FileManager.default.createFile(atPath: url.path, contents: Data())
             }
-            NSDocumentController.shared.openDocument(withContentsOf: url, display: true) { _, _, _ in }
+            NSDocumentController.shared.openDocument(withContentsOf: url, display: true) { _, _, _ in
+                // DocumentGroup opens an untitled document at launch beside it (it does not ask
+                // applicationShouldOpenUntitledFile); tests expect only theirs. It may come a moment later.
+                MainActor.assumeIsolated { Self.closeUntitledDocuments() }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    MainActor.assumeIsolated { Self.closeUntitledDocuments() }
+                }
+            }
         }
         let benchmarkCount = defaults.integer(forKey: "HashlineTypingBenchmark")
         if benchmarkCount > 0 {

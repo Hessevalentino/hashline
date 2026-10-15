@@ -7,6 +7,7 @@ CS = {
     "Choose folders where your Markdown documents are stored.": "Vyberte složky, kde máte dokumenty v Markdownu.",
     "Each folder appears at the top of the library under its name. New documents created at the top level go to the first folder. Removing a folder from the library does not delete it.":
         "Každá složka se v knihovně zobrazí nahoře pod svým jménem. Nové dokumenty vytvořené na nejvyšší úrovni se uloží do první složky. Odebráním z knihovny se složka nesmaže.",
+    "Library folders": "Složky knihovny",
     "Manage Library Folders…": "Spravovat složky knihovny…",
     "No folders": "Žádné složky",
     "Remove from Library": "Odebrat z knihovny",

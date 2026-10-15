@@ -21,12 +21,14 @@ struct LibrarySettingsView: View {
                     }
                 }
                 .padding(.vertical, 2)
+                .accessibilityElement(children: .combine)
                 .contextMenu {
                     Button("Show in Finder") { library.revealInFinder([root.url]) }
                     Button("Remove from Library") { library.removeFolder(root) }
                 }
             }
             .listStyle(.bordered(alternatesRowBackgrounds: true))
+            .accessibilityLabel("Library folders")
             .frame(height: 200)
             .overlay {
                 if library.roots.isEmpty { Text("No folders").foregroundStyle(.secondary) }
