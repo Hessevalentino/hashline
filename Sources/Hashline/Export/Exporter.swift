@@ -214,6 +214,7 @@ enum Exporter {
             pre code.hljs { background: transparent; padding: 0; }
             .math-display { overflow-x: auto; margin: 1em 0; }
             .mermaid-diagram svg { max-width: 100%; height: auto; }
+            :not(svg) > svg:not(.katex svg) { max-width: 100%; height: auto; }
             .mermaid-diagram[data-rendered="true"] > pre { display: none; }
             .front-matter { display: none; }
             .footnote { font-size: 0.85em; opacity: 0.85; }

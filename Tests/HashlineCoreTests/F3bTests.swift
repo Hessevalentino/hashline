@@ -55,4 +55,13 @@ struct MathTests {
         #expect(html.contains("<div class=\"mermaid-diagram\" data-mermaid=\"graph TD; A--&gt;B\n\">"))
         #expect(html.contains("class=\"katex\""))
     }
+
+    @Test func svgCodeBlockIsAPicture() {
+        let markdown = "```svg\n<svg onload=\"x()\"><circle r=\"1\"/></svg>\n```\n"
+        let blocks = BlockMap(text: markdown).blocks
+        #expect(HTMLRenderer.body(for: blocks, options: .preview)
+            == "<div class=\"svg-image\"><svg><circle r=\"1\" /></svg>\n</div>\n")
+        // Without the sanitizer (CommonMark output) it stays code.
+        #expect(HTMLRenderer.body(for: blocks).hasPrefix("<pre><code class=\"language-svg\">"))
+    }
 }

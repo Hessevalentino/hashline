@@ -54,6 +54,7 @@ final class PreviewProvider: QLPreviewProvider, QLPreviewingController {
         sheet += """
             pre code.hljs { background: transparent; padding: 0; }
             .math-display { overflow-x: auto; margin: 1em 0; }
+            :not(svg) > svg:not(.katex svg) { max-width: 100%; height: auto; }
             .front-matter { display: none; }
             .hashline-truncated { opacity: 0.6; font-style: italic; }
             .task-list-item { list-style: none; }

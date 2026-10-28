@@ -91,7 +91,18 @@ struct F3aTests {
          "<kbd>⌘</kbd><br><details open=\"\"><summary>S</summary>t</details>"),
         ("<iframe src=\"https://x\"></iframe>", "&lt;iframe src=&quot;https://x&quot;&gt;&lt;/iframe&gt;"),
         ("<!-- hidden -->visible", "visible"),
-        ("<svg onload=alert(1)>", "&lt;svg onload=alert(1)&gt;"),
+        ("<svg onload=alert(1)>", "<svg>"),
+        ("<svg viewBox=\"0 0 9 9\"><rect width=\"9\" fill=\"url(#g)\" onclick=\"x()\"/></svg>",
+         "<svg viewbox=\"0 0 9 9\"><rect width=\"9\" fill=\"url(#g)\" /></svg>"),
+        ("<svg><use href=\"https://x/a.svg#a\"/><use xlink:href=\"#a\"/></svg>",
+         "<svg><use /><use xlink:href=\"#a\" /></svg>"),
+        ("<path style=\"fill: red; background: url(https://x)\" fill=\"url(https://x)\"/>",
+         "<path style=\"fill: red\" />"),
+        ("<svg><foreignObject><img src=x onerror=alert(1)></foreignObject></svg>",
+         "<svg>&lt;foreignObject&gt;<img src=\"x\">&lt;/foreignObject&gt;</svg>"),
+        ("<svg><style>rect{}</style><set to=\"x\"/></svg>",
+         "<svg>&lt;style&gt;rect{}&lt;/style&gt;&lt;set to=&quot;x&quot;/&gt;</svg>"),
+        ("<?xml version=\"1.0\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\">\n<svg></svg>", "\n\n<svg></svg>"),
     ])
     func sanitizer(html: String, expected: String) {
         #expect(HTMLSanitizer.sanitize(html) == expected)

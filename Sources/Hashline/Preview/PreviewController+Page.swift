@@ -22,6 +22,7 @@ extension PreviewController {
         body > [data-block] { content-visibility: auto; contain-intrinsic-size: auto 1.5em; }
         .math-display { overflow-x: auto; margin: 1em 0; }
         .mermaid-diagram svg { max-width: 100%; height: auto; }
+        :not(svg) > svg:not(.katex svg) { max-width: 100%; height: auto; }
         .mermaid-diagram[data-rendered="true"] > pre { display: none; }
         .mermaid-error { color: #d73a49; font-size: 0.85em; }
         .footnote { font-size: 0.85em; opacity: 0.85; }

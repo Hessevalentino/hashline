@@ -77,6 +77,18 @@ struct XSSCorpusTests {
         "`<script>alert(1)</script>`",
         "```html\n<script>alert(1)</script>\n```",
         "```mermaid\ngraph TD; A[\"<img src=x onerror=alert(1)>\"]-->B\n```",
+        // Inline SVG and ```svg blocks
+        "<svg><a href=\"javascript:alert(1)\"><text>x</text></a></svg>",
+        "<svg><use href=\"data:image/svg+xml;base64,PHN2ZyBvbmxvYWQ9YWxlcnQoMSk+#x\"/></svg>",
+        "<svg><use xlink:href=\"javascript:alert(1)\"/></svg>",
+        "<svg><animate attributeName=\"href\" values=\"javascript:alert(1)\"/></svg>",
+        "<svg><set attributeName=\"onmouseover\" to=\"alert(1)\"/></svg>",
+        "<svg><foreignObject><iframe src=\"javascript:alert(1)\"></iframe></foreignObject></svg>",
+        "<svg><rect fill=\"url(javascript:alert(1))\" style=\"fill:url(https://x/y)\"/></svg>",
+        "<svg><style>@import url(https://x/y.css)</style></svg>",
+        "<svg><image href=\"x\" onerror=\"alert(1)\"/></svg>",
+        "<svg><![CDATA[<img src=x onerror=alert(1)>]]></svg>",
+        "```svg\n<svg onload=alert(1)><script>alert(1)</script></svg>\n```",
         "$\\href{javascript:alert(1)}{x}$",
         "$$\n\\url{javascript:alert(1)}\n$$",
         "---\ntitle: </code></pre><script>alert(1)</script>\n---\n\nx",
@@ -108,7 +120,9 @@ struct XSSCorpusTests {
     }
 
     static let forbiddenTags: Set<String> = ["script", "iframe", "object", "embed", "link", "meta", "base", "form",
-                                             "button", "textarea", "style", "svg", "frame", "frameset", "applet"]
+                                             "button", "textarea", "style", "frame", "frameset", "applet",
+                                             "foreignobject", "image", "animate", "animatemotion",
+                                             "animatetransform", "set"]
 
     /// Attributes of a tag as a browser parses them: name → raw value (quoted values stay whole, so
     /// `title="&quot; onclick=…"` is one title, not an event handler).
@@ -137,11 +151,13 @@ struct XSSCorpusTests {
             }
             for (attribute, rawValue) in attributes {
                 if attribute.hasPrefix("on") { return "event handler \(tag)" }
-                if ["srcdoc", "formaction", "xlink:href"].contains(attribute) { return "dangerous attribute \(tag)" }
+                if ["srcdoc", "formaction"].contains(attribute) { return "dangerous attribute \(tag)" }
                 let value = decodeEntities(rawValue).lowercased()
-                if attribute == "style", value.contains("expression(") || value.contains("url(") {
-                    return "style \(tag)"
-                }
+                if attribute == "xlink:href", !value.hasPrefix("#") { return "xlink:href \(tag)" }
+                // `url(#id)` points inside the document (SVG gradients, markers); any other url() loads.
+                let urls = value.filter { !$0.isWhitespace }.replacingOccurrences(of: "url(#", with: "")
+                    .replacingOccurrences(of: "url(\"#", with: "").replacingOccurrences(of: "url('#", with: "")
+                if value.contains("expression(") || urls.contains("url(") { return "\(attribute) \(tag)" }
                 guard ["href", "src", "action", "data"].contains(attribute) else { continue }
                 let compact = value.filter { !$0.isWhitespace && $0 != "\u{0}" }
                 for scheme in ["javascript:", "vbscript:", "data:text", "data:image/svg", "livescript:"]
@@ -198,6 +214,10 @@ struct XSSCorpusTests {
         #expect(Self.problem(in: "<a href=\"jav&#x09;ascript:alert(1)\">x</a>") != nil)
         #expect(Self.problem(in: "<a href=\"jav&amp;#x09;ascript:alert(1)\">x</a>") == nil)
         #expect(Self.problem(in: "<a href=\"https://example.com\">x</a>") == nil)
+        #expect(Self.problem(in: "<svg><use xlink:href=\"javascript:alert(1)\" /></svg>") != nil)
+        #expect(Self.problem(in: "<svg><rect fill=\"url(https://x)\" /></svg>") != nil)
+        #expect(Self.problem(in: "<svg><foreignobject></foreignobject></svg>") != nil)
+        #expect(Self.problem(in: "<svg><rect fill=\"url(#g)\" /></svg>") == nil)
     }
 
     @Test func exportedPageForbidsScripts() {

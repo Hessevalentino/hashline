@@ -72,6 +72,9 @@ extension Renderer {
             // Rendered in the preview by Mermaid; the source stays visible until then.
             output += "<div class=\"mermaid-diagram\" data-mermaid=\"\(escape(code.code))\">"
                 + "<pre><code>\(escape(code.code))</code></pre></div>\n"
+        } else if options.sanitizeHTML, language == "svg", code.code.contains("<svg") {
+            // An SVG drawing written as code: shown as the picture, through the same allow-list.
+            output += "<div class=\"svg-image\">\(sanitized(code.code))</div>\n"
         } else if options.highlightCode, !language.isEmpty,
            let highlighted = CodeHighlighter.shared.html(code: code.code, language: language) {
             output += "<pre><code class=\"hljs language-\(escape(language))\">" + highlighted + "</code></pre>\n"
