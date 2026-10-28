@@ -1,5 +1,9 @@
 # Změny
 
+## 0.3.6 – 2026-10-28
+
+- Náhled, export i Quick Look kreslí vložené SVG (`<svg>…</svg>` přímo v textu nebo blok ` ```svg `) jako obrázek místo kódu. Pouští se jen statická grafika, skripty, animace a odkazy ven zůstávají zakázané.
+
 ## 0.3.5 – 2026-10-16
 
 - Seznam složek v Nastavení ▸ Knihovna má popis pro VoiceOver a každý řádek se čte jako jedna položka (jméno a cesta složky)

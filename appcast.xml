@@ -6,6 +6,15 @@
     <description>Most recent changes for Hashline.</description>
     <language>cs</language>
     <item>
+      <title>Hashline 0.3.6</title>
+      <pubDate>Wed, 28 Oct 2026 20:57:46 GMT</pubDate>
+      <sparkle:version>15</sparkle:version>
+      <sparkle:shortVersionString>0.3.6</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[<ul><li>Vložené SVG (přímo v textu nebo v bloku ```svg) se v náhledu, exportu i Quick Looku kreslí jako obrázek místo kódu</li></ul>]]></description>
+      <enclosure url="https://github.com/Hessevalentino/hashline/releases/download/v0.3.6/Hashline.dmg" type="application/octet-stream" sparkle:edSignature="q3DCKXuhq4I1AJoGMsJ/S1leNt11nr4Pw8QuYPimZGoqskvRzfRvO87zsOikvWU492TcZIOFXgdWyvKEpXlhBA==" length="7025491" />
+    </item>
+    <item>
       <title>Hashline 0.3.5</title>
       <pubDate>Thu, 15 Oct 2026 22:28:47 GMT</pubDate>
       <sparkle:version>14</sparkle:version>
